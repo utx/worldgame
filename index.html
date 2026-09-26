@@ -268,6 +268,39 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
 .gMsg{min-height:22px;font-weight:800;font-size:15px;margin-top:8px}
 .gMsg.ok{color:var(--good)}.gMsg.bad{color:#ffb1a6}
 .gHint{font-size:12px;color:#9cc4e6;margin-top:6px}
+/* drills: fractions, answer box extras, picture choices */
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;font-size:.82em;margin:0 .14em;letter-spacing:0}
+.fr>span:first-child{border-bottom:2px solid currentColor;padding:0 .18em .08em}
+.fr>span:last-child{padding:.08em .18em 0}
+.mx{margin-right:.05em}
+.nw{white-space:nowrap}
+.eqn{display:block;white-space:nowrap;font-size:1.25em;margin-top:4px}
+#gQ .fr{font-size:.86em}
+#gAns .fr{font-size:.72em}
+.ph{font-style:normal;opacity:.4}
+.suf{font-size:.5em;margin-left:.35em;letter-spacing:0;opacity:.85}
+.gTopR{display:flex;align-items:center;gap:8px}
+#gQuit{padding:1px 10px;font-size:12.5px;border-radius:9px}
+.gFix{display:block;margin-top:4px;color:#ffe7a8;font-weight:700;font-size:14.5px;line-height:1.35}
+.gMsg .fr{font-size:.9em}
+#gNextRow{margin-top:8px}
+.choice.vis{display:flex;align-items:center;justify-content:center;gap:4px;padding:4px 10px;min-height:0}
+.choice.vis svg{height:clamp(56px,10vh,80px);width:auto;max-width:100%}
+.choice .cl{align-self:flex-start;font-size:14px;opacity:.75}
+.ticks .skip{background:rgba(255,255,255,.08);color:var(--dim)}
+.drillHero{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:center;background:radial-gradient(500px 240px at 15% 0%,rgba(143,208,255,.14),transparent 70%),linear-gradient(160deg,#123a5c,#0f2131 70%);border:1px solid #2f6a95;border-radius:18px;padding:18px}
+.drillHero h3{margin:0;font-family:var(--display);font-weight:500;font-size:40px;line-height:1;text-transform:uppercase}
+.drillHero p{margin:6px 0 10px;color:#c9dbe8;max-width:60ch}
+.drillHero .dpay{font-size:14px;margin:6px 0 14px}
+.dlvl{display:flex;gap:6px;margin:4px 0}.dlvl i{width:38px;height:10px;border-radius:4px;background:#1b3045}.dlvl i.on{background:var(--gold)}
+.dstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dstats div{background:rgba(0,0,0,.24);border-radius:12px;padding:10px 12px}
+.dstats b{display:block;font-family:var(--display);font-size:36px;line-height:1;font-weight:500;font-variant-numeric:tabular-nums}
+.dstats span{font-size:11.5px;color:var(--dim);font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.skill{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.skill h3{margin:0;font-size:17px}.skill p{margin:0;color:var(--dim);font-size:13px}
+.skill .row{display:flex;justify-content:space-between;font-size:13px;color:var(--dim)}.skill .row b{color:var(--chalk)}
+.skill .bar i.low{background:linear-gradient(90deg,#ff7b6b,#ffb347)}
 .confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:80;pointer-events:none;animation:fall linear forwards;border-radius:2px}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
 
@@ -275,6 +308,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
   .titleInner{grid-template-columns:1fr}
   .active{grid-template-columns:1fr}
   .bootHero{grid-template-columns:1fr}
+  .drillHero{grid-template-columns:1fr}
   .sbInfo{display:none}
   .sb{padding-left:12px}
   .stat{grid-template-columns:86px 1fr 30px auto}
@@ -310,7 +344,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
         <input id="teamName" maxlength="18" placeholder="Harbour City FC" required>
         <label>Kit colours</label>
         <div class="kitPick" id="kitPick"></div>
-        <button class="btn btnGold" id="startBtn" type="submit" style="font-size:18px;padding:10px">Start in Sydney</button>
+        <button class="btn btnGold" id="startBtn" type="button" style="font-size:18px;padding:10px">Start in Sydney</button>
         <p class="fine" id="newNote">You start with 150 coins, a pair of scuffed boots and a team rating of 50.</p>
       </form>
     </div>
@@ -326,6 +360,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
   </header>
   <nav class="tabs" id="tabs" aria-label="Sections">
     <button class="tab" data-tab="play">Matches</button>
+    <button class="tab" data-tab="drills">Drills</button>
     <button class="tab" data-tab="tours">Tournaments</button>
     <button class="tab" data-tab="world">World map</button>
     <button class="tab" data-tab="boots">Boot room</button>
@@ -366,7 +401,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
 <!-- MATHS GATE -->
 <div class="ov" id="gateOv" hidden>
   <div class="card" id="gateCard">
-    <div id="gTop"><span id="gTitle"></span><span id="gAtt"></span></div>
+    <div id="gTop"><span id="gTitle"></span><span class="gTopR"><span id="gAtt"></span><button class="btn" id="gQuit" hidden>Stop</button></span></div>
     <div id="gTimer"><div id="gFill"></div></div>
     <div id="gVis" hidden></div>
     <div id="gQ"></div>
@@ -379,6 +414,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
     </div>
     <div id="gChoices" hidden></div>
     <div class="gMsg" id="gMsg"></div>
+    <div class="btnRow" id="gNextRow" hidden><button class="btn btnGold" id="gNext">Next ›</button></div>
     <div class="gHint">Type your answer and press Enter</div>
   </div>
 </div>
@@ -391,6 +427,8 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
 </div></div>
 
 <div class="ov" id="ftOv" hidden><div class="card" id="ftCard"></div></div>
+
+<div class="ov" id="drOv" hidden><div class="card" id="drCard"></div></div>
 
 <div class="ov" id="pauseOv" hidden><div class="card">
   <div class="eyebrow">Paused</div>
@@ -713,6 +751,522 @@ function mathsQ(L){
   return makeQuestion(L);
 }
 
+/* =========================================================
+   COACH'S DRILLS — foundation question bank
+   Modelled on the NSW OC Mathematical Reasoning papers: fractions (shaded shapes,
+   amounts, comparing), number lines and scales, shapes & space, and problem-solving moves.
+   Each generator takes a drill level L (1–3) and returns a question, or null to try again:
+     {qh (question html), a (answer: number for typed, key for multiple choice),
+      vis (svg), choices, hint (nudge after a first miss), fix (one-line working shown after a miss),
+      suf (unit shown after the typed answer), den (typed answer is a numerator over den)}
+   ========================================================= */
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+const lcm=(a,b)=>a/gcd(a,b)*b;
+const F=(n,d)=>`<span class="fr"><span>${n}</span><span>${d}</span></span>`;
+const mixed=(w,n,d)=>(w?`<span class="mx">${w}</span>`:"")+F(n,d);
+const fkey=(n,d)=>{const g=gcd(n,d)||1;return (n/g)+"/"+(d/g);};
+function fh(n,d){ const g=gcd(n,d)||1; n/=g; d/=g; if(d===1) return String(n); return mixed(Math.floor(n/d),n%d,d); }
+const opt=(n,d)=>n>0&&d>0?{v:fkey(n,d),h:fh(n,d),val:n/d}:null;
+const plural=(n,one,many)=>n===1?one:(many||one+"s");
+function rset(N,k){ return new Set(shuffle([...Array(N).keys()]).slice(0,k)); }
+/* multiple choice: right answer + up to 3 distinct distractors (first ones listed are the most tempting) */
+function dmc(q,right,cands){
+  if(!right) return null;
+  const seen=new Set([right.v]), out=[];
+  for(const c of cands){ if(!c||seen.has(c.v)) continue; seen.add(c.v); out.push(c); if(out.length===3) break; }
+  if(out.length<3) return null;
+  q.choices=shuffle([right,...out]); q.a=right.v;
+  q.ah=right.vis?"ABCD"[q.choices.indexOf(right)]:right.h;
+  return q;
+}
+
+/* ---------- drawing (for the dark-blue question card) ---------- */
+const SH="#ffd24a", UN="rgba(255,255,255,.07)", LN="rgba(255,255,255,.9)", LN2="rgba(255,255,255,.5)";
+const r1=v=>+v.toFixed(1);
+const rct=(x,y,w,h,f,s,sw)=>`<rect x="${r1(x)}" y="${r1(y)}" width="${r1(w)}" height="${r1(h)}" fill="${f||"none"}" stroke="${s||LN}" stroke-width="${sw||2}"/>`;
+const pgn=(p,f,s,sw)=>`<polygon points="${p.map(q=>q.map(r1).join(",")).join(" ")}" fill="${f||"none"}" stroke="${s||LN}" stroke-width="${sw||2}" stroke-linejoin="round"/>`;
+const dln=(x1,y1,x2,y2,s,sw,dash)=>`<line x1="${r1(x1)}" y1="${r1(y1)}" x2="${r1(x2)}" y2="${r1(y2)}" stroke="${s||LN}" stroke-width="${sw||2}" stroke-linecap="round"${dash?` stroke-dasharray="${dash}"`:""}/>`;
+const arrowDown=(x,y,c)=>`<path d="M${r1(x)} ${y} l-9 -15 h18 z" fill="${c||SH}"/>`+dln(x,y-14,x,y-36,c||SH,4);
+function pieG(n,on,cx,cy,r){
+  let g="";
+  for(let i=0;i<n;i++){ const a1=-Math.PI/2+i*2*Math.PI/n, a2=a1+2*Math.PI/n;
+    g+=`<path d="M${cx} ${cy} L${r1(cx+r*Math.cos(a1))} ${r1(cy+r*Math.sin(a1))} A${r} ${r} 0 0 1 ${r1(cx+r*Math.cos(a2))} ${r1(cy+r*Math.sin(a2))} Z" fill="${on.has(i)?SH:UN}" stroke="${LN}" stroke-width="2" stroke-linejoin="round"/>`; }
+  return g;
+}
+function gridG(R,C,on,ox,oy,cs){
+  let g="";
+  for(let r=0;r<R;r++) for(let c=0;c<C;c++) g+=rct(ox+c*cs,oy+r*cs,cs,cs,on.has(r*C+c)?SH:UN,LN2,1.5);
+  return g+rct(ox,oy,C*cs,R*cs,"none",LN,3);
+}
+/* a shape split into N equal parts: grid of small squares, a circle of slices, or a bar of strips */
+function partsShape(kind,L){
+  let R=0,C=0,N;
+  if(kind==="grid"){ [R,C]=pick(L===1?[[2,4],[2,3],[3,4],[2,5]]:L===2?[[3,4],[4,4],[2,6],[3,5],[2,8]]:[[4,5],[3,6],[4,6],[3,8],[4,4]]); N=R*C; }
+  else if(kind==="pie") N=pick(L===1?[4,6,8]:[6,8,10,12]);
+  else N=pick(L===1?[4,5,6]:[6,8,10,12]);
+  const word=kind==="grid"?"small squares":kind==="pie"?"slices":"strips";
+  const draw=on=>{
+    if(kind==="grid"){ const cs=Math.min(300/C,150/R,40); return svgWrap(340,170,gridG(R,C,on,(340-C*cs)/2,(170-R*cs)/2,cs),"A rectangle split into equal small squares"); }
+    if(kind==="pie") return svgWrap(340,170,pieG(N,on,170,85,76),"A circle split into equal slices");
+    const w=300/N; let g=""; for(let i=0;i<N;i++) g+=rct(20+i*w,50,w,70,on.has(i)?SH:UN,LN2,1.5);
+    return svgWrap(340,170,g+rct(20,50,300,70,"none",LN,3),"A bar split into equal strips");
+  };
+  return {N,word,draw};
+}
+
+const DQ={};
+/* ================= FRACTIONS: shaded shapes ================= */
+DQ.shadeMore=L=>{
+  const S=partsShape(pick(["grid","grid","pie","bar"]),L), N=S.N;
+  const fr=[]; for(let q=2;q<=6;q++) for(let p=1;p<q;p++) if(gcd(p,q)===1&&N%q===0&&N*p/q>=2&&(L>1||p===1||q===4)) fr.push([p,q]);
+  if(!fr.length) return null;
+  const [p,q]=pick(fr), t=N*p/q, k=rnd(Math.max(1,Math.floor(t/3)),t-1);
+  return {vis:S.draw(rset(N,k)), a:t-k,
+    qh:`How many MORE ${S.word} must be shaded so that ${F(p,q)} of the shape is shaded?`,
+    hint:`First work out how many ${S.word} make ${F(p,q)} of all ${N}.`,
+    fix:`${F(p,q)} of ${N} is ${t}. ${k} are shaded already, so ${t} − ${k} = ${t-k}.`};
+};
+DQ.whatFrac=L=>{
+  const S=partsShape(pick(["grid","pie","bar"]),L), N=S.N, k=rnd(1,N-1);
+  if(gcd(k,N)===1&&Math.random()<.75) return null;
+  const right=opt(k,N), lt1=o=>o&&o.val<1?o:null;
+  return dmc({vis:S.draw(rset(N,k)), qh:`What fraction of the shape is shaded?`,
+    fix:`${k} of the ${N} ${S.word} are shaded: ${F(k,N)}${gcd(k,N)>1?` = ${fh(k,N)}`:""}.`},
+    right,[opt(N-k,N),lt1(opt(k,N-k)),opt(k+1,N),opt(k-1,N),opt(k,N+1),opt(N-k-1,N)].map(lt1));
+};
+DQ.fracAs=L=>{
+  const S=partsShape(pick(["grid","grid","pie","bar"]),L), N=S.N;
+  const ds=[]; for(let q=2;q<N;q++) if(N%q===0&&(L>1||q<=4)) ds.push(q);
+  if(!ds.length) return null;
+  const q=pick(ds), g=N/q, j=rnd(1,q-1), k=j*g;
+  return {vis:S.draw(rset(N,k)), a:j, den:q,
+    qh:`What fraction of the shape is shaded? Write it with ${q} on the bottom.`,
+    hint:`Each ${F(1,q)} of the shape is ${g} ${S.word}.`,
+    fix:`${N} ÷ ${q} = ${g}, so each ${F(1,q)} is ${g} ${S.word}. ${k} ÷ ${g} = ${j}, so it's ${F(j,q)}.`};
+};
+DQ.sameArea=L=>{
+  const g=L===1?4:L===2?pick([4,6]):pick([6,8]), S=g*g;
+  const P=pick([2,4,8].filter(p=>S%p===0&&(L>1||p<8))), m=rnd(1,P-1), t=S*m/P, s=rnd(Math.max(1,Math.floor(t/4)),t-1);
+  // square X: g×g grid on the left; square Y: P equal triangles on the right
+  const side=136, xo=18, yo=14, cs=side/g, Yx=186;
+  let gX=gridG(g,g,rset(S,s),xo,yo,cs);
+  const c=[Yx+side/2,yo+side/2], TL=[Yx,yo], TR=[Yx+side,yo], BR=[Yx+side,yo+side], BL=[Yx,yo+side];
+  const TM=[Yx+side/2,yo], RM=[Yx+side,yo+side/2], BM=[Yx+side/2,yo+side], LM=[Yx,yo+side/2];
+  let tris;
+  if(P===2) tris=Math.random()<.5?[[TL,TR,BR],[TL,BR,BL]]:[[TL,TR,BL],[TR,BR,BL]];
+  else { const ring=P===4?[TL,TR,BR,BL]:[TL,TM,TR,RM,BR,BM,BL,LM]; tris=ring.map((p,i)=>[c,p,ring[(i+1)%P]]); }
+  const onY=rset(P,m);
+  let gY=tris.map((t,i)=>pgn(t,onY.has(i)?SH:UN,LN2,1.5)).join("")+rct(Yx,yo,side,side,"none",LN,3);
+  const vis=svgWrap(340,178,gX+gY+txt(xo+side/2,168,"X",15,"#9cc4e6")+txt(Yx+side/2,168,"Y",15,"#9cc4e6"),"Two equal squares, X and Y");
+  return {vis, a:t-s,
+    qh:`Squares X and Y are the same size. X is split into ${S} equal small squares, and Y into ${P} equal triangles. How many MORE small squares must be shaded on X so that the same area is shaded on both?`,
+    hint:`What fraction of Y is shaded? Shade the same fraction of the ${S} small squares.`,
+    fix:`${m} of ${P} triangles is ${fh(m,P)} of Y. ${fh(m,P)} of ${S} is ${t}, and ${t} − ${s} = ${t-s}.`};
+};
+
+/* ================= FRACTIONS: amounts and word problems ================= */
+DQ.fracOf=L=>{
+  if(L===1){
+    const d=pick([2,3,4,5,6,8,10]), n=rnd(1,d-1), X=d*rnd(2,10), ans=X/d*n;
+    const qh=pick([`A squad has ${X} players. ${F(n,d)} of them are at training. How many players is that?`,
+      `A stand has ${X} seats. ${F(n,d)} of the seats are yellow. How many yellow seats are there?`,
+      `What is ${F(n,d)} of ${X}?`]);
+    return {qh,a:ans,hint:`Find ${F(1,d)} of ${X} first: divide by ${d}.`,fix:`${X} ÷ ${d} = ${X/d}, and ${X/d} × ${n} = ${ans}.`};
+  }
+  if(L===2||Math.random()<.4){
+    if(Math.random()<.5){
+      const [a,b]=shuffle([2,3,4,5,6]).slice(0,2), X=lcm(a,b)*rnd(1,4); if(X>120||X-X/a-X/b<=0) return null;
+      const ans=X-X/a-X/b;
+      return {qh:`Tom has ${X} stickers. He gives ${F(1,a)} of them to Mia and ${F(1,b)} of them to Sam. How many stickers does Tom have left?`,a:ans,
+        hint:`Work out ${F(1,a)} of ${X} and ${F(1,b)} of ${X} separately.`,
+        fix:`${F(1,a)} of ${X} is ${X/a}, ${F(1,b)} of ${X} is ${X/b}. ${X} − ${X/a} − ${X/b} = ${ans}.`};
+    }
+    const d1=pick([2,3,4,5]), n1=rnd(1,d1-1), d2=pick([2,3,4]), n2=rnd(1,d2-1), X=d1*d2*rnd(1,4);
+    const B=X/d1*n1; if(B%d2) return null; const ans=B/d2*n2;
+    return {qh:`There are ${X} players at a camp. ${F(n1,d1)} of them are goalkeepers. ${F(n2,d2)} of the goalkeepers wear green gloves. How many goalkeepers wear green gloves?`,a:ans,
+      hint:`First find how many goalkeepers there are.`,
+      fix:`${F(n1,d1)} of ${X} is ${B} goalkeepers. ${F(n2,d2)} of ${B} is ${ans}.`};
+  }
+  if(Math.random()<.5){
+    const d=pick([3,4,5,6,8]), n=rnd(1,d-1), k=rnd(2,9), Y=n*k, ans=d*k;
+    return {qh:`${F(n,d)} of a number is ${Y}. What is the number?`,a:ans,
+      hint:`${F(n,d)} means ${n} out of ${d} equal parts. Find ONE part first.`,
+      fix:`${n} parts = ${Y}, so 1 part = ${k}. All ${d} parts = ${ans}.`};
+  }
+  const d=pick([3,4,5,6]), n=rnd(1,d-1), k=rnd(2,8), left=(d-n)*k, ans=d*k;
+  return {qh:`Ali spends ${F(n,d)} of his pocket money on a new ball. He has $${left} left. How many dollars did he have to start with?`,a:ans,
+    hint:`If he spent ${F(n,d)}, what fraction is left?`,
+    fix:`${F(d-n,d)} is left, so ${d-n>1?`${d-n} parts = $${left}, and `:""}1 part = $${k}. All ${d} parts = $${ans}.`};
+};
+DQ.cake=L=>{
+  const n=pick(L===1?[8,10]:[8,10,12]), a=rnd(1,3), rest=n-a; if(rest%2) return null;
+  const half=rest/2, b=rnd(1,2), left=half-b; if(left<1) return null;
+  return dmc({vis:svgWrap(340,170,pieG(n,new Set(),170,85,76),`A pizza cut into ${n} equal slices`),
+    qh:`A pizza is cut into ${n} equal slices. Ella gives ${a} ${plural(a,"slice")} to Jack. She then gives Sue half of the slices that are left. Ella eats ${b} ${plural(b,"slice")}. What fraction of the pizza is left?`,
+    fix:`${n} − ${a} = ${rest}. Sue gets half, so ${half} are left. Ella eats ${b}: ${left} of ${n} slices = ${fh(left,n)}.`},
+    opt(left,n),[opt(half,n),opt(left,rest),opt(n-left,n),opt(left+1,n),opt(left-1,n)]);
+};
+DQ.shops=L=>{
+  if(L===1) return null;
+  const [a,b]=pick([[3,6],[2,8],[4,8],[3,9],[2,10],[4,12],[3,12],[5,10]]), room=b-b/a;
+  const k=rnd(2,room-1), r=room-k; if(r<1) return null;
+  return {qh:`Sam spends ${F(1,a)} of his money in the first shop. He spends ${F(1,b)} of it in each of the other shops he visits. At the end he has ${fh(r,b)} of his money left. How many shops did Sam visit altogether?`,a:k+1,
+    hint:`Change everything into ${b}ths.`,
+    fix:`${F(1,a)} = ${F(b/a,b)}, leaving ${F(room,b)}. He ends with ${F(r,b)}, so he spent ${F(k,b)} in ${k} more shops: 1 + ${k} = ${k+1}.`};
+};
+DQ.unitConv=L=>{
+  const U=pick([["minutes","an hour",60,[2,3,4,5,6,10,12],"min"],["centimetres","a metre",100,[2,4,5,10,20,25],"cm"],
+    ["grams","a kilogram",1000,[2,4,5,8,10],"g"],["cents","a dollar",100,[2,4,5,10,20],"c"],["minutes","2 hours",120,[3,4,5,6,8],"min"]]);
+  const d=pick(U[3]), n=L===1?1:rnd(1,d-1), ans=U[2]/d*n;
+  return {qh:`How many ${U[0]} are there in ${F(n,d)} of ${U[1]}?`,a:ans,suf:U[4],
+    hint:`How many ${U[0]} are in ${U[1]}? Find ${F(1,d)} of that first.`,
+    fix:`${U[1]} is ${U[2]} ${U[0]}. ${U[2]} ÷ ${d} = ${U[2]/d}${n>1?`, and ${U[2]/d} × ${n} = ${ans}`:""}.`};
+};
+
+/* ================= FRACTIONS: comparing and equivalent ================= */
+DQ.closest=L=>{
+  const T=L===1?pick([1,2]):pick([1,2,3]), dens=L===1?[2,4]:L===2?[2,3,4,5]:[3,4,5,6,8];
+  const pool=new Map();
+  for(const d of dens) for(let n=(T-1)*d+1;n<(T+1)*d;n++){ if(n%d===0) continue; const o=opt(n,d); if(!pool.has(o.v)) pool.set(o.v,{...o,n,d,dist:Math.abs(n/d-T)}); }
+  const four=shuffle([...pool.values()]).slice(0,4).sort((x,y)=>x.dist-y.dist);
+  if(four.length<4||four[1].dist-four[0].dist<1/30) return null;
+  const R=four[0];
+  return dmc({qh:`Which one of these numbers is closest to ${T}?`,
+    fix:`${R.h} is only ${fh(Math.abs(R.n-T*R.d),R.d)} away from ${T}. The others are further away.`},R,four.slice(1));
+};
+DQ.biggest=L=>{
+  const big=Math.random()<.6, word=big?"LARGEST":"SMALLEST";
+  let fr=[], why;
+  if(L===1){
+    if(Math.random()<.5){ const d=pick([5,6,8,10,12]); fr=shuffle([...Array(d-1).keys()].map(i=>i+1)).slice(0,4).map(n=>[n,d]);
+      why=`They all have ${d} on the bottom, so the ${big?"biggest":"smallest"} top number wins.`; }
+    else { const n=pick([1,2,3]); fr=shuffle([3,4,5,6,8,10].filter(d=>d>n)).slice(0,4).map(d=>[n,d]);
+      why=`They all have ${n} on top. A ${big?"smaller":"bigger"} bottom number means ${big?"bigger":"smaller"} pieces.`; }
+  } else {
+    const dens=L===2?[2,3,4,5,6,8,10]:[3,4,6,8,12], seen=new Set();
+    for(let t=0;t<40&&fr.length<4;t++){ const d=pick(dens), n=rnd(1,d-1), k=fkey(n,d); if(!seen.has(k)){ seen.add(k); fr.push([n,d]); } }
+    if(fr.length<4) return null;
+  }
+  const s=fr.slice().sort((x,y)=>big?y[0]/y[1]-x[0]/x[1]:x[0]/x[1]-y[0]/y[1]);
+  if(Math.abs(s[0][0]/s[0][1]-s[1][0]/s[1][1])<1e-9) return null;
+  if(!why){ const Lc=lcm(s[0][1],s[1][1]);
+    const cv=([n,d])=>d===Lc?F(n,d):`${F(n,d)} = ${F(n*Lc/d,Lc)}`;
+    why=`Give them the same bottom number: ${cv(s[0])} is ${big?"more":"less"} than ${cv(s[1])}.`; }
+  const o=([n,d])=>({v:n+"/"+d,h:F(n,d)});
+  return dmc({qh:`Which fraction is the ${word}?`,fix:why},o(s[0]),s.slice(1).map(o));
+};
+DQ.equiv=L=>{
+  const b=pick([2,3,4,5,6,8,10]), a=rnd(1,b-1); if(gcd(a,b)!==1) return null;
+  const m=L===1?rnd(2,3):L===2?rnd(2,6):rnd(3,10), kind=L===1?0:rnd(0,L===2?1:2);
+  if(kind===0) return {qh:`Fill in the missing number:<span class="eqn">${F(a,b)} = ${F("?",b*m)}</span>`,a:a*m,
+    hint:`What was ${b} multiplied by to make ${b*m}?`,fix:`${b} × ${m} = ${b*m}, so ${a} × ${m} = ${a*m}.`};
+  if(kind===1) return {qh:`Fill in the missing number:<span class="eqn">${F(a,b)} = ${F(a*m,"?")}</span>`,a:b*m,
+    hint:`What was ${a} multiplied by to make ${a*m}?`,fix:`${a} × ${m} = ${a*m}, so ${b} × ${m} = ${b*m}.`};
+  const m1=rnd(2,4); let m2=rnd(2,6); if(m2===m1) m2++;
+  return {qh:`Fill in the missing number:<span class="eqn">${F(a*m1,b*m1)} = ${F("?",b*m2)}</span>`,a:a*m2,
+    hint:`Simplify ${F(a*m1,b*m1)} first.`,fix:`${F(a*m1,b*m1)} = ${F(a,b)}, and ${F(a,b)} = ${F(a*m2,b*m2)}.`};
+};
+const PART_NAMES={2:"halves",3:"thirds",4:"quarters",5:"fifths",6:"sixths",8:"eighths",10:"tenths"};
+DQ.partsIn=L=>{
+  const d=pick(L===1?[2,4]:L===2?[3,4,5]:[3,5,6,8]), w=L===1?1:L===2?rnd(1,2):rnd(2,3), n=rnd(1,d-1), ans=w*d+n;
+  const cnt=w+1, r=cnt>3?34:42, gap=(340-cnt*2*r)/(cnt+1); let g="";
+  for(let i=0;i<cnt;i++){ const on=new Set(i<w?[...Array(d).keys()]:[...Array(n).keys()]); g+=pieG(d,on,gap+r+i*(2*r+gap),85,r); }
+  return {vis:svgWrap(340,170,g,`${w} and ${n} ${PART_NAMES[d]} shaded`),
+    qh:`How many ${PART_NAMES[d]} make <span class="nw">${mixed(w,n,d)}?</span>`,a:ans,
+    hint:`How many ${PART_NAMES[d]} make one whole?`,
+    fix:`Each whole is ${d} ${PART_NAMES[d]}. ${w} × ${d} = ${w*d}, plus ${n} more = ${ans}.`};
+};
+DQ.notEqual=L=>{
+  const [p,q]=pick([[1,2],[1,3],[2,3],[3,4],[1,4],[2,5],[3,5],[3,8]]);
+  const ms=shuffle([2,3,4,5,6,7,8,9].slice(0,L===1?3:L===2?5:8)).slice(0,3);
+  const eq=ms.map(m=>[p*m,q*m]);
+  const m=rnd(2,4), wrongs=[[p+m,q+m],[p*m+1,q*m],[p*m,q*m+1],[p*m-1,q*m]].filter(([n,d])=>n>0&&n<d&&Math.abs(n/d-p/q)>1e-9);
+  if(!wrongs.length) return null;
+  const w=pick(wrongs), o=([n,d])=>({v:n+"/"+d,h:F(n,d)});
+  return dmc({qh:`Which fraction is NOT equal to <span class="nw">${F(p,q)}?</span>`,
+    fix:`The others are ${F(p,q)} with the top and bottom multiplied by the same number. ${F(w[0],w[1])} isn't.`},o(w),eq.map(o));
+};
+
+/* ================= NUMBER LINES AND SCALES ================= */
+function lineSVG(n,labels,arrowAt,extra){
+  const x0=34,x1=306,y=96,dx=(x1-x0)/n;
+  let g=dln(x0-10,y,x1+10,y,LN,3);
+  for(let t=0;t<=n;t++){ const X=x0+t*dx, big=labels[t]!==undefined; g+=dln(X,y-(big?12:8),X,y+(big?12:8),LN,big?3:2); if(big) g+=txt(X,y+30,labels[t],17); }
+  if(arrowAt!=null) g+=arrowDown(x0+arrowAt*dx,y-12);
+  return svgWrap(340,140,g+(extra?extra(x0,dx,y):""),"A number line");
+}
+DQ.lineRead=L=>{
+  const a=L===1?0:L===2?pick([0,0,10*rnd(1,9)]):pick([0,100,200,1000]);
+  const step=pick(L===1?[2,5,10]:L===2?[5,10,20,25]:[20,25,50,250]), n=pick(L===1?[4,5]:L===2?[4,5,6,8]:[4,5,8,10]);
+  const b=a+n*step, i=rnd(1,n-1), ans=a+i*step, lab={0:fmt(a)}; lab[n]=fmt(b);
+  return {vis:lineSVG(n,lab,i),qh:`What number is the arrow pointing to?`,a:ans,
+    hint:`The line goes from ${fmt(a)} to ${fmt(b)}. Count the equal gaps between the marks.`,
+    fix:`${fmt(b)} − ${fmt(a)} = ${fmt(b-a)}, shared into ${n} gaps, so each gap is ${step}. ${i} gaps along is ${fmt(ans)}.`};
+};
+DQ.lineFrac=L=>{
+  const d=pick(L===1?[2,4]:L===2?[3,4,5]:[4,5,8,10]), span=L===3?2:1, w=rnd(L===1?0:1,5);
+  const ticks=span*d, i=rnd(1,ticks-1); if(i%d===0) return null;
+  const num=w*d+i, lab={}; for(let s=0;s<=span;s++) lab[s*d]=String(w+s);
+  return dmc({vis:lineSVG(ticks,lab,i),qh:`What number is the arrow pointing to?`,
+    fix:`Each whole is split into ${d} equal gaps, so each gap is ${F(1,d)}. The arrow is at ${fh(num,d)}.`},
+    opt(num,d),[opt(w*(d+1)+i%d+Math.floor(i/d)*(d+1),d+1),opt(num+1,d),opt(num-1,d),opt(num+d,d),opt(w*d+(d-i%d),d)]);
+};
+DQ.jumps=L=>{
+  if(L<3||Math.random()<.4){
+    const d=L===1?2:pick([3,4,L===3?5:4]), a=rnd(1,6), span=rnd(2,L===1?3:4), b=a+span, ans=span*d;
+    const lab={}; for(let s=0;s<=span;s++) lab[s*d]=String(a+s);
+    const arcs=(x0,dx,y)=>{ let s=""; for(let j=0;j<3;j++){ const xa=x0+j*dx, xb=xa+dx; s+=`<path d="M${r1(xa)} ${y-6} Q${r1((xa+xb)/2)} ${y-34} ${r1(xb)} ${y-6}" fill="none" stroke="${SH}" stroke-width="2.5"/>`; } return s; };
+    return {vis:lineSVG(ans,lab,null,arcs),a:ans,
+      qh:`Charlie counts from ${a} to ${b} in jumps of ${F(1,d)}. How many jumps does he make?`,
+      hint:`How many jumps of ${F(1,d)} does it take to get from one whole number to the next?`,
+      fix:`${d} jumps make 1 whole. From ${a} to ${b} is ${span} wholes, so ${span} × ${d} = ${ans} jumps.`};
+  }
+  const d1=pick([3,4]), d2=pick([2,5,6].filter(x=>x!==d1)), a1=rnd(2,6), s1=rnd(2,3), a2=rnd(2,6), s2=rnd(2,3);
+  const j1=s1*d1, j2=s2*d2; if(j1===j2) return null;
+  const [A,B]=j1>j2?[["Julie",a1,s1,d1,j1],["Charlie",a2,s2,d2,j2]]:[["Charlie",a2,s2,d2,j2],["Julie",a1,s1,d1,j1]];
+  return {a:A[4]-B[4],
+    qh:`Julie counts from ${a1} to ${a1+s1} in jumps of ${F(1,d1)}. Charlie counts from ${a2} to ${a2+s2} in jumps of ${F(1,d2)}. How many MORE jumps does ${A[0]} make than ${B[0]}?`,
+    hint:`Work out each person's number of jumps first.`,
+    fix:`${A[0]}: ${A[2]} × ${A[3]} = ${A[4]} jumps. ${B[0]}: ${B[2]} × ${B[3]} = ${B[4]} jumps. ${A[4]} − ${B[4]} = ${A[4]-B[4]}.`};
+};
+DQ.jug=L=>{
+  const opts=L===1?[[20,4],[40,4],[100,5],[50,5],[100,4]]:L===2?[[40,5],[60,4],[80,4],[30,6],[60,5],[200,4],[40,8]]:[[40,5],[80,5],[60,6],[120,6],[100,5],[80,8]];
+  const [max,n]=pick(opts), step=max/n, halfOK=L===3&&step%2===0&&Math.random()<.5;
+  const i=rnd(1,n-1)+(halfOK?.5:0), ans=i*step;
+  const x0=112,x1=228,top=18,bot=150,H=bot-top, lvl=bot-i/n*H;
+  let g=`<rect x="${x0}" y="${r1(lvl)}" width="${x1-x0}" height="${r1(bot-lvl)}" fill="rgba(96,165,250,.55)"/>`+dln(x0,lvl,x1,lvl,"#93c5fd",2);
+  g+=`<path d="M${x0} ${top-6} V${bot} H${x1} V${top-6}" fill="none" stroke="${LN}" stroke-width="3" stroke-linejoin="round"/>`;
+  g+=`<path d="M${x1} ${top+8} q26 4 26 34 q0 30 -26 34" fill="none" stroke="${LN}" stroke-width="3"/>`;
+  for(let t=0;t<=n;t++){ const y=bot-t/n*H; g+=dln(x0,y,x0+(t===0||t===n?20:14),y,LN,2); }
+  g+=txt(x0-10,top,`${max} mL`,15,"#fff","end")+txt(x0-10,bot,"0",15,"#fff","end");
+  return {vis:svgWrap(340,164,g,"A measuring jug"),a:ans,suf:"mL",qh:`How much water is in the jug?`,
+    hint:`Only 0 and ${max} are labelled. How much is each gap worth?`,
+    fix:`${max} ÷ ${n} gaps = ${step} mL per gap. The water is ${String(i).replace(".5","½")} gaps up: ${ans} mL.`};
+};
+DQ.twoScales=L=>{
+  if(L===1) return null;
+  const [A,n1]=pick([[20,4],[40,4],[40,5],[60,4],[80,4],[100,5],[40,8],[60,5]]), i1=rnd(1,n1-1), m=i1*A/n1;
+  const n2=pick([4,5,6,8,10]), i2=rnd(1,n2-1); if(m%i2) return null;
+  const Y=n2*m/i2; if(Y===A||Y>400) return null;
+  const scale=(y,n,i,endLab)=>{ const x0=36,x1=304,dx=(x1-x0)/n; let s=rct(x0-14,y-20,x1-x0+28,44,"rgba(255,255,255,.06)","rgba(255,255,255,.35)",1.5)+dln(x0,y+6,x1,y+6,LN,2.5);
+    for(let t=0;t<=n;t++) s+=dln(x0+t*dx,y+6,x0+t*dx,y+(t===0||t===n?-6:0),LN,2);
+    s+=txt(x0,y+16,"0 g",12.5)+txt(x1,y+16,endLab,endLab==="Y"?16:12.5,endLab==="Y"?SH:"#fff");
+    s+=`<path d="M${r1(x0+i*dx)} ${y+4} l-7 -13 h14 z" fill="#ff8a80"/>`; return s; };
+  return {vis:svgWrap(340,160,scale(40,n1,i1,`${A} g`)+scale(118,n2,i2,"Y"),"Two weighing scales"),a:Y,suf:"g",
+    qh:`Both scales are weighing the SAME football, and both are correct. What number is Y?`,
+    hint:`Read the top scale first to find out how heavy the football is.`,
+    fix:`Top: each gap is ${A/n1} g, so the ball is ${m} g. Bottom: ${i2} gaps = ${m} g, so each gap is ${m/i2} g, and Y = ${n2} × ${m/i2} = ${Y}.`};
+};
+DQ.thermo=L=>{
+  const [range,minor,major]=L===1?[30,1,5]:[40,2,10], odd=L===3&&Math.random()<.5;
+  const val=()=>minor*rnd(1,range/minor-1)+(odd?1:0);
+  const o=val(), i=val(); if(o===i||o>range||i>range) return null;
+  const th=(x,v,name)=>{ const top=16,bot=136,H=bot-top, y=bot-v/range*H; let s="";
+    s+=`<rect x="${x-9}" y="${top-6}" width="18" height="${bot-top+10}" rx="9" fill="rgba(255,255,255,.1)" stroke="${LN}" stroke-width="2"/>`;
+    s+=`<circle cx="${x}" cy="${bot+14}" r="14" fill="#ff6b5b" stroke="${LN}" stroke-width="2"/>`;
+    s+=`<rect x="${x-4}" y="${r1(y)}" width="8" height="${r1(bot+6-y)}" fill="#ff6b5b"/>`;
+    for(let t=0;t<=range;t+=minor){ const yy=bot-t/range*H, M=t%major===0; s+=dln(x+11,yy,x+(M?24:18),yy,LN,M?2:1.2); if(M) s+=txt(x+30,yy,String(t),12,"#fff","start"); }
+    return s+txt(x,168,name,13,"#9cc4e6"); };
+  return {vis:svgWrap(340,176,th(100,o,"outside")+th(222,i,"inside")+txt(300,20,"°C",13,"#9cc4e6"),"Two thermometers"),a:Math.abs(o-i),suf:"°C",
+    qh:`What is the difference between the outside temperature and the inside temperature?`,
+    hint:`Read each thermometer first. What is each small mark worth?`,
+    fix:`Each small mark is ${minor} °C. Outside is ${o} °C, inside is ${i} °C. ${Math.max(o,i)} − ${Math.min(o,i)} = ${Math.abs(o-i)}.`};
+};
+
+/* ================= SHAPES AND SPACE ================= */
+const PIECES=[[[1,0],[2,0],[0,1],[1,1],[1,2]],[[0,0],[0,1],[0,2],[0,3],[1,3]],[[0,0],[1,0],[0,1],[1,1],[0,2]],[[0,0],[0,1],[1,1],[1,2],[1,3]],
+  [[0,0],[0,1],[1,1],[0,2],[0,3]],[[0,0],[0,1],[0,2],[1,2]],[[0,0],[1,0],[2,0],[2,1],[3,1]],[[0,0],[1,0],[2,0],[0,1],[0,2],[1,2]],[[0,0],[1,0],[1,1],[2,1],[1,2],[1,3]]];
+const nrm=c=>{const mx=Math.min(...c.map(p=>p[0])),my=Math.min(...c.map(p=>p[1]));return c.map(([x,y])=>[x-mx,y-my]).sort((a,b)=>a[1]-b[1]||a[0]-b[0]);};
+const ckey=c=>nrm(c).map(p=>p.join(",")).join(";");
+const rotCW=c=>nrm(c.map(([x,y])=>[-y,x])), rotCCW=c=>nrm(c.map(([x,y])=>[y,-x])), rot180=c=>nrm(c.map(([x,y])=>[-x,-y]));
+const flipH=c=>nrm(c.map(([x,y])=>[-x,y])), flipV=c=>nrm(c.map(([x,y])=>[x,-y]));
+function pieceG(c,W,H,pad,maxCs,ox0,oy0){
+  const cw=Math.max(...c.map(p=>p[0]))+1, ch=Math.max(...c.map(p=>p[1]))+1, cs=Math.min((W-2*pad)/cw,(H-2*pad)/ch,maxCs);
+  const ox=(ox0||0)+(W-cw*cs)/2, oy=(oy0||0)+(H-ch*cs)/2;
+  return {g:c.map(([x,y])=>rct(ox+x*cs,oy+y*cs,cs,cs,SH,"#0b2640",2)).join(""),ox,oy,w:cw*cs,h:ch*cs};
+}
+DQ.turnFlip=L=>{
+  let S=nrm(pick(PIECES)); for(let i=rnd(0,3);i>0;i--) S=rotCW(S); if(Math.random()<.5) S=flipH(S);
+  const kinds=L===1?["cw","flip"]:L===2?["cw","ccw","half","flip"]:["ccw","half","flip","two"], k=pick(kinds);
+  const T={cw:[rotCW(S),[rotCCW(S),rot180(S),flipH(rotCW(S)),S,flipH(S)]],
+    ccw:[rotCCW(S),[rotCW(S),rot180(S),flipH(rotCCW(S)),S]],
+    half:[rot180(S),[S,flipV(S),flipH(S),rotCW(S)]],
+    flip:[flipH(S),[S,rot180(S),flipV(S),rotCW(S)]],
+    two:[flipH(rotCW(S)),[rotCW(S),flipH(S),flipH(rotCCW(S)),rotCCW(S)]]}[k];
+  const card=c=>({v:ckey(c),h:"",vis:svgWrap(100,100,pieceG(c,100,100,8,20).g,"A shape")});
+  const P=pieceG(S,200,170,14,32,20,0);
+  let icon="";
+  if(k==="flip"||k==="two"){ const mx=P.ox+P.w+18; icon+=dln(mx,8,mx,162,"#ff8a80",3,"8 6")+txt(mx+8,160,"mirror",12,"#ff8a80","start"); }
+  if(k!=="flip"){ const cx=285,cy=74,r=24, tri=(a,b,c)=>`<path d="M${a} L${b} L${c} Z" fill="${SH}"/>`;
+    if(k==="half") icon+=`<path d="M${cx} ${cy-r} A${r} ${r} 0 0 1 ${cx} ${cy+r}" fill="none" stroke="${SH}" stroke-width="4"/>`+tri(`${cx+8} ${cy+r-9}`,`${cx+8} ${cy+r+9}`,`${cx-8} ${cy+r}`);
+    else if(k==="ccw") icon+=`<path d="M${cx} ${cy-r} A${r} ${r} 0 1 0 ${cx+r} ${cy}" fill="none" stroke="${SH}" stroke-width="4"/>`+tri(`${cx+r-9} ${cy+4}`,`${cx+r+9} ${cy+4}`,`${cx+r} ${cy-11}`);
+    else icon+=`<path d="M${cx} ${cy-r} A${r} ${r} 0 1 1 ${cx-r} ${cy}" fill="none" stroke="${SH}" stroke-width="4"/>`+tri(`${cx-r-9} ${cy+4}`,`${cx-r+9} ${cy+4}`,`${cx-r} ${cy-11}`);
+    icon+=txt(cx,cy+r+22,k==="half"?"½ turn":"¼ turn",13,SH); }
+  const qh={cw:`The shape is turned a quarter turn CLOCKWISE. Which picture shows it after the turn?`,
+    ccw:`The shape is turned a quarter turn ANTICLOCKWISE. Which picture shows it after the turn?`,
+    half:`The shape is turned a HALF turn. Which picture shows it after the turn?`,
+    flip:`The shape is flipped over the dashed mirror line. Which picture shows its reflection?`,
+    two:`The shape is turned a quarter turn CLOCKWISE, then flipped over a mirror line like the dashed one. Which picture shows the result?`}[k];
+  const fix={cw:`In a quarter turn clockwise, the top of the shape swings round to the right-hand side.`,
+    ccw:`In a quarter turn anticlockwise, the top of the shape swings round to the left-hand side.`,
+    half:`A half turn is two quarter turns: the shape ends up upside down AND back to front.`,
+    flip:`In a reflection, left and right swap over, but the top stays at the top.`,
+    two:`Turn it first (top swings to the right), then swap left and right.`}[k];
+  return dmc({vis:svgWrap(340,170,P.g+icon,"A shape made of squares"),qh,fix},card(T[0]),T[1].map(card));
+};
+DQ.symmetry=L=>{
+  const [R,C]=L===1?[3,6]:L===2?[4,8]:[5,8], horiz=L===3&&Math.random()<.4, RR=horiz?C:R, CC=horiz?R:C;
+  // build on a vertical mirror (R rows × C cols), then optionally rotate the picture for a horizontal mirror
+  const on=new Set(), half=C/2, m=rnd(L===1?3:4,L===1?4:L===2?6:7);
+  const cells=shuffle([...Array(R*half).keys()]).slice(0,m).map(i=>[Math.floor(i/half),i%half]);
+  let missing=0, pairs=0;
+  for(const [r,c] of cells){ on.add(r*C+c); if(Math.random()<.55){ on.add(r*C+(C-1-c)); pairs++; } else missing++; }
+  if(L>1){ const extra=rnd(0,2); for(let e=0;e<extra;e++){ const r=rnd(0,R-1), c=rnd(half,C-1); if(!on.has(r*C+c)&&!on.has(r*C+(C-1-c))){ on.add(r*C+c); missing++; } } }
+  if(missing<2||missing>5||pairs<1) return null;
+  const cs=Math.min(300/CC,150/RR,34), ox=(340-CC*cs)/2, oy=(170-RR*cs)/2;
+  let g="";
+  for(let r=0;r<R;r++) for(let c=0;c<C;c++){ const [rr,cc]=horiz?[c,r]:[r,c]; g+=rct(ox+cc*cs,oy+rr*cs,cs,cs,on.has(r*C+c)?SH:UN,LN2,1.5); }
+  g+=rct(ox,oy,CC*cs,RR*cs,"none",LN,3);
+  g+=horiz?dln(ox-12,oy+half*cs,ox+CC*cs+12,oy+half*cs,"#ff8a80",4,"9 6"):dln(ox+half*cs,oy-10,ox+half*cs,oy+RR*cs+10,"#ff8a80",4,"9 6");
+  return {vis:svgWrap(340,170,g,"A grid with a dashed mirror line"),a:missing,
+    qh:`Shade more squares so that the dashed line is a line of symmetry. What is the SMALLEST number of extra squares you need to shade?`,
+    hint:`Check each shaded square: is there a shaded square the same distance away on the other side of the line?`,
+    fix:`${missing} shaded ${plural(missing,"square has","squares have")} no partner the same distance away on the other side of the line.`};
+};
+function voxSVG(h,Lx,W,Hm){
+  const k=.5,kv=.38, s=Math.min(300/(Lx+W*k),140/(Hm+W*kv),40), w=Lx*s+W*k*s, hh=Hm*s+W*kv*s;
+  const ox=(340-w)/2, oy=170-(170-hh)/2-4;
+  const P=(x,y,z)=>[ox+x*s+y*k*s, oy-z*s-y*kv*s];
+  let g="";
+  for(let y=W-1;y>=0;y--) for(let z=0;z<Hm;z++) for(let x=0;x<Lx;x++){ if(z>=h[y][x]) continue;
+    g+=pgn([P(x+1,y,z),P(x+1,y+1,z),P(x+1,y+1,z+1),P(x+1,y,z+1)],"#d9a520","#5a3c00",1.2);
+    g+=pgn([P(x,y,z+1),P(x+1,y,z+1),P(x+1,y+1,z+1),P(x,y+1,z+1)],"#fff1a8","#5a3c00",1.2);
+    g+=pgn([P(x,y,z),P(x+1,y,z),P(x+1,y,z+1),P(x,y,z+1)],"#ffd24a","#5a3c00",1.2); }
+  return svgWrap(340,176,g,"A stack of cubes");
+}
+DQ.cubes=L=>{
+  const [Lx,W,H]=L===1?pick([[3,2,2],[3,2,3],[2,2,3]]):L===2?pick([[3,3,3],[4,2,3],[3,2,4]]):pick([[4,3,3],[4,3,4],[3,3,4]]);
+  const h=[];
+  for(let y=W-1;y>=0;y--){ h[y]=[]; for(let x=0;x<Lx;x++){ let b=H; if(y<W-1) b=Math.min(b,h[y+1][x]); if(x>0) b=Math.min(b,h[y][x-1]);
+    const drop=(x===0&&y===W-1)?0:Math.random()<(L===1?.4:.5)?(L===3&&Math.random()<.3?2:1):0; h[y][x]=Math.max(0,b-drop); } }
+  const rows=h.map(r=>r.reduce((a,b)=>a+b,0)), sum=rows.reduce((a,b)=>a+b,0), full=Lx*W*H;
+  if(sum===full||sum<Lx*W) return null;
+  const hidden=h.some((r,y)=>y>0&&r.some(v=>v>=2)); if(!hidden) return null;
+  const rowName=W===2?["front","back"]:["front","middle","back"];
+  const rowTxt=rows.map((v,y)=>`${rowName[y]} row ${v}`).reverse().join(", ");
+  const more=L>1&&Math.random()<.5;
+  return {vis:voxSVG(h,Lx,W,H),
+    qh:more?`Every cube sits on the table or on another cube. How many MORE cubes are needed to make a solid block ${Lx} cubes long, ${W} cubes deep and ${H} cubes high?`
+      :`Every cube sits on the table or on another cube. How many cubes are in this stack?`,
+    a:more?full-sum:sum,
+    hint:`Look down on each tower from the top: its height tells you how many cubes are in it, even the hidden ones.`,
+    fix:more?`The stack has ${sum} cubes (${rowTxt}). A full block is ${Lx} × ${W} × ${H} = ${full}, and ${full} − ${sum} = ${full-sum}.`
+      :`Count tower by tower: ${rowTxt}. That's ${sum} cubes.`};
+};
+DQ.halfArea=L=>{
+  const [C,R]=L===1?[4,3]:L===2?[5,4]:[6,4], st=[];
+  let f=0,hc=0;
+  for(let i=0;i<R*C;i++){ const r=Math.random(); const s=r<.38?0:r<.7?1:2+rnd(0,3); st.push(s); if(s===1) f++; else if(s>1) hc++; }
+  if(hc%2){ const j=st.findIndex(s=>s>1); st[j]=0; hc--; }
+  if(f<2||hc<2) return null;
+  const cs=Math.min(300/C,150/R,40), ox=(340-C*cs)/2, oy=(170-R*cs)/2; let g="";
+  for(let r=0;r<R;r++) for(let c=0;c<C;c++){ const x=ox+c*cs,y=oy+r*cs, s=st[r*C+c], TL=[x,y],TR=[x+cs,y],BR=[x+cs,y+cs],BL=[x,y+cs];
+    g+=rct(x,y,cs,cs,s===1?SH:UN,LN2,1.2);
+    if(s>1) g+=pgn([[TL,TR,BL],[TL,TR,BR],[TR,BR,BL],[TL,BR,BL]][s-2],SH,"#0b2640",1.2); }
+  g+=rct(ox,oy,C*cs,R*cs,"none",LN,2.5);
+  const area=f+hc/2;
+  return {vis:svgWrap(340,170,g,"Shaded squares and half squares on a grid"),a:area,suf:"cm²",
+    qh:`Each small square has an area of 1 cm². What is the total area of the shaded part?`,
+    hint:`Two shaded half-squares make one whole square.`,
+    fix:`${f} whole squares and ${hc} half squares. ${hc} halves make ${hc/2} whole, so ${f} + ${hc/2} = ${area} cm².`};
+};
+
+/* ================= PROBLEM SOLVING (OC reasoning moves) ================= */
+DQ.fence=L=>{
+  const g=pick([2,3,5]);
+  if(L===1){ const m=rnd(3,8), len=g*m;
+    return {qh:`A straight fence is ${len} m long. It has a post every ${g} m, including a post at each end. How many posts are there?`,a:m+1,
+      hint:`Draw a short fence: are there more posts or more gaps?`,
+      fix:`${len} ÷ ${g} = ${m} gaps. A straight fence has one more post than gaps: ${m+1}.`}; }
+  if(L===2){ const m=rnd(2,6), s=g*m;
+    return {qh:`A square field has sides of ${s} m. A fence goes all the way round, with a post every ${g} m and a post at each corner. How many posts are there?`,a:4*m,
+      hint:`All the way round a closed shape, the number of posts equals the number of gaps.`,
+      fix:`Each side has ${s} ÷ ${g} = ${m} gaps. 4 × ${m} = ${4*m} gaps all the way round, so ${4*m} posts.`}; }
+  const a=g*rnd(2,6), b=g*rnd(2,6); if(a===b) return null; const ans=2*(a/g+b/g);
+  return {qh:`A rectangular pitch is ${a} m long and ${b} m wide. A fence goes all the way round, with a post every ${g} m and a post at each corner. How many posts are there?`,a:ans,
+    hint:`All the way round a closed shape, the number of posts equals the number of gaps.`,
+    fix:`Gaps: ${a/g} + ${b/g} + ${a/g} + ${b/g} = ${ans}. Round a closed shape, posts = gaps = ${ans}.`};
+};
+DQ.layers=L=>{
+  if(L===3&&Math.random()<.6){
+    const m=pick([250,300,400,600]), C=pick([1,1.5,2]), per=Math.floor(C*1000/m); if(per<2) return null;
+    const n=rnd(per*3,per*8); if(n%per===0) return null; const ans=Math.ceil(n/per);
+    return {qh:`Each box weighs ${m} g. Each bag can hold up to ${C} kg. What is the smallest number of bags needed to pack ${n} boxes?`,a:ans,
+      hint:`First work out how many boxes fit in ONE bag.`,
+      fix:`${C} kg = ${C*1000} g, so ${per} boxes fit in a bag. ${n} ÷ ${per} = ${Math.floor(n/per)} full bags, and the ${n%per} left over need one more: ${ans}.`};
+  }
+  const k=rnd(4,L===1?6:9), n=rnd(k*2,k*(L===1?5:9)); if(n%k===0) return null; const fl=Math.floor(n/k);
+  return {qh:`Maisy builds a wall one layer at a time. Each layer uses ${k} bricks, and she finishes each layer before starting the next. She has ${n} bricks and uses them all. Which layer is she working on when she lays her LAST brick?`,a:fl+1,
+    hint:`How many layers can she finish completely?`,
+    fix:`${fl} × ${k} = ${fl*k} bricks finish ${fl} layers. The other ${n-fl*k} go on layer ${fl+1}.`};
+};
+DQ.swap=L=>{
+  const [A,B,C]=pick([["squigs","zots","grozzles"],["bloops","zings","wibbles"],["flurbs","mips","zonks"]]);
+  if(L===1){ const c=rnd(2,5), d=rnd(2,6); if(c===d) return null; const t=rnd(2,4), N=d*t;
+    return {qh:`In a made-up money game, ${c} ${B} are worth ${d} ${C}. How many ${B} are ${N} ${C} worth?`,a:c*t,
+      hint:`How many lots of ${d} ${C} are in ${N} ${C}?`,
+      fix:`${N} ÷ ${d} = ${t} lots, and each lot is worth ${c} ${B}: ${t} × ${c} = ${c*t}.`}; }
+  const a=rnd(2,9), b=rnd(2,4), c=rnd(2,5), d=rnd(2,6); if(a===b||c===d) return null;
+  const t=rnd(1,2), N=d*b*t, mid=c*b*t, ans=a*c*t;
+  return {qh:`In a made-up money game, ${a} ${A} are worth ${b} ${B}, and ${c} ${B} are worth ${d} ${C}. How many ${A} are ${N} ${C} worth?`,a:ans,
+    hint:`Change the ${C} into ${B} first.`,
+    fix:`${N} ${C} = ${N/d} lots of ${d}, worth ${N/d} × ${c} = ${mid} ${B}. ${mid} ${B} = ${mid/b} lots of ${b}, worth ${mid/b} × ${a} = ${ans} ${A}.`};
+};
+DQ.sumDiff=L=>{
+  if(L===1){ const r=pick([2,3]), k=rnd(2,8), T=(r+1)*k, big=Math.random()<.6;
+    return {qh:`Leo and Max scored ${T} goals altogether this season. Max scored ${r===2?"twice":"three times"} as many as Leo. How many goals did ${big?"Max":"Leo"} score?`,a:big?r*k:k,
+      hint:`Leo has 1 share and Max has ${r} shares. How many shares is that altogether?`,
+      fix:`${r+1} shares = ${T}, so 1 share = ${k}. Leo scored ${k} and Max scored ${r*k}.`}; }
+  if(L===2){ const s=rnd(20,140), d=2*rnd(3,20), T=2*s+d;
+    return {qh:`Brian and Yarram have ${T} cards altogether. Yarram has ${d} more than Brian. How many cards does Yarram have?`,a:s+d,
+      hint:`Take away the extra ${d} first, then share what's left equally.`,
+      fix:`${T} − ${d} = ${T-d}. Half of that is ${s}, so Brian has ${s} and Yarram has ${s} + ${d} = ${s+d}.`}; }
+  const a=rnd(3,9), b=rnd(2,8), c=rnd(8,15), ans=c-a+b; if(ans<=0) return null;
+  return {qh:`Dave is ${a} years younger than Sam. Sam is ${b} years older than Lisa. Fred is ${c} years older than Dave. How many years older is Fred than Lisa?`,a:ans,
+    hint:`Pick an age for Sam, like 20, and work out everyone else's age.`,
+    fix:`If Sam is 20: Dave is ${20-a}, Lisa is ${20-b}, Fred is ${20-a+c}. ${20-a+c} − ${20-b} = ${ans}.`};
+};
+DQ.rule=L=>{
+  const steps=L===1?3:L===2?4:5; let n=rnd(21,97); const seq=[n];
+  for(let i=0;i<steps;i++){ n=n%2?n+1:n/2; seq.push(n); }
+  return {qh:`Start with ${seq[0]}. Follow this rule ${steps} times: if the number is odd, add 1; if it is even, divide it by 2. What number do you end with?`,a:n,
+    hint:`Write each number down as you go so you don't lose count.`,
+    fix:`${seq.join(" → ")}.`};
+};
+
+/* ---------- a 5-question session: 3 fraction/number-line questions, 1 shapes & space, 1 wildcard ---------- */
+const DPOOL={
+  fvis:["shadeMore","whatFrac","fracAs","sameArea"],
+  fword:["fracOf","cake","shops","unitConv","closest","biggest","equiv","partsIn","notEqual"],
+  line:["lineRead","lineFrac","jumps","jug","twoScales","thermo"],
+  space:["turnFlip","symmetry","cubes","halfArea"],
+  think:["fence","layers","swap","sumDiff","rule"]
+};
+const DTOPIC={fvis:"frac",fword:"frac",line:"line",space:"space",think:"think"};
+function makeDrillQ(id,L){ for(let t=0;t<80;t++){ const q=DQ[id](L); if(q){ q.id=id; return q; } } return null; }
+let drillRecent=new Set();
+function buildDrillSet(L){
+  const used=new Set(), set=[];
+  const take=pools=>{
+    const ids=shuffle(pools.flatMap(p=>DPOOL[p].map(id=>[id,p])).filter(([id])=>!used.has(id))).sort((x,y)=>drillRecent.has(x[0])-drillRecent.has(y[0]));
+    for(const [id,p] of ids){ const q=makeDrillQ(id,L); if(q){ used.add(id); q.topic=DTOPIC[p]; set.push(q); return; } }
+  };
+  take(["fvis"]); take(["line"]); take(["fword"]); take(["space"]);
+  take(Math.random()<.5?["think"]:["fvis","fword","line"]);
+  drillRecent=used;
+  return shuffle(set);
+}
+
 /* ---------- Audio ---------- */
 let AC=null;
 function audio(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){} } if(AC&&AC.state==="suspended")AC.resume(); }
@@ -939,14 +1493,16 @@ function codeOf(name){
   if(c.length<3) c=(c+"FC").slice(0,3);
   return c;
 }
+function freshDrills(){ return {lvl:1,played:0,perfect:0,best:0,topics:{}}; }
 function freshSave(name,kit){
   return {v:1,team:{name,code:codeOf(name),kit},coins:150,region:"oce",
     boots:{owned:{street:{p:0,a:0,d:0,color:null}},eq:"street"},
     train:{pace:1,pass:1,def:1,gk:1},trophies:{},rec:{w:0,d:0,l:0,gf:0,ga:0},
-    tour:null,tourLast:null,halfLen:"normal",beaten:{}};
+    tour:null,tourLast:null,halfLen:"normal",beaten:{},drills:freshDrills()};
 }
 function save(){ try{ localStorage.setItem(SAVE_KEY,JSON.stringify(G)); }catch(e){} }
-function loadSave(){ try{ const d=JSON.parse(localStorage.getItem(SAVE_KEY)||"null"); if(d&&d.v===1&&d.team) return d; }catch(e){} return null; }
+function loadSave(){ try{ const d=JSON.parse(localStorage.getItem(SAVE_KEY)||"null");
+  if(d&&d.v===1&&d.team){ d.drills=Object.assign(freshDrills(),d.drills||{}); d.drills.topics=d.drills.topics||{}; return d; } }catch(e){} return null; }
 
 /* ---------- derived numbers ---------- */
 function bootStats(id){
@@ -1058,14 +1614,18 @@ function initTitle(){
     $("startBtn").textContent="Start a new career";
     $("newNote").textContent="Starting again replaces your current career.";
   }
-  $("newForm").onsubmit=e=>{
-    e.preventDefault(); audio();
+  /* started from the button (not a form submit), so it also works in sandboxed previews that block forms */
+  const startCareer=()=>{
+    audio();
     const name=$("teamName").value.trim().slice(0,18)||"Harbour City FC";
     if(sv && !newConfirm){ newConfirm=true; $("startBtn").textContent="Press again to replace your career"; return; }
     G=freshSave(name,KITS[newKit]); save();
     TAB="play"; showScreen("hub");
     toast(`Welcome to Sydney, ${name}! Win friendlies to earn coins.`);
   };
+  $("startBtn").onclick=startCareer;
+  $("teamName").onkeydown=e=>{ if(e.key==="Enter"){ e.preventDefault(); startCareer(); } };
+  $("newForm").onsubmit=e=>{ e.preventDefault(); startCareer(); };
   drawTitleMap();
 }
 
@@ -1085,7 +1645,7 @@ function renderTop(){
 function renderHub(scrollTop){
   renderTop();
   document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===TAB)));
-  const V={play:vPlay,tours:vTours,world:vWorld,boots:vBoots,train:vTrain,cab:vCab}[TAB];
+  const V={play:vPlay,drills:vDrills,tours:vTours,world:vWorld,boots:vBoots,train:vTrain,cab:vCab}[TAB];
   const P=$("panel"), keep=P.scrollTop;
   P.innerHTML=`<div class="wrap">${V()}</div>`;
   P.scrollTop=scrollTop?0:keep;
@@ -1256,9 +1816,84 @@ function vCab(){
     return `<div class="cabItem ${n?"won":""}">${trophySVG(T.tier,n>0)}<h3>${esc(T.name)}</h3><div class="n">${n?`Won ×${n}`:"Not won yet"}</div></div>`;}).join("")}</div>`;
 }
 
+
+/* ---------- Coach's Drills: tab and session ---------- */
+const DTOPICS=[
+  {k:"frac",name:"Fractions",what:"Shaded shapes, fractions of amounts, comparing fractions"},
+  {k:"line",name:"Number lines & scales",what:"Number lines, jugs, thermometers and weighing scales"},
+  {k:"space",name:"Shapes & space",what:"Turns, flips, symmetry, cube stacks and area"},
+  {k:"think",name:"Problem solving",what:"Fence posts, rounding up, swaps and sharing"}];
+const DRILL_PAY=[0,4,6,8], DRILL_BONUS=[0,10,15,20], DRILL_N=5;
+function vDrills(){
+  const D=G.drills, L=D.lvl;
+  const tops=DTOPICS.map(t=>{ const s=D.topics[t.k]||{r:0,n:0}, pc=s.n?Math.round(s.r/s.n*100):0;
+    return `<article class="skill"><h3>${t.name}</h3><p>${t.what}</p><div class="bar"><i class="${s.n&&pc<60?"low":""}" style="width:${s.n?Math.max(3,pc):0}%"></i></div>
+      <div class="row"><span>${s.n?`<b>${s.r}</b> of ${s.n} right`:"Not tried yet"}</span><b>${s.n?pc+"%":""}</b></div></article>`; }).join("");
+  return `<section class="drillHero"><div>
+      <div class="eyebrow">Coach's Drills · Level ${L} of 3</div><h3>Train your brain, earn coins</h3>
+      <p>Five questions from the coach: fractions, number lines, scales and shapes. There's no timer, so take your time and check your answer before you press Enter.</p>
+      <div class="dlvl" aria-label="Level ${L} of 3">${[1,2,3].map(i=>`<i class="${i<=L?"on":""}"></i>`).join("")}</div>
+      <p class="dpay">Each right answer earns <b><i class="coin"></i>${DRILL_PAY[L]}</b>. Get 5 out of 5 for a <b><i class="coin"></i>${DRILL_BONUS[L]} bonus</b>${L<3?" and move up a level":""}.</p>
+      <button class="btn btnGold" data-act="drill" style="font-size:18px;padding:10px 24px">Start drills</button></div>
+    <div class="dstats"><div><b>${D.played}</b><span>Sessions</span></div><div><b>${D.perfect}</b><span>5 out of 5</span></div><div><b>${D.best}/5</b><span>Best</span></div></div></section>
+  <div class="secHead small"><h2>Skills tracker</h2><p>How often each kind of drill question has been answered correctly.</p></div>
+  <div class="grid">${tops}</div>`;
+}
+let DR=null;
+function startDrills(){
+  audio(); if(document.activeElement) document.activeElement.blur();
+  $("drOv").hidden=true;
+  DR={L:G.drills.lvl,qs:buildDrillSet(G.drills.lvl),i:0,res:[],coins:0};
+  drillAsk();
+}
+function drillAsk(){
+  const q=DR.qs[DR.i], pay=DRILL_PAY[DR.L], last=DR.i===DR.qs.length-1;
+  openGate(q,{title:`Coach's Drills · question ${DR.i+1} of ${DR.qs.length}`,attempts:q.choices?1:2,noTimer:true,manual:true,
+    msg:q.choices?"One try, so think it through first.":"Two tries. No timer, so take your time.",
+    okMsg:`Correct! +${pay} coins`,nextLabel:last?"See results ›":"Next question ›",
+    onDone:ok=>drillAnswered(ok),onQuit:()=>drillEnd(true)});
+}
+function drillAnswered(ok){
+  if(!DR) return;
+  const q=DR.qs[DR.i], T=G.drills.topics, t=T[q.topic]||(T[q.topic]={r:0,n:0});
+  t.n++; if(ok){ t.r++; const c=DRILL_PAY[DR.L]; DR.coins+=c; G.coins+=c; sCoin(); }
+  DR.res.push(ok); DR.i++; save(); renderTop();
+  if(DR.i<DR.qs.length) setTimeout(drillAsk,160); else drillEnd(false);
+}
+function drillEnd(quit){
+  if(!DR) return;
+  const D=G.drills, n=DR.res.filter(Boolean).length, done=DR.res.length, L=DR.L;
+  if(quit&&!done){ DR=null; renderHub(false); return; }
+  const perfect=!quit&&n===DRILL_N;
+  let bonus=0, lvlMsg="";
+  if(perfect){ bonus=DRILL_BONUS[L]; G.coins+=bonus; }
+  if(!quit){
+    D.played++; if(perfect) D.perfect++; D.best=Math.max(D.best,n);
+    if(perfect&&D.lvl<3){ D.lvl++; lvlMsg=`Level up! You're on Level ${D.lvl} drills now: harder questions, more coins.`; }
+    else if(n<=1&&D.lvl>1){ D.lvl--; lvlMsg=`Back to Level ${D.lvl} for some extra practice. Get 5 out of 5 to move up again.`; }
+  }
+  save(); renderHub(false);
+  const head=quit?"Session stopped":perfect?"Perfect session!":n>=3?"Good session":"Keep training";
+  const ticks=Array.from({length:DRILL_N},(_,i)=>i<done?`<span class="${DR.res[i]?"ok":"no"}">${DR.res[i]?"✓":"✗"}</span>`:`<span class="skip">·</span>`).join("");
+  $("drCard").innerHTML=`<div class="eyebrow">Coach's Drills · Level ${L}</div><h2>${head}</h2>
+    <div class="ticks">${ticks}</div><p class="lead">${n} of ${quit?done:DRILL_N} right</p>
+    <div class="ledger"><div><span>Right answers (${n} × ${DRILL_PAY[L]})</span><span><i class="coin"></i>${DR.coins}</span></div>
+      ${perfect?`<div><span>5 out of 5 bonus</span><span><i class="coin"></i>${bonus}</span></div>`:""}
+      <div class="tot"><span>Coins earned</span><span><i class="coin"></i>${DR.coins+bonus}</span></div></div>
+    ${lvlMsg?`<div class="tourMsg">${lvlMsg}</div>`:""}
+    <div class="btnRow"><button class="btn btnGold" id="drAgain">Go again</button><button class="btn" id="drBack">Back</button></div>`;
+  $("drOv").hidden=false;
+  if(perfect){ confettiDOM(70); sCrowd(); }
+  DR=null;
+  $("drAgain").onclick=startDrills;
+  $("drBack").onclick=()=>{ audio(); $("drOv").hidden=true; renderHub(false); };
+  $("drAgain").focus();
+}
+
 /* ---------- hub actions ---------- */
 const ACT={
   play:d=>startMatch(TEAM[d.code],{tour:false,ko:false,label:"Friendly"}),
+  drill:()=>startDrills(),
   seg:d=>{ if(d.k==="clubf") CLUBF=d.v; else { G.halfLen=d.v; save(); } renderHub(false); },
   fly:d=>fly(d.reg),
   goWorld:d=>{ MAPSEL=d.reg; TAB="world"; renderHub(true); },
@@ -1332,25 +1967,34 @@ function tourAfterMatch(res,gf,ga,pens){
 /* =========================================================
    MATHS GATE
    ========================================================= */
-const gate={active:false,q:null,input:"",att:2,max:2,time:45,total:45,timer:null,start:0,onDone:null};
+const gate={active:false,q:null,input:"",att:2,max:2,time:45,total:45,timer:null,start:0,onDone:null,
+  manual:false,waiting:false,waitT:0,seq:0,okMsg:"",nextLabel:"",onQuit:null};
+/* options: title, msg, attempts, time, onDone(ok,fast,first)
+   drills also pass: noTimer, manual (wait for "Next" after a miss and show the one-line fix), okMsg, nextLabel, onQuit */
 function openGate(q,o){
-  gate.q=q; gate.onDone=o.onDone; gate.att=gate.max=o.attempts||2;
+  gate.q=q; gate.onDone=o.onDone; gate.att=gate.max=o.attempts||2; gate.seq++;
+  gate.manual=!!o.manual; gate.waiting=false; gate.okMsg=o.okMsg||""; gate.nextLabel=o.nextLabel||""; gate.onQuit=o.onQuit||null;
   gate.total=gate.time=(o.time||45)+((q.vis||q.ts)?10:0);
   gate.input=""; gate.start=performance.now(); gate.active=true;
   $("gTitle").textContent=o.title; $("gMsg").textContent=o.msg||""; $("gMsg").className="gMsg ok";
-  $("gQ").textContent=q.q; $("gAns").textContent=" "; $("gAns").className="";
+  $("gQ").innerHTML="<span>"+(q.qh||esc(q.q))+"</span>"; $("gAns").className="";
   const vis=$("gVis"); vis.innerHTML=q.vis||""; vis.hidden=!q.vis;
   const mc=!!q.choices, ch=$("gChoices");
   $("gPad").hidden=mc; $("gAns").hidden=mc; ch.hidden=!mc; ch.innerHTML="";
+  $("gNextRow").hidden=true; $("gQuit").hidden=!gate.onQuit;
   document.querySelector(".gHint").textContent=mc?"Click an answer or press 1–4":"Type your answer and press Enter";
-  if(mc) q.choices.forEach(c=>{ const b=document.createElement("button"); b.className="choice"; b.textContent=c;
-    b.addEventListener("click",()=>{ audio(); if(!gate.active||b.disabled)return; submitAnswer(c===q.a,b); }); ch.appendChild(b); });
-  attDots(); $("gFill").style.width="100%"; $("gateOv").hidden=false;
+  if(mc) q.choices.forEach((c,i)=>{
+    const o2=typeof c==="string"?{v:c,h:esc(c)}:c, b=document.createElement("button");
+    b.className="choice"+(o2.vis?" vis":""); b.dataset.v=o2.v;
+    b.innerHTML=o2.vis?`<span class="cl">${"ABCD"[i]}</span>${o2.vis}`:o2.h;
+    b.addEventListener("click",()=>{ audio(); if(!gate.active||b.disabled)return; submitAnswer(o2.v===q.a,b); }); ch.appendChild(b); });
+  renderAns(); attDots(); $("gFill").style.width="100%"; $("gateOv").hidden=false;
   clearInterval(gate.timer);
-  gate.timer=setInterval(()=>{ gate.time-=.2; $("gFill").style.width=Math.max(0,gate.time/gate.total*100)+"%"; if(gate.time<=0){ clearInterval(gate.timer); gateFail(true); } },200);
+  $("gTimer").hidden=!!o.noTimer;
+  if(!o.noTimer) gate.timer=setInterval(()=>{ gate.time-=.2; $("gFill").style.width=Math.max(0,gate.time/gate.total*100)+"%"; if(gate.time<=0){ clearInterval(gate.timer); gateFail(true); } },200);
 }
 const attDots=()=>$("gAtt").textContent=gate.max>1?`Tries: ${"●".repeat(gate.att)}${"○".repeat(gate.max-gate.att)}`:"One try";
-function closeGate(){ clearInterval(gate.timer); gate.active=false; $("gateOv").hidden=true; }
+function closeGate(){ clearInterval(gate.timer); gate.active=false; gate.waiting=false; $("gateOv").hidden=true; }
 document.querySelectorAll(".key").forEach(b=>b.addEventListener("click",()=>{ audio(); keyPress(b.dataset.k); }));
 function gateKeyboard(e){
   if(gate.q&&gate.q.choices){ const n=parseInt(e.key,10); if(n>=1&&n<=4){ const b=$("gChoices").children[n-1]; if(b) b.click(); } return; }
@@ -1358,38 +2002,56 @@ function gateKeyboard(e){
   else if(e.key==="Backspace") keyPress("del");
   else if(e.key==="Enter") keyPress("go");
 }
+/* the answer box: plain number, number + unit (mL, cm²…), or a numerator over a fixed denominator */
+function renderAns(){
+  const q=gate.q, box=$("gAns"), v=gate.input?Number(gate.input).toLocaleString("en-AU"):"", ph='<i class="ph">?</i>';
+  if(q&&q.den) box.innerHTML=F(v||ph,q.den);
+  else if(q&&q.suf) box.innerHTML=(v||ph)+`<small class="suf">${q.suf}</small>`;
+  else box.textContent=v||" ";
+  box.classList.toggle("long",gate.input.length>5);
+}
 function keyPress(k){
   if(!gate.active)return;
   if(k==="del"){ gate.input=gate.input.slice(0,-1); sKey(); }
   else if(k==="go"){ if(gate.input.length&&!gate.q.choices) submitAnswer(parseInt(gate.input,10)===gate.q.a); return; }
   else if(gate.input.length<9){ gate.input+=k; sKey(); }
-  const box=$("gAns"); box.textContent=gate.input?Number(gate.input).toLocaleString("en-AU"):" "; box.classList.toggle("long",gate.input.length>5);
+  renderAns();
 }
 const fmtA=a=>typeof a==="number"?fmt(a):a;
 function submitAnswer(ok,btn){
   if(ok){
     clearInterval(gate.timer); gate.active=false;
     if(btn) btn.classList.add("right"); else $("gAns").classList.add("good");
-    const first=gate.att===gate.max, fast=(performance.now()-gate.start)<12000;
-    $("gMsg").textContent=first&&fast?"Lightning fast!":"Correct!"; $("gMsg").className="gMsg ok";
+    const first=gate.att===gate.max, fast=(performance.now()-gate.start)<12000, s=gate.seq;
+    $("gMsg").textContent=gate.okMsg||(first&&fast?"Lightning fast!":"Correct!"); $("gMsg").className="gMsg ok";
     sGood();
-    setTimeout(()=>{ closeGate(); gate.onDone(true,fast,first); },500);
+    setTimeout(()=>{ if(s!==gate.seq) return; closeGate(); gate.onDone(true,fast,first); },gate.manual?850:500);
   }else{
     gate.att--; gate.input="";
     if(btn){ btn.classList.add("wrong"); btn.disabled=true; }
-    else { $("gAns").textContent=" "; const b=$("gAns"); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); }
+    else { renderAns(); const b=$("gAns"); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); }
     sWrong();
-    if(gate.att<=0){ clearInterval(gate.timer); gateFail(false); }
-    else { attDots(); $("gMsg").textContent=gate.q.hint?"Not quite. Hint: "+gate.q.hint:"Not quite. One more try!"; $("gMsg").className="gMsg bad"; }
+    if(gate.att<=0){ clearInterval(gate.timer); attDots(); gateFail(false); }
+    else { attDots(); $("gMsg").innerHTML=gate.q.hint?"Not quite. Hint: "+gate.q.hint:"Not quite. One more try!"; $("gMsg").className="gMsg bad"; }
   }
 }
 function gateFail(timeout){
   gate.active=false;
-  if(gate.q.choices) [...$("gChoices").children].forEach(b=>{ if(b.textContent===gate.q.a) b.classList.add("right"); b.disabled=true; });
-  $("gMsg").textContent=(timeout?"Time's up! ":"")+"The answer was "+fmtA(gate.q.a)+".";
+  if(gate.q.choices) [...$("gChoices").children].forEach(b=>{ if(b.dataset.v===String(gate.q.a)) b.classList.add("right"); b.disabled=true; });
+  const fix=gate.manual?(gate.q.fix||gate.q.hint||""):"";
+  $("gMsg").innerHTML=(timeout?"Time's up! ":"")+"The answer was "+(gate.q.ah||fmtA(gate.q.a))+"."+(fix?`<span class="gFix">${fix}</span>`:"");
   $("gMsg").className="gMsg bad";
-  setTimeout(()=>{ closeGate(); gate.onDone(false,false,false); },2000);
+  if(gate.manual){ gate.waiting=true; gate.waitT=performance.now(); $("gNext").textContent=gate.nextLabel||"Next ›"; $("gNextRow").hidden=false; $("gNext").focus();
+    document.querySelector(".gHint").textContent="Press Enter or click the button to carry on"; return; }
+  const s=gate.seq;
+  setTimeout(()=>{ if(s!==gate.seq) return; closeGate(); gate.onDone(false,false,false); },2000);
 }
+function gateNext(){
+  if(!gate.waiting||performance.now()-gate.waitT<350) return;
+  closeGate(); gate.onDone(false,false,false);
+}
+$("gNext").onclick=()=>{ audio(); gateNext(); };
+$("gQuit").onclick=()=>{ audio(); const f=gate.onQuit; gate.seq++; closeGate(); if(f) f(); };
 
 /* =========================================================
    MATCH ENGINE
@@ -1484,6 +2146,7 @@ function inputVec(){
 }
 window.addEventListener("keydown",e=>{
   if(e.target&&e.target.tagName==="INPUT") return;
+  if(gate.waiting){ if((e.key==="Enter"||e.key===" ")&&!e.repeat) gateNext(); if(e.key!=="Tab") e.preventDefault(); return; }
   if(gate.active){ gateKeyboard(e); if(e.key!=="Tab") e.preventDefault(); return; }
   audio();
   if(SCREEN!=="match"||!M) return;
