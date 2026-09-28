@@ -2272,11 +2272,13 @@ function attemptShot(){
     }});
 }
 function shotOutcome(ok,fast,first,charge,d){
+  // No correct answer = no goal, however close to goal the shot is.
+  if(!ok){ const r=Math.random(); return r<.45?"save":r<.6?"post":"wide"; }
   const bs=M.bs, P=bs.p*(.45+.55*charge);
-  let pg=!ok?.1:first?(fast?.72:.62):.4;
+  let pg=first?(fast?.72:.62):.4;
   pg+=(bs.a-60)*.005+(P-50)*.003-Math.max(0,d-200)*.0016*(1-bs.p/180)-(M.opp.r-65)*.006;
-  pg=clamp(pg,ok?.12:.03,.93);
-  const wide=!ok?.55:first?clamp(.14-(bs.a-45)*.0025,.02,.14):.22;
+  pg=clamp(pg,.12,.93);
+  const wide=first?clamp(.14-(bs.a-45)*.0025,.02,.14):.22;
   if(Math.random()<wide) return Math.random()<.18?"post":"wide";
   return Math.random()<pg/(1-wide)?"goal":"save";
 }
@@ -2323,7 +2325,10 @@ function shotUpdate(dt){
   }
   if(S.out==="post"&&crossedLine){ M.shot=null; b.z=0; b.x=S.side===0?PW-2:2; b.vx=-b.vx*.35; b.vy=-b.vy*.5+rf(-80,80); b.lastSide=S.side; say("OFF THE POST!"); sPost(); if(M.pens) penResolve(false); return; }
   if(S.out==="goal"&&(S.side===0?b.x>=PW+14:b.x<=-14)){ M.shot=null; b.z=0; b.vx*=.08; b.vy*=.08; if(M.pens){ burst(b.x,b.y,["#ffcf3f","#ffffff"],20); sCrowd(); penResolve(true);} else goalScored(S.side,S.shooter); return; }
-  if(S.out==="wide"&&(S.side===0?b.x>=PW+6:b.x<=-6)){ M.shot=null; b.z=0; say(pick(["Wide!","Just past the post!","Over the bar!"])); if(S.side===0) sGroan(); if(M.pens){ b.vx=b.vy=0; penResolve(false);} return; }
+  if(S.out==="wide"&&(S.side===0?b.x>=PW+6:b.x<=-6)){ M.shot=null; b.z=0;
+    // a wide shot from a tight angle can cross the line between the posts: keep it outside the goal mouth
+    if(b.y>GY1-8&&b.y<GY2+8) b.y=b.y<GMID?GY1-8:GY2+8;
+    say(pick(["Wide!","Just past the post!","Over the bar!"])); if(S.side===0) sGroan(); if(M.pens){ b.vx=b.vy=0; penResolve(false);} return; }
 }
 function goalScored(side,scorer){
   M.score[side]++; setSB();
@@ -2342,7 +2347,10 @@ function outCheck(){
   const b=M.ball;
   if(b.x<0||b.x>PW){
     const end=b.x<0?0:1;
-    if(b.y>GY1&&b.y<GY2){ goalScored(end===0?1:0,null); return true; }
+    if(b.y>GY1&&b.y<GY2){
+      // your team only scores from a shot you answered correctly, never from a loose ball
+      if(end===1){ restart(1,"gk",wx(1,40),GMID,"Goal kick"); return true; }
+      goalScored(1,null); return true; }
     if(b.lastSide!==end) restart(end,"gk",wx(end,40),GMID,"Goal kick");
     else restart(1-end,"corner",end===0?6:PW-6,b.y<GMID?6:PH-6,"Corner");
     return true;
@@ -2651,7 +2659,7 @@ function askPen(){
     onDone:(ok,fast)=>{
       M.state="pen"; if(ok) M.shotC++; M.shotA++;
       let pg;
-      if(side===0) pg=ok?clamp(.8+(fast?.06:0)+(M.bs.a-60)*.003-(M.opp.r-70)*.003,.55,.95):.3;
+      if(side===0) pg=ok?clamp(.8+(fast?.06:0)+(M.bs.a-60)*.003-(M.opp.r-70)*.003,.55,.95):0;
       else pg=ok?clamp(.33+(M.opp.r-keeperRating())*.004,.15,.5):.8;
       const goal=Math.random()<pg;
       M.pens.out=goal?"goal":(Math.random()<.72?"save":Math.random()<.5?"post":"wide");
