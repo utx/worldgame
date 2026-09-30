@@ -2174,7 +2174,7 @@ function kickoff(side,msg){
 }
 function gain(p,quiet){
   const b=M.ball, prev=b.owner?b.owner.side:b.lastSide, wasMine=b.owner&&b.owner.side===0;
-  b.owner=p; b.passTo=null; b.lastSide=p.side; b.z=0; p.hold=0; p.dec=.25+Math.random()*.35;
+  b.owner=p; b.passTo=null; b.lastSide=p.side; b.z=0; p.hold=0; p.stall=0; p.dec=.25+Math.random()*.35;
   M.players.forEach(q=>q.recv=false);
   if(p.side===0&&p.role!=="GK") M.human=p;
   if(p.side===1){ M.charging=false; if(wasMine||M.idle>.3){ const n=nearestTo(0,p.x,p.y,true); if(n) M.human=n; } }
@@ -2269,10 +2269,12 @@ function humanTackle(h){
 function tryTackle(t,c){
   t.tcd = t===M.human ? .55 : .8+Math.random()*.5-M.q*.2;
   let ch;
-  if(t.side===1){ const D=c===M.human?M.bs.d:55; ch=.2+M.q*.28-(D-45)*.0045; }
+  if(t.side===1){ const D=c===M.human?M.bs.d:55; ch=.2+M.q*.28-(D-45)*.0045;
+    // holding on to the ball for ages, or shielding it on the edge, gets harder and harder
+    if(c.side===0){ const st=c.stall||0; ch+=Math.min(.45,Math.max(0,st-2)*.1)+(nearEdge(c)?.1:0); if(st>3) t.tcd*=.6; } }
   else ch=.2+G.train.def*.035-M.q*.15+(t===M.human?.12:0);
   if(c.role==="GK") ch*=.4;
-  if(Math.random()<clamp(ch,.06,.8)){
+  if(Math.random()<clamp(ch,.06,.85)){
     gain(t,true); c.stun=.5; sTackle();
     say(t.side===0?pick(["Crunching tackle! Ball won.","Clean tackle!","Picked their pocket!"]):`Tackled by ${nameOf(t)}!`);
     burst(t.x,t.y,["#ffffff","#cfd8e3"],8);
@@ -2436,11 +2438,16 @@ function moveTo(p,x,y,urg){
   p.dvx=dx/d*sp; p.dvy=dy/d*sp;
 }
 function computeCache(){
-  const b=M.ball, car=b.owner, C={press:[null,null],chase:[null,null]};
+  const b=M.ball, car=b.owner, C={press:[null,null],press2:[null,null],chase:[null,null]};
   M.hAct=humanActive();
   for(let s=0;s<2;s++){
     const cand=M.players.filter(p=>p.side===s&&p.role!=="GK"&&!(s===0&&M.hAct&&p===M.human));
-    if(car&&car.side!==s){ let best=null,bd=1e9; cand.forEach(p=>{const d=dist(p,car); if(d<bd){bd=d;best=p;}}); C.press[s]=best; }
+    if(car&&car.side!==s){
+      const byD=cand.slice().sort((u,v)=>dist(u,car)-dist(v,car));
+      C.press[s]=byD[0]||null;
+      // a carrier sitting on the ball or hugging an edge/corner gets double-teamed
+      if(stalling(car)) C.press2[s]=byD[1]||null;
+    }
     if(!car&&!M.shot){ const tx=b.x+b.vx*.35, ty=b.y+b.vy*.35; let best=null,bd=1e9;
       cand.forEach(p=>{const d=hyp(p.x-tx,p.y-ty); if(d<bd){bd=d;best=p;}});
       if(s===0&&M.hAct&&hyp(M.human.x-tx,M.human.y-ty)<bd) best=null;
@@ -2458,14 +2465,17 @@ function brain(p,dt){
   if(p.recv&&!b.owner){ const t=interceptPoint(p); moveTo(p,t.x,t.y,1.08); return; }
   if(!b.owner){ if(M.C.chase[p.side]===p){ const t=interceptPoint(p); moveTo(p,t.x,t.y,1); } else anchor(p,b.lastSide===p.side); return; }
   if(b.owner.side===p.side){ support(p,dt); return; }
-  if(M.C.press[p.side]===p){ press(p,b.owner); return; }
+  if(M.C.press[p.side]===p||M.C.press2[p.side]===p){ press(p,b.owner); return; }
   anchor(p,false);
 }
 function humanBrain(p,dt){
   const v=inputVec(), own=M.ball.owner===p;
   let sp=p.sp*M.boost;
   if(K.sprint&&M.stam>.05&&(v.x||v.y)){ sp*=1.32; M.stam=Math.max(0,M.stam-dt*.38); M.sprinting=true; }
-  if(own) sp*=.78+M.bs.d*.0022;
+  if(own){ sp*=.78+M.bs.d*.0022; p.hold+=dt;
+    // "stall" time only builds while dawdling or hugging an edge, so a proper dribbling run isn't punished
+    const slow=hyp(p.vx,p.vy)<60; p.stall=(nearEdge(p)||slow)?(p.stall||0)+dt:Math.max(0,(p.stall||0)-dt*2);
+    if(p.stall>4&&nearEdge(p)&&!M.stallWarned){ M.stallWarned=true; say("They're swarming you! Keep moving or pass it on."); } }
   if(M.charging) sp*=.55;
   if(p.stun>0) sp*=.3;
   p.dvx=v.x*sp; p.dvy=v.y*sp;
@@ -2514,10 +2524,15 @@ function support(p,dt){
   if(car&&dist(p,car)<70){ const dx=p.x-car.x, dy=p.y-car.y, d=hyp(dx,dy)||1; moveTo(p,p.x+dx/d*60,p.y+dy/d*60,.9); return; }
   anchor(p,true);
 }
+/* close down the ball carrier. While approaching, hold a small goal-side line (capped, so it can't
+   leave the presser hovering out of reach in a corner); once close, go straight for the ball. */
+const nearEdge=p=>p.x<70||p.x>PW-70||p.y<70||p.y>PH-70;
+const stalling=c=>(c.side===0?(c.stall||0)>2:c.hold>2.5)||nearEdge(c);
 function press(p,car){
-  const own=p.side===0?0:PW;
-  moveTo(p,car.x+(own-car.x)*.04,car.y+(GMID-car.y)*.04,1.06);
-  if(p!==M.human&&p.tcd<=0&&dist(p,car)<24&&M.state==="play") tryTackle(p,car);
+  const own=p.side===0?0:PW, d=dist(p,car);
+  if(d<60) moveTo(p,M.ball.x,M.ball.y,1.12);
+  else moveTo(p,car.x+clamp((own-car.x)*.04,-12,12),car.y+clamp((GMID-car.y)*.04,-12,12),1.06);
+  if(p!==M.human&&p.tcd<=0&&d<30&&M.state==="play") tryTackle(p,car);
 }
 function integrate(p,dt){
   const a=Math.min(1,dt*9);
