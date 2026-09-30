@@ -304,6 +304,28 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
 .confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:80;pointer-events:none;animation:fall linear forwards;border-radius:2px}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
 
+/* ---------- Half-time Brain Boost ---------- */
+#htCard{max-width:560px}
+.boostHead{font-family:var(--display);font-weight:600;font-size:clamp(50px,9vw,72px);line-height:.85;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin:10px 0 4px;text-shadow:0 5px 0 rgba(0,0,0,.4)}
+.boostNote{font-size:15px;color:#d6e2e9;margin:4px 0 8px}
+.perks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.perk{background:linear-gradient(rgba(255,207,63,.22),rgba(255,207,63,.05));border:2px solid rgba(255,207,63,.6);border-radius:16px;padding:10px 6px 10px}
+.perk .ic{display:block;font-size:24px;line-height:1;height:26px}
+.perk .ic .coin{width:24px;height:24px;margin:0;vertical-align:0}
+.perk b{display:block;font-family:var(--display);font-weight:600;font-size:44px;line-height:.95;color:var(--gold);margin-top:4px}
+.perk span{display:block;font-size:12.5px;font-weight:800;color:#f1e6c4;line-height:1.2}
+.perk.off{filter:grayscale(1);opacity:.4}
+.boostOn{background:linear-gradient(135deg,#ffe27a,#f2b300);color:var(--goldInk);border-radius:16px;padding:12px 14px;font-weight:800;margin:10px 0;box-shadow:0 0 0 4px rgba(255,207,63,.25),0 12px 30px rgba(255,190,0,.3);animation:slam .5s cubic-bezier(.2,1.4,.4,1)}
+.boostOn b{display:block;font-family:var(--display);font-weight:600;font-size:42px;line-height:.9;text-transform:uppercase;margin-bottom:4px}
+.boostMiss{background:rgba(255,255,255,.06);border:1px dashed rgba(255,255,255,.25);border-radius:14px;padding:10px 12px;font-weight:700;margin:10px 0}
+.hubBoost{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(255,207,63,.22),rgba(255,207,63,.04) 70%);border:2px solid rgba(255,207,63,.55);border-radius:16px;padding:12px 16px}
+.hubBoost .big{font-family:var(--display);font-weight:600;font-size:54px;line-height:.8;color:var(--gold);padding-top:6px}
+.hubBoost h3{margin:0;font-family:var(--display);font-weight:500;font-size:28px;line-height:1;text-transform:uppercase}
+.hubBoost p{margin:2px 0 0;color:#d6e2e9;font-size:14px}
+#boostChip{position:absolute;left:12px;top:10px;z-index:2;background:linear-gradient(#ffe27a,#f2b300);color:var(--goldInk);font-weight:800;font-size:14px;line-height:1.2;border-radius:999px;padding:5px 14px;pointer-events:none;
+  box-shadow:0 0 0 3px rgba(255,207,63,.35),0 6px 18px rgba(0,0,0,.45);animation:glow 1.6s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 8px rgba(255,207,63,.12),0 6px 18px rgba(0,0,0,.45)}}
+
 @media (max-width:760px){
   .titleInner{grid-template-columns:1fr}
   .active{grid-template-columns:1fr}
@@ -318,6 +340,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
   .hTeam .nm{font-size:24px}
   .sbTeam{font-size:22px}
   .sbScore{font-size:26px}
+  .perk b{font-size:34px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01s!important;transition:none!important}
@@ -382,6 +405,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
   </div>
   <div id="stage">
     <canvas id="cv"></canvas>
+    <div id="boostChip" hidden>⚡ BRAIN BOOST · 2× goal chance · faster team</div>
     <div id="comm"></div>
     <div id="banner" hidden></div>
     <div id="touch" hidden>
@@ -419,7 +443,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
   </div>
 </div>
 
-<div class="ov" id="htOv" hidden><div class="card">
+<div class="ov" id="htOv" hidden><div class="card" id="htCard">
   <div class="eyebrow">Half-time</div>
   <div class="scoreLine" id="htScore"></div>
   <div class="statGrid" id="htStats"></div>
@@ -561,9 +585,6 @@ function shapeSVG(name){
 const T2=[
   ()=>{const x=rnd(3,9),m=rnd(2,5),ad=rnd(2,9);
     return {q:`I think of a number. I multiply it by ${m}, then add ${ad}. My answer is ${x*m+ad}. What was my number?`, a:x};},
-  ()=>{const s=rnd(2,9),d=rnd(3,7),n=rnd(6,8);
-    return {q:`A number pattern starts ${s}, ${s+d}, ${s+2*d}, ${s+3*d}, … What is the ${ord(n)} number?`, a:s+(n-1)*d,
-      hint:`The numbers go up by ${d} each time. Keep adding ${d} and count along: ${s} is the 1st, ${s+d} is the 2nd…`};},
   ()=>{const h=rnd(1,10),m1=5*rnd(2,7),m2=5*rnd(0,6);
     const p=n=>String(n).padStart(2,"0");
     return {q:`How many minutes are there from ${h}:${p(m1)} to ${h+1}:${p(m2)}?`, a:(60-m1)+m2};},
@@ -638,11 +659,6 @@ const TS=[
     return {q:`This stack is solid, with no gaps inside. How many cubes are in it?`, a:L*Wd*Hh, vis:cubeSVG(L,Wd,Hh)};},
   ()=>{const n=rnd(5,9),pos=rnd(2,n-1);
     return {q:`${n} children stand in a line. Mia is ${ord(pos)} from the front. How many children are BEHIND Mia?`, a:n-pos};},
-  ()=>{const d=rnd(2,5),s=rnd(1,4),n=rnd(5,7);
-    let v=s,seq=[];
-    for(let i=0;i<4;i++){seq.push(v); v=v*2+d;}
-    let x=s; for(let i=1;i<n;i++) x=x*2+d;
-    return {q:`A pattern starts ${seq.join(", ")}. Each number is DOUBLED then ${d} is added. What is the ${ord(n)} number?`, a:x};},
   ()=>{const t=rnd(2,5),c=rnd(2,6);
     return {q:`A shop sells hats for $${t} and scarves for $${t+c}. Ravi buys 2 hats and 3 scarves. How many dollars does he spend?`, a:2*t+3*(t+c)};},
   // farm legs: forwards or reverse
@@ -742,12 +758,14 @@ function pickOCX(){
 }
 
 
-/* level 0 = warm-ups, 1 = puzzlers, 2 = brain-benders (mixed with thinking skills + wider OC maths) */
+/* level 0 = warm-ups, 1 = puzzlers, 2 = brain-benders, mixed with thinking skills, wider OC maths
+   and a set of Coach's Drill questions (fractions, number lines, scales, shapes) */
 function mathsQ(L){
   const r=Math.random();
-  if(L<=0) return r<0.25?{...pickOCX(),tier:0}:makeQuestion(0);
-  if(r<0.25) return makeTS();
-  if(r<0.6) return {...pickOCX(),tier:L};
+  if(L<=0) return r<0.2?{...pickOCX(),tier:0} : r<0.5?pickDQ(0) : makeQuestion(0);
+  if(r<0.2) return makeTS();
+  if(r<0.45) return {...pickOCX(),tier:L};
+  if(r<0.75) return pickDQ(L);
   return makeQuestion(L);
 }
 
@@ -1266,6 +1284,18 @@ function buildDrillSet(L){
   drillRecent=used;
   return shuffle(set);
 }
+/* ---------- drill questions that also turn up in matches (shots, half-time Brain Boost, penalties).
+   Match maths level 0/1/2 uses drill level 1/2/3. They stay in the Drills tab too. ---------- */
+const MATCH_DQ=["shadeMore","whatFrac","fracAs","fracOf","equiv","closest","lineRead","lineFrac","jug","thermo","turnFlip","cubes","halfArea","fence","sumDiff"];
+let lastD="";
+function pickDQ(L){
+  for(let t=0;t<12;t++){
+    const id=pick(MATCH_DQ); if(id===lastD) continue;
+    const q=makeDrillQ(id,clamp(L+1,1,3));
+    if(q){ lastD=id; return {...q,tier:Math.max(0,L),drill:true}; }
+  }
+  return makeQuestion(clamp(L,0,2));
+}
 
 /* ---------- Audio ---------- */
 let AC=null;
@@ -1296,6 +1326,7 @@ const sCoin=()=>[988,1319].forEach((f,i)=>beep(f,.08,"square",.08,i*.07));
 const sTackle=()=>beep(120,.1,"square",.18);
 const sCrowd=()=>{noise(2.4,.25,650);[523,659,784,1047].forEach((f,i)=>beep(f,.14,"square",.09,i*.1));};
 const sGroan=()=>{noise(1.4,.14,380);};
+const sBoost=()=>[392,523,659,784,1047].forEach((f,i)=>beep(f,.16,"square",.1,i*.09));
 
 /* =========================================================
    DATA
@@ -1479,6 +1510,8 @@ const TRAIN=[
 ];
 const KITS=[["#ffcf3f","#0b1a2b"],["#e63946","#ffffff"],["#1d4ed8","#ffffff"],["#16a34a","#ffffff"],["#f97316","#1a1a1a"],["#7c3aed","#ffffff"],["#111827","#ffcf3f"],["#ffffff","#e63946"]];
 const HALF={short:60,normal:90,long:120};
+/* half-time Brain Boost: coins per right answer, and the power-up for getting all 3 right */
+const HT_PAY=15, HT_BONUS=50, HT_SPEED=1.15, HT_SHOT=2;
 
 const LAND="0000000000000001111011111111101111111111111111110000000011111000000000000000000000111110000000000000000000000|0000000000000011111111111111100000111111111111100000000000000000000000111100000111111111100000001101000000000|0001110000000011111111111111111100011111111111100000000000001110000001100011111111111111111111111111111000000|0111111111111111111111111111011110001111111111000000000001111111111111111111111111111111111111111111111111111|0111111111111111111111111111011111001111110000111000000011111111111111111111111111111111111111111111111111111|0111111111111111111111111000111110000111000000000010001111111111111111111111111111111111111111111111111111111|0111111101111111111111110000111111000000000000000011001111101111111111111111111111111111111111111111111110000|0101100000111111111111111111111111100000000000000011100111111111111111111111111111111111111111110000011100000|1000000000001111111111111111111111110000000000000011111111111111111111111111111111111111111111111100011000010|0000000000000111111111111111111111111000000000000001111111111111111111111111111111111111111111111100000000000|0000000000000011111111111111111111101000000000000000111111111111111111111111111111111111111111111101000000000|0000000000000011111111111111111110000000000000000011111111111101011111111111111111111111111111111110000000000|0000000000000011111111111111110000000000000000000011110101111111111111111111111111111111111111001100000000000|0000000000000011111111111111110000000000000000000011111111011111111111111111111111111111111111111000000000000|0000000000000001111111111111100000000000000000000011111111011000111111111111111111111111111001110000000000000|0000000000000000111111111111000000000000000000000111111111111111111111111111111111111111111100000000000000000|0000000000000000011111100001000000000000000000001111111111111111111111111111111111111111111000000000000000000|0000000000000000001111100011100000000000000000001111111111111111111111110011111111111111111000000000000000000|0000100000000000000011101100111000000000000000011111111111111111111111110001111101111111000000000000000000000|0000000000000000000011111100101010000000000000001111111111111111111111100001111100111110001100000000000000000|0000000000000000000000001110000000000000000000011111111111111111111110000000110000011110001100000010000000000|0000000000000000000000000010011111000000000000001111111111111111111110000000110000011110001110000000000000000|0000000000000000000000000001111111100000000000000111111111111111111110000000011000011100010110000000000000000|0000000000000000000000000000111111111000000000000011101111111111111100000000000000111100111010000000000000000|0000000000000000000000000000111111111100000000000000000011111111111100000000000000011101111011000000000000010|0000000000000000000000001001111111111111100000000000000111111111110000000000000000001101111101111110000000000|0000000000000000000000000001111111111111110000000000000011111111110000000000000000000110001100011111110000000|0000000000000000000000000000111111111111110000000000000001111111110000000000000000000011111100001111001100000|0000000000000000000000000000111111111111110000000000000001111111110010000000000000000000000101110100100100000|0000000000000000000000000000011111111111100000000000000011111111110110000000000000000000000011110110000000000|0000000000000000000000000000001111111111100000000000000011111111111110000000000000000000000111111110000000001|0000000000000000000000000000000111111111100000000000000001111111001110000000000000000000111111111111000000000|0000000000000000000000000000000111111110000000000000000001111111001100000000000000000000111111111111100000000|0000000000000000000000000000001111111100000000000000000001111111000000000000000000000000111111111111100000000|0000000000000000000000000000001111111100000000000000000000111110000000000000000000000000011111111111100000000|0000000000000000000000000000001111111000000000000000000000111100000000000000000000000000011100011111100000010|0000000000000000000000000000001111110000000000000000000000000000000000000000000000000000000000001111000000011|0000000000000000000000000000001111000000000000000000000000000000000000000000000000000000000000000011000000111|0000000000000000000000000000011110000000000000000000000000000000000000000000000000000000000000000011000001110|0000000000000000000000000000011110000000000000000000000000000000000000000000000000000000000000000000000001100|0000000000000000000000000000011100000000000000000000000000000000000000000010000000000000000000000000000000000|0000000000000000000000000000011100100000010000000000000000000000000000000000000000000000000000000000000000000|0000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000".split("|");
 
@@ -1550,6 +1583,11 @@ function confettiDOM(n=60){
     s.style.animationDuration=(1.6+Math.random()*1.6)+"s"; s.style.animationDelay=(Math.random()*.5)+"s";
     document.body.appendChild(s); setTimeout(()=>s.remove(),3800); }
 }
+/* the three Brain Boost rewards, shown big at half-time and on the Matches tab */
+const perksHTML=on=>`<div class="perks">
+  <div class="perk${on?"":" off"}"><span class="ic">⚽</span><b>${HT_SHOT}×</b><span>chance of scoring from your shots</span></div>
+  <div class="perk${on?"":" off"}"><span class="ic">⚡</span><b>+${Math.round((HT_SPEED-1)*100)}%</b><span>team running speed</span></div>
+  <div class="perk${on?"":" off"}"><span class="ic"><i class="coin"></i></span><b>+${HT_BONUS}</b><span>bonus coins</span></div></div>`;
 
 /* =========================================================
    SCREENS
@@ -1663,6 +1701,11 @@ function nextBanner(){
   const T=TOUR[G.tour.id], nx=tourNext();
   return `<div class="notice"><div><div class="eyebrow">${esc(T.name)} · ${esc(nx.label)}</div><b>Next up: ${esc(TEAM[nx.code].name)}</b></div><button class="btn btnGold" data-act="tourPlay">Play next match</button></div>`;
 }
+function boostBanner(){
+  return `<div class="hubBoost"><div class="big">${HT_SHOT}×</div><div><div class="eyebrow">Half-time Brain Boost</div>
+    <h3>Get all 3 half-time questions right</h3>
+    <p>Your shots are <b>twice as likely to score</b> in the second half, your team runs <b>${Math.round((HT_SPEED-1)*100)}% faster</b>, and you win <b><i class="coin"></i>${HT_BONUS} bonus coins</b>.</p></div></div>`;
+}
 
 function vPlay(){
   const R=REG[G.region];
@@ -1671,6 +1714,7 @@ function vPlay(){
   return `${nextBanner()}
   <div class="secHead"><div class="eyebrow">${R.city} · ${R.name}</div><h2>Friendlies</h2>
     <p>Beat a team to earn coins. Stronger teams pay more. Your team rating is <b>${myRating()}</b>. Want different opponents? Fly somewhere new on the World map.</p></div>
+  ${boostBanner()}
   <div class="toolbar"><div class="seg" role="group" aria-label="Show">${seg("clubf",[["all","All"],["c","Clubs"],["n","Countries"]],CLUBF)}</div>
     <div class="seg" role="group" aria-label="Half length">${seg("half",[["short","1 min halves"],["normal","1½ min"],["long","2 min"]],G.halfLen)}</div></div>
   <div class="grid">${list.map(teamCard).join("")||`<p class="empty">No teams here.</p>`}</div>`;
@@ -1831,7 +1875,7 @@ function vDrills(){
       <div class="row"><span>${s.n?`<b>${s.r}</b> of ${s.n} right`:"Not tried yet"}</span><b>${s.n?pc+"%":""}</b></div></article>`; }).join("");
   return `<section class="drillHero"><div>
       <div class="eyebrow">Coach's Drills · Level ${L} of 3</div><h3>Train your brain, earn coins</h3>
-      <p>Five questions from the coach: fractions, number lines, scales and shapes. There's no timer, so take your time and check your answer before you press Enter.</p>
+      <p>Five questions from the coach: fractions, number lines, scales and shapes. There's no timer, so take your time and check your answer before you press Enter. Practise here: lots of these questions turn up on your shots in matches too.</p>
       <div class="dlvl" aria-label="Level ${L} of 3">${[1,2,3].map(i=>`<i class="${i<=L?"on":""}"></i>`).join("")}</div>
       <p class="dpay">Each right answer earns <b><i class="coin"></i>${DRILL_PAY[L]}</b>. Get 5 out of 5 for a <b><i class="coin"></i>${DRILL_BONUS[L]} bonus</b>${L<3?" and move up a level":""}.</p>
       <button class="btn btnGold" data-act="drill" style="font-size:18px;padding:10px 24px">Start drills</button></div>
@@ -1974,7 +2018,8 @@ const gate={active:false,q:null,input:"",att:2,max:2,time:45,total:45,timer:null
 function openGate(q,o){
   gate.q=q; gate.onDone=o.onDone; gate.att=gate.max=o.attempts||2; gate.seq++;
   gate.manual=!!o.manual; gate.waiting=false; gate.okMsg=o.okMsg||""; gate.nextLabel=o.nextLabel||""; gate.onQuit=o.onQuit||null;
-  gate.total=gate.time=(o.time||45)+((q.vis||q.ts)?10:0);
+  // picture questions and Coach's Drill questions get a little longer on the clock in matches
+  gate.total=gate.time=(o.time||45)+((q.vis||q.ts)?10:0)+(q.drill?10:0);
   gate.input=""; gate.start=performance.now(); gate.active=true;
   $("gTitle").textContent=o.title; $("gMsg").textContent=o.msg||""; $("gMsg").className="gMsg ok";
   $("gQ").innerHTML="<span>"+(q.qh||esc(q.q))+"</span>"; $("gAns").className="";
@@ -2074,10 +2119,11 @@ function startMatch(opp,c){
   M={opp,ctx:c,kitO:[k1,k2],q:clamp((opp.r-40)/55,0,1),bs:bootStats(G.boots.eq),bootCol:G.boots.owned[G.boots.eq].color||BOOT[G.boots.eq].c,
     score:[0,0],half:1,t:0,halfLen:HALF[G.halfLen]||90,state:"pause",pauseT:1,after:null,goalT:0,
     players:[],human:null,ball:null,shot:null,shots:[0,0],poss:[0.01,0.01],
-    ht:{correct:0,res:[]},boost:1,stam:1,charge:0,charging:false,idle:9,recvGrace:0,switchT:0,
+    ht:{correct:0,res:[],all:false},boost:1,shotBoost:1,stam:1,charge:0,charging:false,idle:9,recvGrace:0,switchT:0,
     floaters:[],parts:[],level:mathsLevel(opp.r,c),shotA:0,shotC:0,goals:[],pens:null,hAct:false,C:null,prevState:null};
   for(let s=0;s<2;s++) for(let i=0;i<5;i++) M.players.push(mkPlayer(s,i));
   M.ball={x:500,y:310,vx:0,vy:0,z:0,owner:null,lastSide:0,passTo:null,noP:null,noT:0};
+  $("boostChip").hidden=true;
   showScreen("match");
   $("sbInfo").textContent=c.label+" · "+(opp.star?`watch ${opp.star.split("@")[0]}`:`rating ${opp.r}`);
   setSB(); resizeMatch();
@@ -2261,14 +2307,17 @@ function attemptShot(){
   const h=M.human, dG=hyp(PW-h.x,GMID-h.y);
   if(h.x<470){ floater(h.x,h.y-34,"Too far! Get into their half"); M.charge=0; beep(300,.1,"square",.08); return; }
   const charge=M.charge; M.charge=0; M.state="gate"; M.shotA++;
-  openGate(mathsQ(M.level),{title:`Shot from ${Math.max(2,Math.round(dG/25))} metres. Solve it to strike it clean!`,attempts:2,time:45,
-    msg:"First try = best shot. A fast answer adds power.",
+  const q=mathsQ(M.level), boosted=M.shotBoost>1;
+  openGate(q,{title:`${boosted?"⚡ BOOSTED shot":"Shot"} from ${Math.max(2,Math.round(dG/25))} metres. Solve it to strike it clean!`,attempts:q.choices?1:2,time:45,
+    msg:boosted?`Brain Boost is on: a right answer has ${HT_SHOT}× the chance of a goal!`:q.choices?"One try, so think it through first.":"First try = best shot. A fast answer adds power.",
     onDone:(ok,fast,first)=>{
       if(ok) M.shotC++;
       M.state="play";
       const out=shotOutcome(ok,fast,first,charge,dG);
-      if(!ok) floater(h.x,h.y-34,"Scuffed it!","#ff9d8f"); else if(first&&fast) floater(h.x,h.y-34,"POWER STRIKE!");
-      launchShot(h,out,.3+.7*Math.max(charge,.35)*(M.bs.p/99)+(ok&&fast?.1:0));
+      if(!ok) floater(h.x,h.y-34,"Scuffed it!","#ff9d8f");
+      else if(boosted) floater(h.x,h.y-34,first&&fast?"⚡ BOOSTED POWER STRIKE!":"⚡ BOOSTED STRIKE!");
+      else if(first&&fast) floater(h.x,h.y-34,"POWER STRIKE!");
+      launchShot(h,out,.3+.7*Math.max(charge,.35)*(M.bs.p/99)+(ok&&fast?.1:0)+(ok&&boosted?.1:0));
     }});
 }
 function shotOutcome(ok,fast,first,charge,d){
@@ -2278,7 +2327,9 @@ function shotOutcome(ok,fast,first,charge,d){
   let pg=first?(fast?.72:.62):.4;
   pg+=(bs.a-60)*.005+(P-50)*.003-Math.max(0,d-200)*.0016*(1-bs.p/180)-(M.opp.r-65)*.006;
   pg=clamp(pg,.12,.93);
-  const wide=first?clamp(.14-(bs.a-45)*.0025,.02,.14):.22;
+  let wide=first?clamp(.14-(bs.a-45)*.0025,.02,.14):.22;
+  // half-time Brain Boost: a right answer doubles the chance of scoring (capped so the keeper can still save one)
+  if(M.shotBoost>1){ pg=Math.min(.97,pg*M.shotBoost); wide/=2; }
   if(Math.random()<wide) return Math.random()<.18?"post":"wide";
   return Math.random()<pg/(1-wide)?"goal":"save";
 }
@@ -2337,7 +2388,7 @@ function goalScored(side,scorer){
   M.goals.push({side,m,who});
   M.state="goal"; M.goalT=2.6; M.after=()=>kickoff(1-side);
   const bn=$("banner");
-  bn.innerHTML=`<div class="b1 ${side?"opp":""}">GOAL!</div><div class="b2">${m}' · ${esc(side===0?G.team.name:who+" for "+M.opp.name)}</div>`;
+  bn.innerHTML=`<div class="b1 ${side?"opp":""}">GOAL!</div><div class="b2">${m}' · ${esc(side===0?G.team.name:who+" for "+M.opp.name)}${side===0&&M.shotBoost>1?" · ⚡ Brain Boost":""}</div>`;
   bn.hidden=false; setTimeout(()=>bn.hidden=true,2400);
   if(side===0){ sCrowd(); burst(M.ball.x,M.ball.y,[G.team.kit[0],G.team.kit[1],"#ffcf3f","#ffffff"],40); }
   else { sGroan(); beep(200,.3,"sawtooth",.08); }
@@ -2551,24 +2602,38 @@ function endHalf(){
 }
 function showHalfTime(){
   $("htScore").innerHTML=scoreLine(); $("htStats").innerHTML=statsHTML();
-  $("htBody").innerHTML=`<p class="lead"><b>Brain Boost:</b> three quick questions. Each one right earns <b>10 coins</b>. Get all three and your team runs faster in the second half.</p>
-    <div class="btnRow"><button class="btn btnGold" id="htGo">Start Brain Boost</button><button class="btn" id="htSkip">Skip to second half</button></div>`;
+  $("htBody").innerHTML=`<div class="boostHead">⚡ Brain Boost</div>
+    <p class="boostNote">Three quick questions, one try each. Get <b>ALL 3 right</b> and your team powers up for the whole second half:</p>
+    ${perksHTML(true)}
+    <p class="boostNote">Plus <i class="coin"></i><b>${HT_PAY} coins</b> for every right answer, even if you miss one.</p>
+    <div class="btnRow"><button class="btn btnGold" id="htGo" style="font-size:19px;padding:10px 26px">Start Brain Boost</button><button class="btn" id="htSkip">Skip</button></div>`;
   $("htOv").hidden=false;
   $("htGo").onclick=()=>{ audio(); htQ(0); }; $("htSkip").onclick=secondHalf; $("htGo").focus();
 }
 function htQ(i){
   $("htOv").hidden=true;
-  openGate(mathsQ(M.level),{title:`Brain Boost · question ${i+1} of 3`,attempts:1,time:40,msg:"One try. 10 coins if you get it right.",onDone:ok=>{
+  const so_far=M.ht.correct===i;
+  openGate(mathsQ(M.level),{title:`⚡ Brain Boost · question ${i+1} of 3${so_far?" · all 3 right = power-up!":""}`,attempts:1,time:40,
+    msg:`One try. ${HT_PAY} coins if you get it right.`,onDone:ok=>{
     M.ht.res.push(ok); if(ok){ M.ht.correct++; sCoin(); }
     if(i<2){ setTimeout(()=>htQ(i+1),120); return; }
-    const all=M.ht.correct===3; if(all) M.boost=1.08;
+    const all=M.ht.correct===3;
+    if(all){ M.ht.all=true; M.boost=HT_SPEED; M.shotBoost=HT_SHOT; }
+    const coins=M.ht.correct*HT_PAY+(all?HT_BONUS:0);
     $("htBody").innerHTML=`<div class="ticks">${M.ht.res.map(r=>`<span class="${r?"ok":"no"}">${r?"✓":"✗"}</span>`).join("")}</div>
-      <p class="lead">${M.ht.correct} of 3 right · <i class="coin"></i>${M.ht.correct*10} coins${all?". Your team is faster for the second half!":""}</p>
-      <button class="btn btnGold" id="htKick">Kick off the second half</button>`;
+      ${all?`<div class="boostOn"><b>⚡ Brain Boost active!</b>For the whole second half your shots are ${HT_SHOT}× more likely to score and your team is ${Math.round((HT_SPEED-1)*100)}% faster.</div>${perksHTML(true)}`
+        :`<div class="boostMiss">${M.ht.correct} of 3 right. So close! You need all 3 for the power-up, so no boost this half.</div>${perksHTML(false)}`}
+      <p class="lead"><i class="coin"></i><b>${coins}</b> coins from Brain Boost${all?` (${M.ht.correct} × ${HT_PAY} + ${HT_BONUS} bonus)`:""}</p>
+      <button class="btn btnGold" id="htKick" style="font-size:18px;padding:10px 22px">Kick off the second half</button>`;
     $("htOv").hidden=false; $("htKick").onclick=secondHalf; $("htKick").focus();
+    if(all){ confettiDOM(80); sBoost(); }
   }});
 }
-function secondHalf(){ audio(); $("htOv").hidden=true; M.half=2; M.t=0; sWhistle(); kickoff(1,"Second half under way"); }
+function secondHalf(){
+  audio(); $("htOv").hidden=true; M.half=2; M.t=0; sWhistle();
+  $("boostChip").hidden=!M.ht.all;
+  kickoff(1,M.ht.all?`Second half! ⚡ Brain Boost is on: ${HT_SHOT}× goal chance`:"Second half under way");
+}
 function fullTime(){
   const [a,b]=M.score;
   if(a===b&&M.ctx.ko){ startPens(); return; }
@@ -2581,7 +2646,7 @@ function endMatch(res,extra){
   const base=winCoins(opp.r);
   let rc=extra.forfeit?0:res==="W"?base:res==="D"?Math.round(base/3):5;
   if(c.tour) rc=Math.round(rc*1.5);
-  const gc=extra.forfeit?0:M.score[0]*5, hc=M.ht.correct*10, total=rc+gc+hc;
+  const gc=extra.forfeit?0:M.score[0]*5, hq=M.ht.correct*HT_PAY, hb=M.ht.all?HT_BONUS:0, hc=hq+hb, total=rc+gc+hc;
   G.coins+=total;
   G.rec[res==="W"?"w":res==="D"?"d":"l"]++; G.rec.gf+=gf; G.rec.ga+=ga;
   if(res==="W") G.beaten[opp.code]=true;
@@ -2589,7 +2654,8 @@ function endMatch(res,extra){
   if(c.tour&&G.tour) ti=tourAfterMatch(res,gf,ga,!!extra.pens);
   save();
   M.state="full";
-  showFT(res,{rc,gc,hc,total,ti,extra});
+  $("boostChip").hidden=true;
+  showFT(res,{rc,gc,hq,hb,total,ti,extra});
 }
 function showFT(res,o){
   const c=M.ctx, won=o.ti&&o.ti.won;
@@ -2607,7 +2673,8 @@ function showFT(res,o){
     <div class="ledger">
       <div><span>${res==="W"?"Win":res==="D"?"Draw":"Turning up"}${c.tour?" (tournament ×1½)":""}</span><span><i class="coin"></i>${o.rc}</span></div>
       <div><span>Goals scored × 5</span><span><i class="coin"></i>${o.gc}</span></div>
-      <div><span>Brain Boost (${M.ht.correct}/3)</span><span><i class="coin"></i>${o.hc}</span></div>
+      <div><span>Brain Boost (${M.ht.correct}/3 × ${HT_PAY})</span><span><i class="coin"></i>${o.hq}</span></div>
+      ${o.hb?`<div><span>⚡ Brain Boost bonus (all 3 right)</span><span><i class="coin"></i>${o.hb}</span></div>`:""}
       ${won?`<div><span>Tournament prize</span><span><i class="coin"></i>${TOUR[G.tourLast.id].prize.toLocaleString("en-AU")}</span></div>`:""}
       <div class="tot"><span>Coins earned</span><span><i class="coin"></i>${(o.total+(won?TOUR[G.tourLast.id].prize:0)).toLocaleString("en-AU")}</span></div></div>
     ${o.ti?`<div class="tourMsg">${esc(o.ti.msg)}</div>`:""}
@@ -2653,13 +2720,13 @@ function penUpdate(dt){
   else if(P.phase==="after"){ P.wait-=dt; if(P.wait<=0) nextPen(); }
 }
 function askPen(){
-  const side=M.pens.turn; M.state="gate";
-  openGate(mathsQ(Math.max(1,M.level)),{title:side===0?"Penalty! Solve it to pick your spot":"Save it! Solve it to dive the right way",attempts:1,time:35,
-    msg:side===0?"Right answer: you'll almost always score.":"Right answer: your keeper reads it.",
+  const side=M.pens.turn, boosted=M.shotBoost>1; M.state="gate";
+  openGate(mathsQ(Math.max(1,M.level)),{title:side===0?`${boosted?"⚡ BOOSTED penalty":"Penalty"}! Solve it to pick your spot`:"Save it! Solve it to dive the right way",attempts:1,time:35,
+    msg:side===0?(boosted?"Brain Boost is on: a right answer nearly always scores!":"Right answer: you'll almost always score."):"Right answer: your keeper reads it.",
     onDone:(ok,fast)=>{
       M.state="pen"; if(ok) M.shotC++; M.shotA++;
       let pg;
-      if(side===0) pg=ok?clamp(.8+(fast?.06:0)+(M.bs.a-60)*.003-(M.opp.r-70)*.003,.55,.95):0;
+      if(side===0){ pg=ok?clamp(.8+(fast?.06:0)+(M.bs.a-60)*.003-(M.opp.r-70)*.003,.55,.95):0; if(boosted) pg=Math.min(.97,pg*M.shotBoost); }
       else pg=ok?clamp(.33+(M.opp.r-keeperRating())*.004,.15,.5):.8;
       const goal=Math.random()<pg;
       M.pens.out=goal?"goal":(Math.random()<.72?"save":Math.random()<.5?"post":"wide");
@@ -2765,6 +2832,7 @@ function drawPlayer(g,p,now){
     const sx=-p.fy, sy=p.fx, bc=M.bootCol;
     g.fillStyle=bc; g.strokeStyle="rgba(0,0,0,.5)"; g.lineWidth=1;
     for(const s of [-1,1]){ g.beginPath(); g.ellipse(p.x+sx*s*6+p.fx*4,p.y+sy*s*6+p.fy*4,5,3,Math.atan2(p.fy,p.fx),0,7); g.fill(); g.stroke(); }
+    if(M.shotBoost>1){ g.fillStyle="rgba(255,207,63,.18)"; g.beginPath(); g.arc(p.x,p.y,27+Math.sin(now/180)*3,0,7); g.fill(); }
     g.save(); g.strokeStyle="#ffcf3f"; g.lineWidth=2.5; g.setLineDash([6,5]); g.lineDashOffset=-now/40;
     g.beginPath(); g.arc(p.x,p.y,19,0,7); g.stroke(); g.restore();
     g.fillStyle="#ffcf3f"; g.beginPath(); g.moveTo(p.x-7,p.y-31); g.lineTo(p.x+7,p.y-31); g.lineTo(p.x,p.y-23); g.closePath(); g.fill();
