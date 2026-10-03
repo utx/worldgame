@@ -304,25 +304,41 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
 .confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:80;pointer-events:none;animation:fall linear forwards;border-radius:2px}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
 
-/* ---------- Half-time Brain Boost ---------- */
-#htCard{max-width:560px}
+/* ---------- Brain Boost (pre-match and half-time) ---------- */
+#htCard{max-width:640px}
 .boostHead{font-family:var(--display);font-weight:600;font-size:clamp(50px,9vw,72px);line-height:.85;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin:10px 0 4px;text-shadow:0 5px 0 rgba(0,0,0,.4)}
 .boostNote{font-size:15px;color:#d6e2e9;margin:4px 0 8px}
-.perks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
-.perk{background:linear-gradient(rgba(255,207,63,.22),rgba(255,207,63,.05));border:2px solid rgba(255,207,63,.6);border-radius:16px;padding:10px 6px 10px}
-.perk .ic{display:block;font-size:24px;line-height:1;height:26px}
-.perk .ic .coin{width:24px;height:24px;margin:0;vertical-align:0}
-.perk b{display:block;font-family:var(--display);font-weight:600;font-size:44px;line-height:.95;color:var(--gold);margin-top:4px}
-.perk span{display:block;font-size:12.5px;font-weight:800;color:#f1e6c4;line-height:1.2}
-.perk.off{filter:grayscale(1);opacity:.4}
 .boostOn{background:linear-gradient(135deg,#ffe27a,#f2b300);color:var(--goldInk);border-radius:16px;padding:12px 14px;font-weight:800;margin:10px 0;box-shadow:0 0 0 4px rgba(255,207,63,.25),0 12px 30px rgba(255,190,0,.3);animation:slam .5s cubic-bezier(.2,1.4,.4,1)}
 .boostOn b{display:block;font-family:var(--display);font-weight:600;font-size:42px;line-height:.9;text-transform:uppercase;margin-bottom:4px}
 .boostMiss{background:rgba(255,255,255,.06);border:1px dashed rgba(255,255,255,.25);border-radius:14px;padding:10px 12px;font-weight:700;margin:10px 0}
+.pkBacks{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:10px auto;max-width:420px}
+.pkBack{aspect-ratio:3/4;border-radius:10px;border:2px solid rgba(255,207,63,.55);background:repeating-linear-gradient(45deg,#1a3350 0 8px,#14293f 8px 16px);display:grid;place-items:center;font-family:var(--display);font-size:30px;color:var(--gold)}
+.pkBack:nth-child(3n+2){box-shadow:0 0 14px rgba(255,207,63,.4)}
+.pickNote{font-weight:700;font-size:15px;margin:2px 0 0;color:#d6e2e9}
+.pk{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 16px}
+.pkc{position:relative;border:2px solid var(--line2);border-radius:16px;padding:16px 8px 12px;background:linear-gradient(#183652,#10253a);color:var(--chalk);display:flex;flex-direction:column;align-items:center;gap:3px;min-height:150px;text-align:center;transition:transform .12s}
+.pkc:hover{transform:translateY(-2px)}
+.pkc .ic{font-size:26px;line-height:1;height:30px;display:grid;place-items:center}
+.pkc .ic .coin{width:24px;height:24px;margin:0}
+.pkc .mag{font-family:var(--display);font-weight:600;font-size:40px;line-height:.9;color:var(--chalk)}
+.pkc .lb{font-weight:800;font-size:14.5px;line-height:1.15}
+.pkc .ds{font-size:12px;color:var(--dim);line-height:1.2}
+.pkc .rar{position:absolute;top:5px;right:8px;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--dim)}
+.pkc .pkn{position:absolute;top:5px;left:9px;font-size:11px;font-weight:800;color:var(--dim)}
+.pkc.rare{border-color:#5aa9ff;background:linear-gradient(#1b4470,#10253a)}
+.pkc.rare .rar,.pkc.rare .mag{color:#9fd6ff}
+.pkc.leg{border-color:var(--gold);background:radial-gradient(160px 90px at 50% 0%,rgba(255,207,63,.38),transparent 70%),linear-gradient(#3d2e08,#1a1606);animation:glow 1.6s ease-in-out infinite}
+.pkc.leg .rar,.pkc.leg .mag,.pkc.leg .ic{color:var(--gold)}
+.pkc.leg .ds{color:#e9dcb2}
+.pkc.sel{outline:4px solid var(--good);outline-offset:2px;transform:translateY(-3px)}
+.pkc.sel::after{content:"✓";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);width:26px;height:26px;border-radius:50%;background:var(--good);color:#06331a;font-weight:800;line-height:26px}
+.gotList{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0 2px}
+.gotList span{background:rgba(43,29,0,.15);border-radius:999px;padding:2px 12px;font-weight:800;font-size:15px}
 .hubBoost{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(255,207,63,.22),rgba(255,207,63,.04) 70%);border:2px solid rgba(255,207,63,.55);border-radius:16px;padding:12px 16px}
 .hubBoost .big{font-family:var(--display);font-weight:600;font-size:54px;line-height:.8;color:var(--gold);padding-top:6px}
 .hubBoost h3{margin:0;font-family:var(--display);font-weight:500;font-size:28px;line-height:1;text-transform:uppercase}
 .hubBoost p{margin:2px 0 0;color:#d6e2e9;font-size:14px}
-#boostChip{position:absolute;left:12px;top:10px;z-index:2;background:linear-gradient(#ffe27a,#f2b300);color:var(--goldInk);font-weight:800;font-size:14px;line-height:1.2;border-radius:999px;padding:5px 14px;pointer-events:none;
+#boostChip{position:absolute;left:12px;top:10px;z-index:2;max-width:calc(100% - 24px);background:linear-gradient(#ffe27a,#f2b300);color:var(--goldInk);font-weight:800;font-size:13.5px;line-height:1.25;border-radius:14px;padding:5px 14px;pointer-events:none;
   box-shadow:0 0 0 3px rgba(255,207,63,.35),0 6px 18px rgba(0,0,0,.45);animation:glow 1.6s ease-in-out infinite}
 @keyframes glow{50%{box-shadow:0 0 0 8px rgba(255,207,63,.12),0 6px 18px rgba(0,0,0,.45)}}
 
@@ -335,12 +351,14 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
   .sb{padding-left:12px}
   .stat{grid-template-columns:86px 1fr 30px auto}
 }
+@media (max-width:520px){
+  .pk{grid-template-columns:repeat(2,1fr)}
+}
 @media (max-width:460px){
   .hCoins{font-size:24px}
   .hTeam .nm{font-size:24px}
   .sbTeam{font-size:22px}
   .sbScore{font-size:26px}
-  .perk b{font-size:34px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01s!important;transition:none!important}
@@ -405,7 +423,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
   </div>
   <div id="stage">
     <canvas id="cv"></canvas>
-    <div id="boostChip" hidden>⚡ BRAIN BOOST · 2× goal chance · faster team</div>
+    <div id="boostChip" hidden></div>
     <div id="comm"></div>
     <div id="banner" hidden></div>
     <div id="touch" hidden>
@@ -418,7 +436,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
     <span><kbd>Shift</kbd> sprint</span>
     <span><kbd>Space</kbd> pass · switch player</span>
     <span><kbd>X</kbd> hold to shoot · tackle</span>
-    <span><kbd>P</kbd> pause</span>
+    <span><kbd>P</kbd> pause · drop ball</span>
   </div>
 </section>
 
@@ -444,7 +462,7 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
 </div>
 
 <div class="ov" id="htOv" hidden><div class="card" id="htCard">
-  <div class="eyebrow">Half-time</div>
+  <div class="eyebrow" id="htEye">Half-time</div>
   <div class="scoreLine" id="htScore"></div>
   <div class="statGrid" id="htStats"></div>
   <div id="htBody"></div>
@@ -458,7 +476,8 @@ kbd{font-family:var(--body);background:#16304a;border:1px solid #2c4d6b;border-b
   <div class="eyebrow">Paused</div>
   <h2>Time out</h2>
   <p class="lead" id="pauseNote">Take a breather.</p>
-  <div class="btnRow"><button class="btn btnGold" id="resumeBtn">Resume</button><button class="btn" id="quitBtn">Quit match</button></div>
+  <div class="btnRow"><button class="btn btnGold" id="resumeBtn">Resume</button><button class="btn" id="dropBtn">Drop ball</button><button class="btn" id="quitBtn">Quit match</button></div>
+  <p class="fine" style="margin-top:12px">Ball stuck, or gone off the pitch and not come back? Press <b>Drop ball</b> and the referee restarts play.</p>
 </div></div>
 
 <div id="toast" role="status" aria-live="polite"></div>
@@ -502,7 +521,6 @@ const txt=(x,y,s,size,fill,anchor)=>`<text x="${x}" y="${y}" font-size="${size}"
 const pts=a=>a.map(p=>p.join(",")).join(" ");
 
 function vennSVG(A,B,l,m,r,box){
-  const q=v=>v==="?"?txt(0,0,"?",30,"#ffd24a"):"";
   const cell=(x,v)=>v==="?"?txt(x,98,"?",32,"#ffd24a"):txt(x,98,v,26);
   return svgWrap(340,180,
     (box?`<rect x="6" y="6" width="328" height="168" rx="14" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2" stroke-dasharray="7 5"/>`+txt(300,154,"?",28,"#ffd24a")+txt(42,154,"Neither",12,"rgba(255,255,255,.7)"):"")+
@@ -758,21 +776,23 @@ function pickOCX(){
 }
 
 
-/* level 0 = warm-ups, 1 = puzzlers, 2 = brain-benders, mixed with thinking skills, wider OC maths
-   and a set of Coach's Drill questions (fractions, number lines, scales, shapes) */
+/* level 0 = warm-ups, 1 = puzzlers, 2 = brain-benders, mixed with thinking skills, wider OC maths,
+   Coach's Drill questions (fractions, number lines, scales, shapes) and mental-maths tricks */
 function mathsQ(L){
   const r=Math.random();
-  if(L<=0) return r<0.2?{...pickOCX(),tier:0} : r<0.5?pickDQ(0) : makeQuestion(0);
-  if(r<0.2) return makeTS();
-  if(r<0.45) return {...pickOCX(),tier:L};
-  if(r<0.75) return pickDQ(L);
+  if(L<=0) return r<0.18?{...pickOCX(),tier:0} : r<0.42?pickDQ(0) : r<0.64?pickMental(0) : makeQuestion(0);
+  if(r<0.14) return makeTS();
+  if(r<0.32) return {...pickOCX(),tier:L};
+  if(r<0.56) return pickDQ(L);
+  if(r<0.8) return pickMental(L);
   return makeQuestion(L);
 }
 
 /* =========================================================
    COACH'S DRILLS — foundation question bank
    Modelled on the NSW OC Mathematical Reasoning papers: fractions (shaded shapes,
-   amounts, comparing), number lines and scales, shapes & space, and problem-solving moves.
+   amounts, comparing), number lines and scales, shapes & space, problem-solving moves
+   and mental-maths shortcuts.
    Each generator takes a drill level L (1–3) and returns a question, or null to try again:
      {qh (question html), a (answer: number for typed, key for multiple choice),
       vis (svg), choices, hint (nudge after a first miss), fix (one-line working shown after a miss),
@@ -1262,15 +1282,76 @@ DQ.rule=L=>{
     fix:`${seq.join(" → ")}.`};
 };
 
+/* ================= MENTAL MATHS TRICKS =================
+   Big-looking multiplications that are quick with the right move:
+   ×25 / ×75 / ×50 / ×125 (multiply by 100 or 1000, then take a fraction of it),
+   zeros (150 × 180 → 15 × 18, then put the zeros back), friendly pairs (20 × 12 × 5 → 20 × 5 first),
+   and near-tens (×9, ×11, ×99, ×101, ×98, ×5). */
+DQ.quarter=L=>{
+  const m=L===1?pick([25,25,50]):L===2?pick([25,75,75,50]):pick([75,75,25,125]);
+  let n;
+  if(m===125) n=8*rnd(1,9);
+  else if(m===50) n=L===1?2*rnd(6,24):rnd(13,68);
+  else if(L===1) n=4*rnd(2,9);
+  else if(L===2) n=4*rnd(3,12);
+  else n=2*rnd(6,24);
+  const H=m===125?1000:100, big=n*H, ans=n*m;
+  const part={25:"a quarter",50:"half",75:"three quarters",125:"an eighth"}[m];
+  const qh=Math.random()<.3
+    ? pick([`A stand has ${n} rows with ${m} seats in each row. How many seats is that altogether?`,
+        `Each box holds ${m} footy cards. How many cards are in ${n} boxes?`,
+        `A club sells ${n} tickets at $${m} each. How many dollars is that?`])
+    : (Math.random()<.5?`Work out ${n} × ${m}`:`Work out ${m} × ${n}`);
+  const fix=m===75
+    ? `${n} × 100 = ${fmt(big)}. 75 is three quarters of 100. A quarter of ${fmt(big)} is ${fmt(big/4)}, so three quarters is ${fmt(ans)}.`
+    : `${n} × ${fmt(H)} = ${fmt(big)}. ${m} is ${part} of ${fmt(H)}, so ${m===50?"halve it":m===25?"divide by 4":"divide by 8"}: ${fmt(ans)}.`;
+  return {qh,a:ans,hint:`Do ${n} × ${fmt(H)} first. ${m} is ${part} of ${fmt(H)}.`,fix};
+};
+DQ.zeros=L=>{
+  let a,b,za=1,zb=1;
+  if(L===1){ a=rnd(2,9); b=rnd(2,9); zb=pick([1,1,2]); }
+  else if(L===2){ a=rnd(11,25); b=rnd(2,9); zb=pick([1,1,2]); }
+  else { a=pick([12,14,15,16,18,25]); b=pick([12,14,15,16,18,20,24]); if(a===b) return null; }
+  const A=a*10**za, B=b*10**zb, ans=A*B, z=za+zb, p=a*b;
+  const [x,y]=Math.random()<.5?[A,B]:[B,A];
+  let core=`${a} × ${b} = ${p}`;
+  if(L===3&&a%5===0&&b%2===0&&a!==25) core=`${a} × ${b} = ${a*2} × ${b/2} = ${p}`;
+  else if(a===25&&b%4===0) core=`${a} × ${b} = 100 × ${b/4} = ${p}`;
+  return {qh:`Work out ${fmt(x)} × ${fmt(y)}`,a:ans,
+    hint:`Take the zeros off: work out ${a} × ${b}, then put ${z} zeros back on.`,
+    fix:`Take the zeros off: ${core}. Put the ${z} zeros back on: ${fmt(ans)}.`};
+};
+DQ.friendly=L=>{
+  const pairs=L===1?[[2,5],[4,25],[5,2],[2,50]]:L===2?[[20,5],[25,4],[50,2],[4,25],[5,20]]:[[25,8],[125,8],[20,50],[25,40],[4,250],[50,20]];
+  const [x,y]=pick(pairs);
+  let m=L===1?rnd(3,9):L===2?rnd(6,19):rnd(7,24); if(m%10===0) m++;
+  const ans=x*y*m, order=Math.random()<.7?[x,m,y]:shuffle([x,m,y]);
+  return {qh:`Work out ${order.join(" × ")}`,a:ans,
+    hint:`Look for two numbers that multiply to make 10, 100 or 1000. Do those two first.`,
+    fix:`Pair up the friendly numbers first: ${x} × ${y} = ${fmt(x*y)}. Then ${fmt(x*y)} × ${m} = ${fmt(ans)}.`};
+};
+DQ.nearTen=L=>{
+  const k=L===1?pick(["x5","x9","x11"]):L===2?pick(["x9","x11","x99","x5"]):pick(["x99","x99","x101","x98"]);
+  let n,mult,hint,fix;
+  if(k==="x5"){ n=2*rnd(13,49); mult=5; hint=`× 5 is the same as × 10, then halve it.`; fix=`${n} × 10 = ${fmt(n*10)}, and half of that is ${fmt(n*5)}.`; }
+  else if(k==="x9"){ n=L===1?rnd(12,30):rnd(24,75); mult=9; hint=`× 9 is × 10, then take away one lot of ${n}.`; fix=`${n} × 10 = ${n*10}. Take away one ${n}: ${n*10} − ${n} = ${n*9}.`; }
+  else if(k==="x11"){ n=rnd(12,L===1?40:85); mult=11; hint=`× 11 is × 10, plus one more lot of ${n}.`; fix=`${n} × 10 = ${n*10}. Add one more ${n}: ${n*10} + ${n} = ${n*11}.`; }
+  else if(k==="x99"){ n=L===2?rnd(3,12):rnd(13,45); mult=99; hint=`× 99 is × 100, then take away one lot of ${n}.`; fix=`${n} × 100 = ${fmt(n*100)}. Take away one ${n}: ${fmt(n*99)}.`; }
+  else if(k==="x101"){ n=rnd(13,45); mult=101; hint=`× 101 is × 100, plus one more lot of ${n}.`; fix=`${n} × 100 = ${fmt(n*100)}. Add one more ${n}: ${fmt(n*101)}.`; }
+  else { n=rnd(6,25); mult=98; hint=`× 98 is × 100, then take away two lots of ${n}.`; fix=`${n} × 100 = ${fmt(n*100)}. Take away 2 × ${n} = ${2*n}: ${fmt(n*98)}.`; }
+  return {qh:`Work out ${n} × ${mult}`,a:n*mult,hint,fix};
+};
+
 /* ---------- a 5-question session: 3 fraction/number-line questions, 1 shapes & space, 1 wildcard ---------- */
 const DPOOL={
   fvis:["shadeMore","whatFrac","fracAs","sameArea"],
   fword:["fracOf","cake","shops","unitConv","closest","biggest","equiv","partsIn","notEqual"],
   line:["lineRead","lineFrac","jumps","jug","twoScales","thermo"],
   space:["turnFlip","symmetry","cubes","halfArea"],
-  think:["fence","layers","swap","sumDiff","rule"]
+  think:["fence","layers","swap","sumDiff","rule"],
+  mental:["quarter","zeros","friendly","nearTen"]
 };
-const DTOPIC={fvis:"frac",fword:"frac",line:"line",space:"space",think:"think"};
+const DTOPIC={fvis:"frac",fword:"frac",line:"line",space:"space",think:"think",mental:"mental"};
 function makeDrillQ(id,L){ for(let t=0;t<80;t++){ const q=DQ[id](L); if(q){ q.id=id; return q; } } return null; }
 let drillRecent=new Set();
 function buildDrillSet(L){
@@ -1280,11 +1361,11 @@ function buildDrillSet(L){
     for(const [id,p] of ids){ const q=makeDrillQ(id,L); if(q){ used.add(id); q.topic=DTOPIC[p]; set.push(q); return; } }
   };
   take(["fvis"]); take(["line"]); take(["fword"]); take(["space"]);
-  take(Math.random()<.5?["think"]:["fvis","fword","line"]);
+  take(Math.random()<.6?["mental"]:["think","fvis","fword","line"]);
   drillRecent=used;
   return shuffle(set);
 }
-/* ---------- drill questions that also turn up in matches (shots, half-time Brain Boost, penalties).
+/* ---------- drill questions that also turn up in matches (shots, Brain Boost, penalties).
    Match maths level 0/1/2 uses drill level 1/2/3. They stay in the Drills tab too. ---------- */
 const MATCH_DQ=["shadeMore","whatFrac","fracAs","fracOf","equiv","closest","lineRead","lineFrac","jug","thermo","turnFlip","cubes","halfArea","fence","sumDiff"];
 let lastD="";
@@ -1295,6 +1376,17 @@ function pickDQ(L){
     if(q){ lastD=id; return {...q,tier:Math.max(0,L),drill:true}; }
   }
   return makeQuestion(clamp(L,0,2));
+}
+/* mental-maths tricks: ×25/×75 and friendly pairs come up most often */
+const MENTAL_W=["quarter","quarter","friendly","friendly","zeros","zeros","nearTen"];
+let lastM="";
+function pickMental(L){
+  for(let t=0;t<12;t++){
+    const id=pick(MENTAL_W); if(id===lastM) continue;
+    const q=makeDrillQ(id,clamp(L+1,1,3));
+    if(q){ lastM=id; return {...q,tier:Math.max(0,L),drill:true,topic:"mental"}; }
+  }
+  return pickDQ(L);
 }
 
 /* ---------- Audio ---------- */
@@ -1510,8 +1602,26 @@ const TRAIN=[
 ];
 const KITS=[["#ffcf3f","#0b1a2b"],["#e63946","#ffffff"],["#1d4ed8","#ffffff"],["#16a34a","#ffffff"],["#f97316","#1a1a1a"],["#7c3aed","#ffffff"],["#111827","#ffcf3f"],["#ffffff","#e63946"]];
 const HALF={short:60,normal:90,long:120};
-/* half-time Brain Boost: coins per right answer, and the power-up for getting all 3 right */
-const HT_PAY=15, HT_BONUS=50, HT_SPEED=1.15, HT_SHOT=2;
+
+/* ---------- Brain Boost: 3 questions before kick-off and 3 at half-time.
+   3 right = pick 2 of 6 random power-up cards, 2 right = pick 1. Coins for every right answer. ---------- */
+const BB_PAY=10;
+const PERK_STATS=[
+  {k:"pace",ic:"⚡",lb:"Team speed",ds:"Everyone runs faster"},
+  {k:"p",ic:"💥",lb:"Shot power",ds:"Harder, faster shots"},
+  {k:"a",ic:"🎯",lb:"Accuracy",ds:"Shots find the corners"},
+  {k:"d",ic:"🌀",lb:"Dribbling",ds:"Quicker on the ball, harder to tackle"},
+  {k:"pass",ic:"🔁",lb:"Passing",ds:"Passes go where you aim"},
+  {k:"def",ic:"🛡️",lb:"Tackling",ds:"Win the ball back more often"},
+  {k:"gk",ic:"🧤",lb:"Keeper skill",ds:"Your keeper saves more shots"},
+  {k:"stam",ic:"🔋",lb:"Stamina",ds:"Sprint for much longer"}
+];
+/* guest stars (no Manchester City or Liverpool players) */
+const STARS=[["Pelé",98,10],["Maradona",97,10],["Messi",97,10],["Ronaldo",96,7],["Zidane",96,5],["Cruyff",95,14],["Ronaldinho",94,10],
+  ["Eusébio",93,10],["Bobby Charlton",93,9],["George Best",93,7],["Henry",93,14],["Cantona",93,7],["Mbappé",92,9],["Rooney",91,10],
+  ["Kane",91,9],["Beckham",90,7],["Lamine Yamal",90,19],["Bellingham",90,5],["Vinícius Jr.",90,7],["Bruno Fernandes",89,8],
+  ["Scholes",89,18],["Giggs",89,11],["Saka",88,7],["Kobbie Mainoo",85,37]].map(([name,r,num])=>({name,r,num}));
+const STAR_GK=[["Lev Yashin",94,1],["Buffon",93,1],["Van der Sar",90,1]].map(([name,r,num])=>({name,r,num,gk:true}));
 
 const LAND="0000000000000001111011111111101111111111111111110000000011111000000000000000000000111110000000000000000000000|0000000000000011111111111111100000111111111111100000000000000000000000111100000111111111100000001101000000000|0001110000000011111111111111111100011111111111100000000000001110000001100011111111111111111111111111111000000|0111111111111111111111111111011110001111111111000000000001111111111111111111111111111111111111111111111111111|0111111111111111111111111111011111001111110000111000000011111111111111111111111111111111111111111111111111111|0111111111111111111111111000111110000111000000000010001111111111111111111111111111111111111111111111111111111|0111111101111111111111110000111111000000000000000011001111101111111111111111111111111111111111111111111110000|0101100000111111111111111111111111100000000000000011100111111111111111111111111111111111111111110000011100000|1000000000001111111111111111111111110000000000000011111111111111111111111111111111111111111111111100011000010|0000000000000111111111111111111111111000000000000001111111111111111111111111111111111111111111111100000000000|0000000000000011111111111111111111101000000000000000111111111111111111111111111111111111111111111101000000000|0000000000000011111111111111111110000000000000000011111111111101011111111111111111111111111111111110000000000|0000000000000011111111111111110000000000000000000011110101111111111111111111111111111111111111001100000000000|0000000000000011111111111111110000000000000000000011111111011111111111111111111111111111111111111000000000000|0000000000000001111111111111100000000000000000000011111111011000111111111111111111111111111001110000000000000|0000000000000000111111111111000000000000000000000111111111111111111111111111111111111111111100000000000000000|0000000000000000011111100001000000000000000000001111111111111111111111111111111111111111111000000000000000000|0000000000000000001111100011100000000000000000001111111111111111111111110011111111111111111000000000000000000|0000100000000000000011101100111000000000000000011111111111111111111111110001111101111111000000000000000000000|0000000000000000000011111100101010000000000000001111111111111111111111100001111100111110001100000000000000000|0000000000000000000000001110000000000000000000011111111111111111111110000000110000011110001100000010000000000|0000000000000000000000000010011111000000000000001111111111111111111110000000110000011110001110000000000000000|0000000000000000000000000001111111100000000000000111111111111111111110000000011000011100010110000000000000000|0000000000000000000000000000111111111000000000000011101111111111111100000000000000111100111010000000000000000|0000000000000000000000000000111111111100000000000000000011111111111100000000000000011101111011000000000000010|0000000000000000000000001001111111111111100000000000000111111111110000000000000000001101111101111110000000000|0000000000000000000000000001111111111111110000000000000011111111110000000000000000000110001100011111110000000|0000000000000000000000000000111111111111110000000000000001111111110000000000000000000011111100001111001100000|0000000000000000000000000000111111111111110000000000000001111111110010000000000000000000000101110100100100000|0000000000000000000000000000011111111111100000000000000011111111110110000000000000000000000011110110000000000|0000000000000000000000000000001111111111100000000000000011111111111110000000000000000000000111111110000000001|0000000000000000000000000000000111111111100000000000000001111111001110000000000000000000111111111111000000000|0000000000000000000000000000000111111110000000000000000001111111001100000000000000000000111111111111100000000|0000000000000000000000000000001111111100000000000000000001111111000000000000000000000000111111111111100000000|0000000000000000000000000000001111111100000000000000000000111110000000000000000000000000011111111111100000000|0000000000000000000000000000001111111000000000000000000000111100000000000000000000000000011100011111100000010|0000000000000000000000000000001111110000000000000000000000000000000000000000000000000000000000001111000000011|0000000000000000000000000000001111000000000000000000000000000000000000000000000000000000000000000011000000111|0000000000000000000000000000011110000000000000000000000000000000000000000000000000000000000000000011000001110|0000000000000000000000000000011110000000000000000000000000000000000000000000000000000000000000000000000001100|0000000000000000000000000000011100000000000000000000000000000000000000000010000000000000000000000000000000000|0000000000000000000000000000011100100000010000000000000000000000000000000000000000000000000000000000000000000|0000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000".split("|");
 
@@ -1583,11 +1693,6 @@ function confettiDOM(n=60){
     s.style.animationDuration=(1.6+Math.random()*1.6)+"s"; s.style.animationDelay=(Math.random()*.5)+"s";
     document.body.appendChild(s); setTimeout(()=>s.remove(),3800); }
 }
-/* the three Brain Boost rewards, shown big at half-time and on the Matches tab */
-const perksHTML=on=>`<div class="perks">
-  <div class="perk${on?"":" off"}"><span class="ic">⚽</span><b>${HT_SHOT}×</b><span>chance of scoring from your shots</span></div>
-  <div class="perk${on?"":" off"}"><span class="ic">⚡</span><b>+${Math.round((HT_SPEED-1)*100)}%</b><span>team running speed</span></div>
-  <div class="perk${on?"":" off"}"><span class="ic"><i class="coin"></i></span><b>+${HT_BONUS}</b><span>bonus coins</span></div></div>`;
 
 /* =========================================================
    SCREENS
@@ -1702,9 +1807,9 @@ function nextBanner(){
   return `<div class="notice"><div><div class="eyebrow">${esc(T.name)} · ${esc(nx.label)}</div><b>Next up: ${esc(TEAM[nx.code].name)}</b></div><button class="btn btnGold" data-act="tourPlay">Play next match</button></div>`;
 }
 function boostBanner(){
-  return `<div class="hubBoost"><div class="big">${HT_SHOT}×</div><div><div class="eyebrow">Half-time Brain Boost</div>
-    <h3>Get all 3 half-time questions right</h3>
-    <p>Your shots are <b>twice as likely to score</b> in the second half, your team runs <b>${Math.round((HT_SPEED-1)*100)}% faster</b>, and you win <b><i class="coin"></i>${HT_BONUS} bonus coins</b>.</p></div></div>`;
+  return `<div class="hubBoost"><div class="big">⚡</div><div><div class="eyebrow">Brain Boost · before kick-off and at half-time</div>
+    <h3>3 right = pick 2 power-ups</h3>
+    <p>Three quick questions before each half. Get all 3 right and choose <b>2 of 6 random power-up cards</b>: up to <b>+200% speed</b>, a super keeper, golden shots… and sometimes a <b>legend like Pelé or Messi</b> joins your team. 2 right still wins 1 pick, and every right answer earns <i class="coin"></i>${BB_PAY}.</p></div></div>`;
 }
 
 function vPlay(){
@@ -1866,7 +1971,8 @@ const DTOPICS=[
   {k:"frac",name:"Fractions",what:"Shaded shapes, fractions of amounts, comparing fractions"},
   {k:"line",name:"Number lines & scales",what:"Number lines, jugs, thermometers and weighing scales"},
   {k:"space",name:"Shapes & space",what:"Turns, flips, symmetry, cube stacks and area"},
-  {k:"think",name:"Problem solving",what:"Fence posts, rounding up, swaps and sharing"}];
+  {k:"think",name:"Problem solving",what:"Fence posts, rounding up, swaps and sharing"},
+  {k:"mental",name:"Mental maths tricks",what:"×25 and ×75, friendly pairs, zeros, ×9 and ×99"}];
 const DRILL_PAY=[0,4,6,8], DRILL_BONUS=[0,10,15,20], DRILL_N=5;
 function vDrills(){
   const D=G.drills, L=D.lvl;
@@ -1875,7 +1981,7 @@ function vDrills(){
       <div class="row"><span>${s.n?`<b>${s.r}</b> of ${s.n} right`:"Not tried yet"}</span><b>${s.n?pc+"%":""}</b></div></article>`; }).join("");
   return `<section class="drillHero"><div>
       <div class="eyebrow">Coach's Drills · Level ${L} of 3</div><h3>Train your brain, earn coins</h3>
-      <p>Five questions from the coach: fractions, number lines, scales and shapes. There's no timer, so take your time and check your answer before you press Enter. Practise here: lots of these questions turn up on your shots in matches too.</p>
+      <p>Five questions from the coach: fractions, number lines, scales, shapes and mental-maths tricks. There's no timer, so take your time and check your answer before you press Enter. Practise here: lots of these questions turn up on your shots and in Brain Boost too.</p>
       <div class="dlvl" aria-label="Level ${L} of 3">${[1,2,3].map(i=>`<i class="${i<=L?"on":""}"></i>`).join("")}</div>
       <p class="dpay">Each right answer earns <b><i class="coin"></i>${DRILL_PAY[L]}</b>. Get 5 out of 5 for a <b><i class="coin"></i>${DRILL_BONUS[L]} bonus</b>${L<3?" and move up a level":""}.</p>
       <button class="btn btnGold" data-act="drill" style="font-size:18px;padding:10px 24px">Start drills</button></div>
@@ -2014,7 +2120,8 @@ function tourAfterMatch(res,gf,ga,pens){
 const gate={active:false,q:null,input:"",att:2,max:2,time:45,total:45,timer:null,start:0,onDone:null,
   manual:false,waiting:false,waitT:0,seq:0,okMsg:"",nextLabel:"",onQuit:null};
 /* options: title, msg, attempts, time, onDone(ok,fast,first)
-   drills also pass: noTimer, manual (wait for "Next" after a miss and show the one-line fix), okMsg, nextLabel, onQuit */
+   drills and Brain Boost also pass: manual (wait for "Next" after a miss and show the one-line fix), okMsg, nextLabel;
+   drills pass noTimer and onQuit */
 function openGate(q,o){
   gate.q=q; gate.onDone=o.onDone; gate.att=gate.max=o.attempts||2; gate.seq++;
   gate.manual=!!o.manual; gate.waiting=false; gate.okMsg=o.okMsg||""; gate.nextLabel=o.nextLabel||""; gate.onQuit=o.onQuit||null;
@@ -2111,15 +2218,18 @@ const cv=$("cv"), ctx=cv.getContext("2d");
 let DPR=1, PV={s:1,ox:0,oy:0,cw:0,ch:0}, pitchCan=null;
 
 function mathsLevel(r,c){ let L=r<60?0:r<76?1:2; if(c.final||(c.ko&&r>=70)) L=Math.max(L,1); return L; }
+function freshMods(){ return {pace:0,p:0,a:0,d:0,pass:0,def:0,gk:0,stam:0,shotX:1,coins:0}; }
 function startMatch(opp,c){
   audio();
   if(document.activeElement) document.activeElement.blur();
   let k1=opp.k1,k2=opp.k2; const mine=G.team.kit[0];
   if(colorDist(k1,mine)<110){ [k1,k2]=[k2,k1]; if(colorDist(k1,mine)<110){ k1=lum(mine)>.5?"#1f2937":"#f4f4f4"; k2=lum(mine)>.5?"#f4f4f4":"#1f2937"; } }
+  PK=null;
   M={opp,ctx:c,kitO:[k1,k2],q:clamp((opp.r-40)/55,0,1),bs:bootStats(G.boots.eq),bootCol:G.boots.owned[G.boots.eq].color||BOOT[G.boots.eq].c,
     score:[0,0],half:1,t:0,halfLen:HALF[G.halfLen]||90,state:"pause",pauseT:1,after:null,goalT:0,
     players:[],human:null,ball:null,shot:null,shots:[0,0],poss:[0.01,0.01],
-    ht:{correct:0,res:[],all:false},boost:1,shotBoost:1,stam:1,charge:0,charging:false,idle:9,recvGrace:0,switchT:0,
+    bb:{pre:null,ht:null},bbQs:[],mods:freshMods(),perks:[],boost:1,stam:1,charge:0,charging:false,idle:9,recvGrace:0,switchT:0,
+    lostT:0,gateStuck:0,
     floaters:[],parts:[],level:mathsLevel(opp.r,c),shotA:0,shotC:0,goals:[],pens:null,hAct:false,C:null,prevState:null};
   for(let s=0;s<2;s++) for(let i=0;i<5;i++) M.players.push(mkPlayer(s,i));
   M.ball={x:500,y:310,vx:0,vy:0,z:0,owner:null,lastSide:0,passTo:null,noP:null,noT:0};
@@ -2127,22 +2237,29 @@ function startMatch(opp,c){
   showScreen("match");
   $("sbInfo").textContent=c.label+" · "+(opp.star?`watch ${opp.star.split("@")[0]}`:`rating ${opp.r}`);
   setSB(); resizeMatch();
-  kickoff(0,`Kick-off! ${G.team.name} v ${opp.name}`);
-  sWhistle();
+  kickoff(0,`${G.team.name} v ${opp.name}`);
+  // pre-match Brain Boost: the match waits until it's done (or skipped)
+  M.state="pre";
+  bbIntro("pre");
 }
 function mkPlayer(s,i){
   const R=ROLES[i];
   const sp = i===0?165 : s===0 ? 150+G.train.pace*6 : 140+(M.opp.r-40)*1.3;
-  const p={side:s,i,role:R.r,x:wx(s,R.x),y:R.y,vx:0,vy:0,dvx:0,dvy:0,fx:s?-1:1,fy:0,num:R.n,sp,tcd:0,stun:0,hold:0,dec:0,recv:false,star:"",jx:0,jy:0,jt:0,dive:0};
+  const p={side:s,i,role:R.r,x:wx(s,R.x),y:R.y,vx:0,vy:0,dvx:0,dvy:0,fx:s?-1:1,fy:0,num:R.n,sp,tcd:0,stun:0,hold:0,dec:0,recv:false,star:"",starR:0,jx:0,jy:0,jt:0,dive:0};
   if(s===1&&M.opp.star){ const [nm,pos]=M.opp.star.split("@"); if((pos==="D"&&i===1)||(!pos&&i===3)){ p.star=nm; p.sp*=1.07; } }
   return p;
 }
 const gk=s=>M.players[s*5];
+/* the keeper's rating, after Brain Boost keeper power-ups and any legendary guest keeper */
+function kRating(){ let r=keeperRating()*(1+(M?M.mods.gk:0)); const k=M&&gk(0); if(k&&k.starR) r+=k.starR-60; return r; }
+/* a keeper with the ball in (or just outside) his own box has it in his hands: no tackles, and opponents back off */
+const keeperSafe=o=>!!o&&o.role==="GK"&&axOf(o)<165&&Math.abs(o.y-GMID)<175;
+const keeperHolding=()=>{ const o=M.ball.owner; return keeperSafe(o)?o:null; };
 function nearestTo(side,x,y,noGK,excl){ let best=null,bd=1e9; for(const p of M.players){ if(p.side!==side||(noGK&&p.role==="GK")||p===excl) continue; const d=hyp(p.x-x,p.y-y); if(d<bd){bd=d;best=p;} } return best; }
 function nearestOppDist(x,y,side){ let bd=1e9; for(const p of M.players) if(p.side!==side){ const d=hyp(p.x-x,p.y-y); if(d<bd) bd=d; } return bd; }
 function segDist(px,py,ax,ay,bx,by){ const dx=bx-ax,dy=by-ay,l=dx*dx+dy*dy||1; const t=clamp(((px-ax)*dx+(py-ay)*dy)/l,0,1); return hyp(px-ax-t*dx,py-ay-t*dy); }
 function laneSafety(a,b){ let m=150; for(const o of M.players) if(o.side!==a.side){ m=Math.min(m,segDist(o.x,o.y,a.x,a.y,b.x,b.y)); } return m; }
-const nameOf=p=>p.side===0?(p===M.human?"You":`${G.team.code} #${p.num}`):(p.star||`${M.opp.code} #${p.num}`);
+const nameOf=p=>p.side===0?(p===M.human?"You":(p.star||`${G.team.code} #${p.num}`)):(p.star||`${M.opp.code} #${p.num}`);
 const inOwnBox=p=>axOf(p)<135&&Math.abs(p.y-GMID)<150;
 
 function say(t){ const c=$("comm"); c.textContent=t; c.classList.remove("pop"); void c.offsetWidth; c.classList.add("pop"); }
@@ -2168,7 +2285,7 @@ function kickoff(side,msg){
   const t=M.players[side*5+3]; t.x=side===0?486:514; t.y=310;
   gain(t,true);
   if(side===1) M.human=nearestTo(0,500,310,true);
-  M.charging=false; M.charge=0;
+  M.charging=false; M.charge=0; M.lostT=0;
   M.state="pause"; M.pauseT=1.1;
   say(msg||(side===0?"Your kick-off":`${M.opp.name} kick off`));
 }
@@ -2182,6 +2299,30 @@ function gain(p,quiet){
 }
 const humanActive=()=>!!M.human&&(M.ball.owner===M.human||(M.idle<.6&&M.recvGrace<=0));
 
+/* ---------- drop ball: restart play wherever the ball has got to (or the centre if it's lost) ---------- */
+function dropBall(auto){
+  if(!M) return;
+  if(M.pens){ M.shot=null; M.state="pen"; setupPen(); say("Retake! The referee resets the penalty."); return; }
+  const b=M.ball;
+  M.shot=null; M.after=null; M.charging=false; M.charge=0; M.lostT=0; M.gateStuck=0;
+  $("banner").hidden=true;
+  let x=b.x, y=b.y;
+  if(!isFinite(x)||!isFinite(y)){ x=500; y=310; }
+  x=clamp(x,90,PW-90); y=clamp(y,50,PH-50);
+  M.players.forEach(p=>{
+    if(!isFinite(p.x)||!isFinite(p.y)){ const R=ROLES[p.i]; p.x=wx(p.side,R.x); p.y=R.y; }
+    p.x=clamp(p.x,12,PW-12); p.y=clamp(p.y,12,PH-12);
+    p.vx=p.vy=p.dvx=p.dvy=0; p.recv=false; p.stun=0; p.dive=0; p.tcd=.3;
+    if(p.role==="GK"){ p.x=wx(p.side,24); p.y=GMID; }
+    else { const d=hyp(p.x-x,p.y-y); if(d<45){ const ux=d?(p.x-x)/d:(p.side?1:-1), uy=d?(p.y-y)/d:0; p.x=clamp(x+ux*45,12,PW-12); p.y=clamp(y+uy*45,12,PH-12); } }
+  });
+  b.owner=null; b.x=x; b.y=y; b.vx=b.vy=0; b.z=0; b.passTo=null; b.noP=null; b.noT=0;
+  M.human=nearestTo(0,x,y,true); M.idle=0;
+  M.state="pause"; M.pauseT=.9;
+  say(auto?"The ball got stuck! The referee drops the ball.":"Drop ball! Play restarts.");
+  sWhistle();
+}
+
 /* ---------- keyboard / touch ---------- */
 const K={up:false,down:false,left:false,right:false,sprint:false};
 const J={x:0,y:0,id:null};
@@ -2194,6 +2335,12 @@ window.addEventListener("keydown",e=>{
   if(e.target&&e.target.tagName==="INPUT") return;
   if(gate.waiting){ if((e.key==="Enter"||e.key===" ")&&!e.repeat) gateNext(); if(e.key!=="Tab") e.preventDefault(); return; }
   if(gate.active){ gateKeyboard(e); if(e.key!=="Tab") e.preventDefault(); return; }
+  // Brain Boost power-up cards: 1–6 to pick, Enter to lock in
+  if(PK&&!$("htOv").hidden){
+    const n=parseInt(e.key,10);
+    if(n>=1&&n<=PK.offers.length){ e.preventDefault(); pkToggle(n-1); return; }
+    if(e.key==="Enter"&&!e.repeat){ e.preventDefault(); if(PK.sel.length===PK.picks) pkLock(); return; }
+  }
   audio();
   if(SCREEN!=="match"||!M) return;
   if(e.code==="KeyP"||e.code==="Escape"){ togglePause(); e.preventDefault(); return; }
@@ -2256,11 +2403,12 @@ function humanPass(h){
     let s=cos*3-d/450+laneSafety(h,t)/100; if(t.role==="GK") s-=1.6;
     if(s>bs){bs=s;best=t;} }
   if(!best) return;
-  passBall(h,best,Math.max(.02,.14-G.train.pass*.012));
+  passBall(h,best,Math.max(.02,.14-G.train.pass*.012)/(1+M.mods.pass));
 }
 function humanTackle(h){
   if(h.tcd>0||h.stun>0) return;
   const car=M.ball.owner;
+  if(car&&car.side===1&&keeperSafe(car)&&dist(h,car)<80){ h.tcd=.5; floater(h.x,h.y-30,"Hands off! The keeper has it","#ff9d8f"); return; }
   if(car&&car.side===1&&dist(h,car)<32){ tryTackle(h,car); return; }
   h.tcd=.4;
   if(!car&&hyp(h.x-M.ball.x,h.y-M.ball.y)<34){ gain(h); sTackle(); return; }
@@ -2268,11 +2416,15 @@ function humanTackle(h){
 }
 function tryTackle(t,c){
   t.tcd = t===M.human ? .55 : .8+Math.random()*.5-M.q*.2;
+  // a keeper holding the ball in his box can't be tackled
+  if(keeperSafe(c)) return false;
   let ch;
   if(t.side===1){ const D=c===M.human?M.bs.d:55; ch=.2+M.q*.28-(D-45)*.0045;
     // holding on to the ball for ages, or shielding it on the edge, gets harder and harder
-    if(c.side===0){ const st=c.stall||0; ch+=Math.min(.45,Math.max(0,st-2)*.1)+(nearEdge(c)?.1:0); if(st>3) t.tcd*=.6; } }
-  else ch=.2+G.train.def*.035-M.q*.15+(t===M.human?.12:0);
+    if(c.side===0){ const st=c.stall||0; ch+=Math.min(.45,Math.max(0,st-2)*.1)+(nearEdge(c)?.1:0); if(st>3) t.tcd*=.6; }
+    // guest stars are slippery
+    if(c.starR) ch-=.08+(c.starR-85)*.006; }
+  else ch=.2+G.train.def*.035-M.q*.15+(t===M.human?.12:0)+M.mods.def*.15;
   if(c.role==="GK") ch*=.4;
   if(Math.random()<clamp(ch,.06,.85)){
     gain(t,true); c.stun=.5; sTackle();
@@ -2302,42 +2454,45 @@ function aiPass(p,long,force){
     const s=open+lane*1.3+(axOf(t)-axOf(p))*.35-d*.12+Math.random()*20;
     if(s>bs){bs=s;best=t;} }
   if(!best) return false;
-  passBall(p,best,p.side===0?.05:.03+(1-M.q)*.16);
+  passBall(p,best,p.side===0?.05/(1+M.mods.pass):.03+(1-M.q)*.16);
   return true;
 }
 function attemptShot(){
   const h=M.human, dG=hyp(PW-h.x,GMID-h.y);
   if(h.x<470){ floater(h.x,h.y-34,"Too far! Get into their half"); M.charge=0; beep(300,.1,"square",.08); return; }
   const charge=M.charge; M.charge=0; M.state="gate"; M.shotA++;
-  const q=mathsQ(M.level), boosted=M.shotBoost>1;
-  openGate(q,{title:`${boosted?"⚡ BOOSTED shot":"Shot"} from ${Math.max(2,Math.round(dG/25))} metres. Solve it to strike it clean!`,attempts:q.choices?1:2,time:45,
-    msg:boosted?`Brain Boost is on: a right answer has ${HT_SHOT}× the chance of a goal!`:q.choices?"One try, so think it through first.":"First try = best shot. A fast answer adds power.",
+  const q=mathsQ(M.level), boosted=M.mods.shotX>1;
+  const who=h.star?`${h.star} shoots`:"Shot";
+  openGate(q,{title:`${boosted?"⚡ GOLDEN "+who.toLowerCase():who} from ${Math.max(2,Math.round(dG/25))} metres. Solve it to strike it clean!`,attempts:q.choices?1:2,time:45,
+    msg:boosted?`Golden shots are on: a right answer is ${M.mods.shotX}× as likely to score!`:q.choices?"One try, so think it through first.":"First try = best shot. A fast answer adds power.",
     onDone:(ok,fast,first)=>{
       if(ok) M.shotC++;
       M.state="play";
-      const out=shotOutcome(ok,fast,first,charge,dG);
+      const out=shotOutcome(ok,fast,first,charge,dG,h);
       if(!ok) floater(h.x,h.y-34,"Scuffed it!","#ff9d8f");
-      else if(boosted) floater(h.x,h.y-34,first&&fast?"⚡ BOOSTED POWER STRIKE!":"⚡ BOOSTED STRIKE!");
+      else if(boosted) floater(h.x,h.y-34,first&&fast?"⚡ GOLDEN POWER STRIKE!":"⚡ GOLDEN STRIKE!");
       else if(first&&fast) floater(h.x,h.y-34,"POWER STRIKE!");
-      launchShot(h,out,.3+.7*Math.max(charge,.35)*(M.bs.p/99)+(ok&&fast?.1:0)+(ok&&boosted?.1:0));
+      launchShot(h,out,.3+.7*Math.max(charge,.35)*(M.bs.p/99)+(ok&&fast?.1:0)+(ok&&boosted?.1:0)+(h.starR?.12:0));
     }});
 }
-function shotOutcome(ok,fast,first,charge,d){
+function shotOutcome(ok,fast,first,charge,d,sh){
   // No correct answer = no goal, however close to goal the shot is.
   if(!ok){ const r=Math.random(); return r<.45?"save":r<.6?"post":"wide"; }
   const bs=M.bs, P=bs.p*(.45+.55*charge);
   let pg=first?(fast?.72:.62):.4;
-  pg+=(bs.a-60)*.005+(P-50)*.003-Math.max(0,d-200)*.0016*(1-bs.p/180)-(M.opp.r-65)*.006;
+  pg+=(bs.a-60)*.005+(P-50)*.003-Math.max(0,d-200)*.0016*Math.max(0,1-bs.p/180)-(M.opp.r-65)*.006;
+  if(sh&&sh.starR) pg+=.06+(sh.starR-85)*.008;
   pg=clamp(pg,.12,.93);
   let wide=first?clamp(.14-(bs.a-45)*.0025,.02,.14):.22;
-  // half-time Brain Boost: a right answer doubles the chance of scoring (capped so the keeper can still save one)
-  if(M.shotBoost>1){ pg=Math.min(.97,pg*M.shotBoost); wide/=2; }
+  if(sh&&sh.starR) wide*=.6;
+  // Golden shots power-up: a right answer multiplies the chance of scoring (capped so the keeper can still save one)
+  if(M.mods.shotX>1){ pg=Math.min(.97,pg*M.mods.shotX); wide/=M.mods.shotX; }
   if(Math.random()<wide) return Math.random()<.18?"post":"wide";
   return Math.random()<pg/(1-wide)?"goal":"save";
 }
 function aiShoot(p){
   const dg=hyp((p.side===0?PW:0)-p.x,GMID-p.y);
-  const pg=clamp(.14+(M.opp.r-keeperRating())*.008+(200-dg)*.0012+(p.star?.07:0),.05,.55);
+  const pg=clamp(.14+(M.opp.r-kRating())*.008+(200-dg)*.0012+(p.star?.07:0),.05,.55);
   const r=Math.random(); let out;
   if(r<.16) out="wide"; else if(r<.2) out="post"; else out=Math.random()<pg/.8?"goal":"save";
   launchShot(p,out,.45+M.q*.4);
@@ -2357,11 +2512,13 @@ function launchShot(p,out,pow){
   if(!M.pens) M.shots[side]++;
   M.players.forEach(q=>q.recv=false);
   p.stun=.15; sKick();
-  say(side===0?pick(["You shoot!","Here's the strike…","Lines it up… SHOOTS!"]):`${nameOf(p)} shoots!`);
+  say(side===0?pick([p.star?`${p.star} shoots!`:"You shoot!","Here's the strike…","Lines it up… SHOOTS!"]):`${nameOf(p)} shoots!`);
 }
 function shotUpdate(dt){
   const S=M.shot, b=M.ball, k=S.k;
   S.t+=dt; b.x+=b.vx*dt; b.y+=b.vy*dt;
+  // safety net: a shot should never take this long, so call it wide and carry on
+  if(S.t>Math.max(3.5,S.reachT+1.5)||!isFinite(b.x+b.y)){ M.shot=null; k.dive=0; b.z=0; if(M.pens){ b.vx=b.vy=0; penResolve(false); } else dropBall(true); return; }
   b.z=Math.sin(Math.min(1,S.t/S.reachT)*Math.PI)*S.h;
   const kp=Math.min(1,S.t/(S.reachT*.85)), e=1-(1-kp)*(1-kp);
   k.y=S.k0+(S.kT-S.k0)*e; k.dive=(S.kT-S.k0)*e; k.x+=(wx(k.side,14)-k.x)*Math.min(1,dt*6);
@@ -2386,15 +2543,15 @@ function shotUpdate(dt){
 function goalScored(side,scorer){
   M.score[side]++; setSB();
   const m=minuteNow();
-  const who=side===0?"You":(scorer&&scorer.star?scorer.star:`${M.opp.code} #${scorer?scorer.num:""}`.trim());
+  const who=side===0?(scorer&&scorer.star?scorer.star:"You"):(scorer&&scorer.star?scorer.star:`${M.opp.code} #${scorer?scorer.num:""}`.trim());
   M.goals.push({side,m,who});
   M.state="goal"; M.goalT=2.6; M.after=()=>kickoff(1-side);
   const bn=$("banner");
-  bn.innerHTML=`<div class="b1 ${side?"opp":""}">GOAL!</div><div class="b2">${m}' · ${esc(side===0?G.team.name:who+" for "+M.opp.name)}${side===0&&M.shotBoost>1?" · ⚡ Brain Boost":""}</div>`;
+  bn.innerHTML=`<div class="b1 ${side?"opp":""}">GOAL!</div><div class="b2">${m}' · ${esc(side===0?(who==="You"?G.team.name:who+" for "+G.team.name):who+" for "+M.opp.name)}${side===0&&M.perks.length?" · ⚡ Brain Boost":""}</div>`;
   bn.hidden=false; setTimeout(()=>bn.hidden=true,2400);
   if(side===0){ sCrowd(); burst(M.ball.x,M.ball.y,[G.team.kit[0],G.team.kit[1],"#ffcf3f","#ffffff"],40); }
   else { sGroan(); beep(200,.3,"sawtooth",.08); }
-  say(side===0?pick(["GOOOAL! Top corner!","GOOOAL! What a finish!","GOOOAL! The keeper had no chance!"]):`${who} scores for ${M.opp.name}.`);
+  say(side===0?(who!=="You"?`GOOOAL! ${who} scores!`:pick(["GOOOAL! Top corner!","GOOOAL! What a finish!","GOOOAL! The keeper had no chance!"])):`${who} scores for ${M.opp.name}.`);
 }
 function outCheck(){
   const b=M.ball;
@@ -2413,11 +2570,17 @@ function outCheck(){
 }
 function restart(side,type,x,y,label){
   const b=M.ball; M.shot=null;
+  if(!isFinite(x)) x=500; if(!isFinite(y)) y=GMID;
   const t=type==="gk"?gk(side):nearestTo(side,x,y,true);
+  if(!t){ dropBall(true); return; }
   t.x=x; t.y=y; t.vx=t.vy=0;
   const cx=500-x, cy=310-y, n=hyp(cx,cy)||1; t.fx=cx/n; t.fy=cy/n;
   b.x=x+t.fx*13; b.y=y+t.fy*13; b.vx=b.vy=0; b.z=0;
-  M.players.forEach(p=>{ if(p.side!==side){ const d=hyp(p.x-x,p.y-y); if(d<80){ const dd=d||1; p.x=clamp(x+(p.x-x)/dd*80,10,PW-10); p.y=clamp(y+(p.y-y)/dd*80,10,PH-10); } } });
+  // everyone on the other team stands back: well back for a goal kick, 80 away for anything else
+  const R=type==="gk"?150:80;
+  M.players.forEach(p=>{ if(p.side!==side){ const d=hyp(p.x-x,p.y-y); if(d<R){ const dd=d||1; let ux=(p.x-x)/dd, uy=(p.y-y)/dd;
+    if(type==="gk"){ const fwd=side===0?1:-1; if(ux*fwd<.3){ ux=fwd*.8; uy=uy<0?-.6:.6; } }
+    p.x=clamp(x+ux*R,10,PW-10); p.y=clamp(y+uy*R,10,PH-10); } } });
   gain(t,true);
   if(side===0&&t.role!=="GK") M.human=t;
   M.state="pause"; M.pauseT=.8;
@@ -2440,9 +2603,11 @@ function moveTo(p,x,y,urg){
 function computeCache(){
   const b=M.ball, car=b.owner, C={press:[null,null],press2:[null,null],chase:[null,null]};
   M.hAct=humanActive();
+  const kh=keeperHolding();
   for(let s=0;s<2;s++){
     const cand=M.players.filter(p=>p.side===s&&p.role!=="GK"&&!(s===0&&M.hAct&&p===M.human));
-    if(car&&car.side!==s){
+    // nobody presses a keeper who has the ball in his hands
+    if(car&&car.side!==s&&!kh){
       const byD=cand.slice().sort((u,v)=>dist(u,car)-dist(v,car));
       C.press[s]=byD[0]||null;
       // a carrier sitting on the ball or hugging an edge/corner gets double-teamed
@@ -2471,7 +2636,7 @@ function brain(p,dt){
 function humanBrain(p,dt){
   const v=inputVec(), own=M.ball.owner===p;
   let sp=p.sp*M.boost;
-  if(K.sprint&&M.stam>.05&&(v.x||v.y)){ sp*=1.32; M.stam=Math.max(0,M.stam-dt*.38); M.sprinting=true; }
+  if(K.sprint&&M.stam>.05&&(v.x||v.y)){ sp*=1.32; M.stam=Math.max(0,M.stam-dt*.38/(1+M.mods.stam)); M.sprinting=true; }
   if(own){ sp*=.78+M.bs.d*.0022; p.hold+=dt;
     // "stall" time only builds while dawdling or hugging an edge, so a proper dribbling run isn't punished
     const slow=hyp(p.vx,p.vy)<60; p.stall=(nearEdge(p)||slow)?(p.stall||0)+dt:Math.max(0,(p.stall||0)-dt*2);
@@ -2482,7 +2647,10 @@ function humanBrain(p,dt){
 }
 function carrierBrain(p,dt){
   p.hold+=dt; p.dec-=dt;
-  if(p.role==="GK"){ p.dvx=p.dvy=0; if(p.hold>.9&&p.dec<=0&&M.state==="play"){ p.dec=.3; aiPass(p,true,p.hold>2.2); } return; }
+  if(p.role==="GK"){ p.dvx=p.dvy=0;
+    // keeper waits a moment for the opponents to back off, then throws it out; after 3 seconds he just kicks it long
+    if(p.hold>.9&&p.dec<=0&&M.state==="play"){ p.dec=.3; aiPass(p,true,p.hold>2.2); }
+    return; }
   const gx=p.side===0?PW+10:-10;
   let dx=gx-p.x, dy=GMID-p.y; const d0=hyp(dx,dy)||1; dx/=d0; dy/=d0;
   for(const o of M.players){ if(o.side===p.side) continue; const ox=p.x-o.x, oy=p.y-o.y, od=hyp(ox,oy);
@@ -2549,12 +2717,26 @@ function separate(){
     if(d>0&&d<22){ const push=(22-d)/2, ux=dx/d, uy=dy/d; a.x-=ux*push; a.y-=uy*push; b.x+=ux*push; b.y+=uy*push; }
   }
 }
+/* while a keeper holds the ball, opponents are eased out of a 150-pixel zone in front of him (never pushed into the goal) */
+const KEEP_R=150;
+function keeperSpace(dt){
+  const kh=keeperHolding(); if(!kh) return;
+  const fwd=kh.side===0?1:-1, k=Math.min(1,dt*7);
+  for(const p of M.players){ if(p.side===kh.side) continue;
+    let dx=p.x-kh.x, dy=p.y-kh.y; const d=hyp(dx,dy); if(d>=KEEP_R) continue;
+    if(dx*fwd<20){ dx=20*fwd; if(Math.abs(dy)<1) dy=p.y<GMID?-1:1; }
+    const n=hyp(dx,dy)||1, tx=kh.x+dx/n*KEEP_R, ty=kh.y+dy/n*KEEP_R;
+    p.x+=(tx-p.x)*k; p.y+=(clamp(ty,12,PH-12)-p.y)*k;
+    if(p.tcd<.3) p.tcd=.3;
+  }
+}
 function ballUpdate(dt){
   const b=M.ball;
   if(b.owner){ const o=b.owner, tx=o.x+o.fx*13, ty=o.y+o.fy*13, k=Math.min(1,dt*20);
     b.x+=(tx-b.x)*k; b.y+=(ty-b.y)*k; b.vx=o.vx; b.vy=o.vy; b.z=0; return; }
   if(M.shot){ shotUpdate(dt); return; }
   b.x+=b.vx*dt; b.y+=b.vy*dt; const f=Math.exp(-1.2*dt); b.vx*=f; b.vy*=f; b.noT-=dt;
+  if(!isFinite(b.x+b.y+b.vx+b.vy)){ dropBall(true); return; }
   if(outCheck()) return;
   const sp=hyp(b.vx,b.vy);
   const list=M.players.map(p=>({p,d:hyp(p.x-b.x,p.y-b.y)})).sort((u,v)=>u.d-v.d);
@@ -2565,7 +2747,7 @@ function ballUpdate(dt){
     const gkBox=p.role==="GK"&&inOwnBox(p), reach=gkBox?24:15;
     if(d>reach) continue;
     let take=sp<380||p===b.passTo||gkBox;
-    if(!take) take=Math.random()<(p.side===1?.12+M.q*.18:.1+G.train.def*.02);
+    if(!take) take=Math.random()<(p.side===1?.12+M.q*.18:.1+G.train.def*.02+M.mods.def*.06);
     if(take){ gain(p); return; }
   }
 }
@@ -2575,8 +2757,14 @@ function mUpdate(dt){
   M.floaters=M.floaters.filter(f=>(f.t+=dt)<1.3);
   M.parts=M.parts.filter(q=>{ q.t+=dt; q.x+=q.vx*dt; q.y+=q.vy*dt; q.vy+=q.g*dt; q.r+=dt*8; return q.t<q.life; });
   const st=M.state;
-  if(st==="gate"||st==="paused"||st==="half"||st==="full") return;
-  if(st==="goal"){ M.goalT-=dt; ballUpdateLoose(dt); if(M.goalT<=0){ const f=M.after; M.after=null; if(f) f(); } return; }
+  if(st==="gate"){
+    // safety net: if a maths question ever closes without handing control back, carry on with a drop ball
+    if(!gate.active&&$("gateOv").hidden){ M.gateStuck+=dt; if(M.gateStuck>1.5){ M.gateStuck=0; if(M.pens){ M.state="pen"; setupPen(); } else dropBall(true); } }
+    else M.gateStuck=0;
+    return;
+  }
+  if(st==="paused"||st==="half"||st==="full"||st==="pre") return;
+  if(st==="goal"){ M.goalT-=dt; ballUpdateLoose(dt); if(M.goalT<=0){ const f=M.after; M.after=null; if(f) f(); else { M.state="play"; } } return; }
   if(st==="pause"){ M.pauseT-=dt; if(M.pauseT<=0) M.state="play"; return; }
   if(st==="pen"){ penUpdate(dt); return; }
   // play
@@ -2597,11 +2785,160 @@ function mUpdate(dt){
   for(const p of M.players){ p.tcd-=dt; p.stun=Math.max(0,p.stun-dt); brain(p,dt); }
   for(const p of M.players) integrate(p,dt);
   separate();
+  keeperSpace(dt);
   if(!M.sprinting) M.stam=Math.min(1,M.stam+dt*.18);
   ballUpdate(dt);
+  // safety net for a lost ball: off the pitch with nobody restarting it, or loose and untouched for ages
+  if(M.state==="play"&&!b.owner&&!M.shot){
+    M.lostT+=dt;
+    const off=!isFinite(b.x+b.y)||b.x<-30||b.x>PW+30||b.y<-30||b.y>PH+30;
+    if((off&&M.lostT>.6)||M.lostT>9){ dropBall(true); return; }
+  } else M.lostT=0;
   if(M.state==="play"&&!M.shot&&M.t>=M.halfLen) endHalf();
 }
 function ballUpdateLoose(dt){ const b=M.ball; if(b.owner) return; b.x+=b.vx*dt; b.y+=b.vy*dt; const f=Math.exp(-3*dt); b.vx*=f; b.vy*=f; }
+
+/* =========================================================
+   BRAIN BOOST — 3 questions before kick-off and at half-time.
+   3 right: pick 2 of 6 random power-up cards. 2 right: pick 1.
+   ========================================================= */
+let PK=null;
+function bbQuestions(L){
+  // always at least two mental-maths tricks (×25/×75, zeros, friendly pairs…), plus one from the match mix
+  return shuffle([pickMental(L),pickMental(L),mathsQ(L)]);
+}
+const rollMag=()=>Math.min(200,50+10*Math.floor(16*Math.random()**3));
+const usedStar=s=>M.players.some(p=>p.star===s.name)||(!!M.opp.star&&M.opp.star.split("@")[0]===s.name);
+function drawPerks(n){
+  const pool=[
+    ...PERK_STATS.filter(s=>!(s.k==="pace"&&M.mods.pace>=2)).map(s=>({w:10,make:()=>{ const mag=rollMag();
+      return {kind:"stat",k:s.k,ic:s.ic,lb:s.lb,ds:s.ds,mag,big:`+${mag}%`,rar:mag>=160?"leg":mag>=100?"rare":""}; }})),
+    {w:4,make:()=>{ const x=Math.random()<.25?2:1.5; return {kind:"shotX",ic:"⚽",lb:"Golden shots",ds:`A right answer is ${x}× as likely to score`,mag:x,big:`${x}×`,rar:x>=2?"leg":"rare"}; }},
+    {w:6,make:()=>{ const c=pick([40,50,60,80,100,150]); return {kind:"coins",ic:'<i class="coin"></i>',lb:"Bonus coins",ds:"Paid at full time",mag:c,big:`+${c}`,rar:c>=100?"rare":""}; }},
+    {w:1.8,make:()=>{ const isGK=!gk(0).starR&&Math.random()<.2, list=(isGK?STAR_GK:STARS).filter(s=>!usedStar(s));
+      if(!list.length||(!isGK&&[3,4,1,2].every(i=>M.players[i].starR))) return null;
+      const s=pick(list); return {kind:"star",star:s,ic:"★",lb:s.name,ds:isGK?`Legendary keeper joins your team`:`Guest star joins your team`,big:String(s.r),rar:"leg"}; }}
+  ];
+  const out=[];
+  while(out.length<n&&pool.length){
+    const tot=pool.reduce((a,p)=>a+p.w,0); let r=Math.random()*tot, i=0;
+    while(i<pool.length-1&&(r-=pool[i].w)>0) i++;
+    const pk=pool.splice(i,1)[0].make(); if(pk) out.push(pk);
+  }
+  return shuffle(out);
+}
+function addStar(S){
+  const idx=S.gk?0:[3,4,1,2].find(i=>!M.players[i].starR);
+  if(idx==null) return;
+  const p=M.players[idx]; p.star=S.name; p.starR=S.r; p.num=S.num;
+  if(!S.gk) p.sp*=1+(S.r-80)*.012;
+}
+function recalcMods(){
+  const m=M.mods, b=bootStats(G.boots.eq);
+  M.boost=Math.min(3,1+m.pace);
+  M.bs={p:Math.round(b.p*(1+m.p)),a:Math.round(b.a*(1+m.a)),d:Math.round(b.d*(1+m.d))};
+  gk(0).sp=165*(1+m.gk*.25);
+}
+function applyPerk(pk){
+  const m=M.mods;
+  if(pk.kind==="stat") m[pk.k]+=pk.mag/100;
+  else if(pk.kind==="shotX") m.shotX=Math.min(3,m.shotX*pk.mag);
+  else if(pk.kind==="coins") m.coins+=pk.mag;
+  else if(pk.kind==="star") addStar(pk.star);
+  M.perks.push(pk);
+  recalcMods();
+}
+function refreshBoostChip(){
+  const m=M.mods, parts=[];
+  PERK_STATS.forEach(s=>{ if(m[s.k]>0) parts.push(`${s.ic} ${s.lb} +${Math.round(m[s.k]*100)}%`); });
+  if(m.shotX>1) parts.push(`⚽ Golden shots ${m.shotX}×`);
+  M.players.forEach(p=>{ if(p.side===0&&p.starR) parts.push(`★ ${p.star}`); });
+  if(m.coins) parts.push(`+${m.coins} coins`);
+  const c=$("boostChip"); c.textContent=parts.length?"BRAIN BOOST · "+parts.join(" · "):""; c.hidden=!parts.length;
+}
+function bbIntro(round){
+  const pre=round==="pre";
+  $("htEye").textContent=pre?`Before kick-off · ${M.ctx.label}`:"Half-time";
+  $("htScore").innerHTML=scoreLine(); $("htStats").innerHTML=pre?"":statsHTML(); $("htStats").hidden=pre;
+  $("htBody").innerHTML=`<div class="boostHead">⚡ Brain Boost</div>
+    <p class="boostNote">Three questions, one try each. ${pre?"Power up your team before kick-off!":"Power up for the second half!"}</p>
+    <div class="pkBacks" aria-hidden="true">${"<div class=\"pkBack\">?</div>".repeat(6)}</div>
+    <p class="boostNote"><b>All 3 right:</b> pick <b>2</b> of 6 random power-ups. <b>2 right:</b> pick 1. Look out for legendary cards: huge boosts, or a guest star like Pelé or Messi joining your team.</p>
+    <p class="boostNote"><i class="coin"></i><b>${BB_PAY} coins</b> for every right answer.</p>
+    <div class="btnRow"><button class="btn btnGold" id="htGo" style="font-size:19px;padding:10px 26px">Start Brain Boost</button><button class="btn" id="htSkip">${pre?"Skip, just play":"Skip"}</button></div>`;
+  $("htOv").hidden=false;
+  $("htGo").onclick=()=>{ audio(); M.bb[round]={res:[],correct:0}; M.bbQs=bbQuestions(M.level); bbAsk(round,0); };
+  $("htSkip").onclick=()=>{ audio(); bbDone(round); };
+  $("htGo").focus();
+}
+function bbAsk(round,i){
+  $("htOv").hidden=true;
+  const B=M.bb[round], last=i===2, perfect=B.correct===i, canPick=B.correct+(3-i)>=2;
+  openGate(M.bbQs[i],{title:`⚡ Brain Boost · question ${i+1} of 3${perfect?" · all 3 right = 2 power-ups!":""}`,attempts:1,time:45,manual:true,
+    msg:perfect?"One try. Keep it perfect to pick TWO power-ups!":canPick?"One try. 2 right still wins a power-up!":`One try. Every right answer still earns ${BB_PAY} coins.`,
+    okMsg:`Correct! +${BB_PAY} coins`,nextLabel:last?"See your power-ups ›":"Next question ›",
+    onDone:ok=>{
+      B.res.push(ok); if(ok){ B.correct++; sCoin(); }
+      if(!last){ setTimeout(()=>bbAsk(round,i+1),140); return; }
+      bbResult(round);
+    }});
+}
+const bbTicks=B=>`<div class="ticks">${B.res.map(r=>`<span class="${r?"ok":"no"}">${r?"✓":"✗"}</span>`).join("")}</div>`;
+function bbResult(round){
+  const B=M.bb[round], picks=B.correct===3?2:B.correct===2?1:0;
+  if(!picks){
+    $("htBody").innerHTML=`${bbTicks(B)}<div class="boostMiss">${B.correct} of 3 right. You need 2 right for a power-up, and all 3 to pick two.${B.correct?` You still win <i class="coin"></i>${B.correct*BB_PAY}.`:""}</div>
+      <button class="btn btnGold" id="htKick" style="font-size:18px;padding:10px 22px">${round==="pre"?"Kick off":"Kick off the second half"}</button>`;
+    $("htOv").hidden=false; $("htKick").onclick=()=>{ audio(); bbDone(round); }; $("htKick").focus();
+    return;
+  }
+  PK={round,picks,offers:drawPerks(6),sel:[],res:B};
+  renderPerks();
+  $("htOv").hidden=false;
+  if(picks===2){ confettiDOM(70); sBoost(); } else sGood();
+  if(PK.offers.some(o=>o.rar==="leg")) setTimeout(()=>beep(1568,.2,"triangle",.1),500);
+}
+function renderPerks(focusI){
+  const P=PK, full=P.sel.length===P.picks;
+  const cards=P.offers.map((o,i)=>`<button class="pkc ${o.rar} ${P.sel.includes(i)?"sel":""}" data-pk="${i}" aria-pressed="${P.sel.includes(i)}">
+    <span class="pkn">${i+1}</span>${o.rar?`<span class="rar">${o.rar==="leg"?"Legendary":"Rare"}</span>`:""}
+    <span class="ic">${o.ic}</span><span class="mag">${o.big}</span><span class="lb">${esc(o.lb)}</span><span class="ds">${esc(o.ds)}</span></button>`).join("");
+  $("htBody").innerHTML=`${bbTicks(P.res)}
+    <div class="boostHead" style="font-size:clamp(40px,7vw,58px)">${P.picks===2?"Perfect! Pick 2":"Pick 1 power-up"}</div>
+    <p class="pickNote">${P.picks===2?"All 3 right! Choose any TWO cards.":"2 of 3 right. Choose ONE card. Get all 3 next time to pick two!"} Click a card or press 1–6.</p>
+    <div class="pk">${cards}</div>
+    <div class="btnRow"><button class="btn btnGold" id="pkGo" style="font-size:18px;padding:10px 24px" ${full?"":"disabled"}>${full?"Lock in and play ›":`Pick ${P.picks-P.sel.length} more`}</button></div>`;
+  $("htBody").querySelectorAll(".pkc").forEach(b=>b.onclick=()=>{ audio(); pkToggle(+b.dataset.pk); });
+  $("pkGo").onclick=()=>{ audio(); pkLock(); };
+  if(full) $("pkGo").focus();
+  else if(focusI!=null){ const b=$("htBody").querySelector(`[data-pk="${focusI}"]`); if(b) b.focus(); }
+}
+function pkToggle(i){
+  if(!PK) return;
+  const s=PK.sel, j=s.indexOf(i);
+  if(j>=0) s.splice(j,1); else { s.push(i); if(s.length>PK.picks) s.shift(); }
+  sKey(); renderPerks(i);
+}
+function pkLock(){
+  if(!PK||PK.sel.length!==PK.picks) return;
+  const got=PK.sel.map(i=>PK.offers[i]), round=PK.round;
+  PK=null;
+  got.forEach(applyPerk);
+  sBoost();
+  const star=got.find(o=>o.kind==="star");
+  $("htBody").innerHTML=`<div class="boostOn"><b>⚡ Powered up!</b>${star?`${esc(star.star.name)} has joined ${esc(G.team.name)}!`:"Your power-ups last for the rest of the match."}
+      <div class="gotList">${got.map(o=>`<span>${o.kind==="star"?"★ "+esc(o.lb):o.kind==="coins"?`+${o.mag} coins`:`${o.ic} ${esc(o.lb)} ${o.big}`}</span>`).join("")}</div></div>
+    <button class="btn btnGold" id="htKick" style="font-size:18px;padding:10px 22px">${round==="pre"?"Kick off":"Kick off the second half"}</button>`;
+  $("htKick").onclick=()=>{ audio(); bbDone(round); }; $("htKick").focus();
+  if(star) confettiDOM(60);
+}
+function bbDone(round){
+  PK=null; $("htOv").hidden=true; refreshBoostChip();
+  if(round==="pre"){
+    M.state="pause"; M.pauseT=1.1; sWhistle();
+    say(M.perks.length?`Kick-off! ⚡ ${M.perks.length} power-up${M.perks.length>1?"s":""} on`:`Kick-off! ${G.team.name} v ${M.opp.name}`);
+  } else secondHalf();
+}
 
 /* ---------- halves ---------- */
 function statsHTML(){
@@ -2612,42 +2949,13 @@ function statsHTML(){
 function scoreLine(){ return `${badge(G.team.code,G.team.kit[0],G.team.kit[1])}<span class="num">${M.score[0]}</span><span class="num" style="opacity:.5">–</span><span class="num">${M.score[1]}</span>${badge(M.opp.code,M.kitO[0],M.kitO[1])}`; }
 function endHalf(){
   sWhistle();
-  if(M.half===1){ M.state="half"; showHalfTime(); }
+  if(M.half===1){ M.state="half"; bbIntro("ht"); }
   else { M.state="full"; fullTime(); }
-}
-function showHalfTime(){
-  $("htScore").innerHTML=scoreLine(); $("htStats").innerHTML=statsHTML();
-  $("htBody").innerHTML=`<div class="boostHead">⚡ Brain Boost</div>
-    <p class="boostNote">Three quick questions, one try each. Get <b>ALL 3 right</b> and your team powers up for the whole second half:</p>
-    ${perksHTML(true)}
-    <p class="boostNote">Plus <i class="coin"></i><b>${HT_PAY} coins</b> for every right answer, even if you miss one.</p>
-    <div class="btnRow"><button class="btn btnGold" id="htGo" style="font-size:19px;padding:10px 26px">Start Brain Boost</button><button class="btn" id="htSkip">Skip</button></div>`;
-  $("htOv").hidden=false;
-  $("htGo").onclick=()=>{ audio(); htQ(0); }; $("htSkip").onclick=secondHalf; $("htGo").focus();
-}
-function htQ(i){
-  $("htOv").hidden=true;
-  const so_far=M.ht.correct===i;
-  openGate(mathsQ(M.level),{title:`⚡ Brain Boost · question ${i+1} of 3${so_far?" · all 3 right = power-up!":""}`,attempts:1,time:40,
-    msg:`One try. ${HT_PAY} coins if you get it right.`,onDone:ok=>{
-    M.ht.res.push(ok); if(ok){ M.ht.correct++; sCoin(); }
-    if(i<2){ setTimeout(()=>htQ(i+1),120); return; }
-    const all=M.ht.correct===3;
-    if(all){ M.ht.all=true; M.boost=HT_SPEED; M.shotBoost=HT_SHOT; }
-    const coins=M.ht.correct*HT_PAY+(all?HT_BONUS:0);
-    $("htBody").innerHTML=`<div class="ticks">${M.ht.res.map(r=>`<span class="${r?"ok":"no"}">${r?"✓":"✗"}</span>`).join("")}</div>
-      ${all?`<div class="boostOn"><b>⚡ Brain Boost active!</b>For the whole second half your shots are ${HT_SHOT}× more likely to score and your team is ${Math.round((HT_SPEED-1)*100)}% faster.</div>${perksHTML(true)}`
-        :`<div class="boostMiss">${M.ht.correct} of 3 right. So close! You need all 3 for the power-up, so no boost this half.</div>${perksHTML(false)}`}
-      <p class="lead"><i class="coin"></i><b>${coins}</b> coins from Brain Boost${all?` (${M.ht.correct} × ${HT_PAY} + ${HT_BONUS} bonus)`:""}</p>
-      <button class="btn btnGold" id="htKick" style="font-size:18px;padding:10px 22px">Kick off the second half</button>`;
-    $("htOv").hidden=false; $("htKick").onclick=secondHalf; $("htKick").focus();
-    if(all){ confettiDOM(80); sBoost(); }
-  }});
 }
 function secondHalf(){
   audio(); $("htOv").hidden=true; M.half=2; M.t=0; sWhistle();
-  $("boostChip").hidden=!M.ht.all;
-  kickoff(1,M.ht.all?`Second half! ⚡ Brain Boost is on: ${HT_SHOT}× goal chance`:"Second half under way");
+  refreshBoostChip();
+  kickoff(1,M.perks.length?"Second half! ⚡ Power-ups on":"Second half under way");
 }
 function fullTime(){
   const [a,b]=M.score;
@@ -2661,7 +2969,8 @@ function endMatch(res,extra){
   const base=winCoins(opp.r);
   let rc=extra.forfeit?0:res==="W"?base:res==="D"?Math.round(base/3):5;
   if(c.tour) rc=Math.round(rc*1.5);
-  const gc=extra.forfeit?0:M.score[0]*5, hq=M.ht.correct*HT_PAY, hb=M.ht.all?HT_BONUS:0, hc=hq+hb, total=rc+gc+hc;
+  const bbN=["pre","ht"].reduce((a,k)=>a+(M.bb[k]?M.bb[k].correct:0),0), bbAsked=["pre","ht"].reduce((a,k)=>a+(M.bb[k]?M.bb[k].res.length:0),0);
+  const gc=extra.forfeit?0:M.score[0]*5, hq=bbN*BB_PAY, hb=extra.forfeit?0:M.mods.coins, total=rc+gc+hq+hb;
   G.coins+=total;
   G.rec[res==="W"?"w":res==="D"?"d":"l"]++; G.rec.gf+=gf; G.rec.ga+=ga;
   if(res==="W") G.beaten[opp.code]=true;
@@ -2670,7 +2979,7 @@ function endMatch(res,extra){
   save();
   M.state="full";
   $("boostChip").hidden=true;
-  showFT(res,{rc,gc,hq,hb,total,ti,extra});
+  showFT(res,{rc,gc,hq,hb,bbN,bbAsked,total,ti,extra});
 }
 function showFT(res,o){
   const c=M.ctx, won=o.ti&&o.ti.won;
@@ -2684,12 +2993,13 @@ function showFT(res,o){
     <div class="scoreLine">${scoreLine()}</div>
     ${o.extra.pens?`<p class="scorers"><b>${esc(o.extra.pens)}</b> on penalties</p>`:""}
     ${sc?`<p class="scorers">${esc(sc)}</p>`:""}
-    <div class="statGrid">${statsHTML()}<span class="l">${M.shotC}/${M.shotA}</span><span class="c">Shot maths</span><span class="r"></span></div>
+    <div class="statGrid">${statsHTML()}<span class="l">${M.shotC}/${M.shotA}</span><span class="c">Shot maths</span><span class="r"></span>
+      <span class="l">${o.bbN}/${o.bbAsked}</span><span class="c">Brain Boost</span><span class="r"></span></div>
     <div class="ledger">
       <div><span>${res==="W"?"Win":res==="D"?"Draw":"Turning up"}${c.tour?" (tournament ×1½)":""}</span><span><i class="coin"></i>${o.rc}</span></div>
       <div><span>Goals scored × 5</span><span><i class="coin"></i>${o.gc}</span></div>
-      <div><span>Brain Boost (${M.ht.correct}/3 × ${HT_PAY})</span><span><i class="coin"></i>${o.hq}</span></div>
-      ${o.hb?`<div><span>⚡ Brain Boost bonus (all 3 right)</span><span><i class="coin"></i>${o.hb}</span></div>`:""}
+      <div><span>Brain Boost answers (${o.bbN} × ${BB_PAY})</span><span><i class="coin"></i>${o.hq}</span></div>
+      ${o.hb?`<div><span>⚡ Bonus-coin power-ups</span><span><i class="coin"></i>${o.hb}</span></div>`:""}
       ${won?`<div><span>Tournament prize</span><span><i class="coin"></i>${TOUR[G.tourLast.id].prize.toLocaleString("en-AU")}</span></div>`:""}
       <div class="tot"><span>Coins earned</span><span><i class="coin"></i>${(o.total+(won?TOUR[G.tourLast.id].prize:0)).toLocaleString("en-AU")}</span></div></div>
     ${o.ti?`<div class="tourMsg">${esc(o.ti.msg)}</div>`:""}
@@ -2714,6 +3024,7 @@ function renderPenInfo(){
 }
 function setupPen(){
   const P=M.pens, side=P.turn;
+  M.shot=null;
   M.players.forEach(p=>{ p.vx=p.vy=p.dvx=p.dvy=0; p.dive=0; p.stun=0;
     if(p.role!=="GK"){ p.x=500+(p.side?1:-1)*(20+ (p.i-1)*24); p.y=300+(p.i%2?-40:40); } });
   const k=gk(1-side); k.x=wx(k.side,14); k.y=GMID;
@@ -2724,7 +3035,7 @@ function setupPen(){
   const b=M.ball; b.owner=null; b.x=side===0?PW-112:112; b.y=GMID; b.vx=b.vy=0; b.z=0;
   P.taker=t; P.phase="ready"; P.wait=1.2;
   if(side===0) M.human=t;
-  say(side===0?"Your penalty. Get ready…":`${nameOf(t)} steps up for ${M.opp.name}…`);
+  say(side===0?(t.star?`${t.star} steps up. Get ready…`:"Your penalty. Get ready…"):`${nameOf(t)} steps up for ${M.opp.name}…`);
 }
 function penUpdate(dt){
   const P=M.pens, b=M.ball;
@@ -2735,14 +3046,14 @@ function penUpdate(dt){
   else if(P.phase==="after"){ P.wait-=dt; if(P.wait<=0) nextPen(); }
 }
 function askPen(){
-  const side=M.pens.turn, boosted=M.shotBoost>1; M.state="gate";
-  openGate(mathsQ(Math.max(1,M.level)),{title:side===0?`${boosted?"⚡ BOOSTED penalty":"Penalty"}! Solve it to pick your spot`:"Save it! Solve it to dive the right way",attempts:1,time:35,
-    msg:side===0?(boosted?"Brain Boost is on: a right answer nearly always scores!":"Right answer: you'll almost always score."):"Right answer: your keeper reads it.",
+  const side=M.pens.turn, boosted=M.mods.shotX>1; M.state="gate";
+  openGate(mathsQ(Math.max(1,M.level)),{title:side===0?`${boosted?"⚡ GOLDEN penalty":"Penalty"}! Solve it to pick your spot`:"Save it! Solve it to dive the right way",attempts:1,time:35,
+    msg:side===0?(boosted?"Golden shots are on: a right answer nearly always scores!":"Right answer: you'll almost always score."):"Right answer: your keeper reads it.",
     onDone:(ok,fast)=>{
       M.state="pen"; if(ok) M.shotC++; M.shotA++;
       let pg;
-      if(side===0){ pg=ok?clamp(.8+(fast?.06:0)+(M.bs.a-60)*.003-(M.opp.r-70)*.003,.55,.95):0; if(boosted) pg=Math.min(.97,pg*M.shotBoost); }
-      else pg=ok?clamp(.33+(M.opp.r-keeperRating())*.004,.15,.5):.8;
+      if(side===0){ const t=M.pens.taker; pg=ok?clamp(.8+(fast?.06:0)+(M.bs.a-60)*.003-(M.opp.r-70)*.003+(t&&t.starR?.06:0),.55,.95):0; if(boosted) pg=Math.min(.97,pg*M.mods.shotX); }
+      else pg=ok?clamp(.33+(M.opp.r-kRating())*.004,.1,.5):.8;
       const goal=Math.random()<pg;
       M.pens.out=goal?"goal":(Math.random()<.72?"save":Math.random()<.5?"post":"wide");
       M.pens.phase="runup";
@@ -2768,14 +3079,17 @@ function nextPen(){
 function togglePause(){
   if(!M||gate.active) return;
   if(M.state==="paused"){ $("pauseOv").hidden=true; M.state=M.prevState||"play"; return; }
-  if(!["play","pause","goal","pen"].includes(M.state)) return;
-  M.prevState=M.state; M.state="paused"; M.charging=false; Object.keys(K).forEach(k=>K[k]=false);
+  // a question that closed without handing back control can still be paused (and then drop-balled)
+  const stuckGate=M.state==="gate"&&$("gateOv").hidden;
+  if(!["play","pause","goal","pen"].includes(M.state)&&!stuckGate) return;
+  M.prevState=stuckGate?(M.pens?"pen":"play"):M.state; M.state="paused"; M.charging=false; Object.keys(K).forEach(k=>K[k]=false);
   $("pauseNote").textContent=M.ctx.tour?"Quitting counts as a 3–0 defeat in the tournament.":"Quitting counts as a loss.";
   $("quitBtn").textContent="Quit match"; delete $("quitBtn").dataset.sure;
   $("pauseOv").hidden=false; $("resumeBtn").focus();
 }
 $("pauseBtn").onclick=()=>{ audio(); togglePause(); };
 $("resumeBtn").onclick=()=>togglePause();
+$("dropBtn").onclick=()=>{ audio(); if(!M) return; $("pauseOv").hidden=true; dropBall(false); };
 $("quitBtn").onclick=e=>{ const b=e.currentTarget; if(!b.dataset.sure){ b.dataset.sure="1"; b.textContent="Press again to quit"; return; }
   $("pauseOv").hidden=true; M.pens=null; endMatch("L",{forfeit:true}); };
 
@@ -2843,11 +3157,12 @@ function drawPlayer(g,p,now){
   const human=p===M.human&&p.side===0&&!(M.pens&&M.pens.turn===1);
   let ry=12, oy=0; if(p.dive){ const dv=clamp(Math.abs(p.dive)*.35,0,13); ry=12+dv; oy=Math.sign(p.dive)*dv*.6; }
   g.fillStyle="rgba(0,0,0,.3)"; g.beginPath(); g.ellipse(p.x+3,p.y+oy+7,13,ry*.5,0,0,7); g.fill();
+  if(p.side===0&&p.starR){ g.fillStyle="rgba(255,207,63,.22)"; g.beginPath(); g.arc(p.x,p.y+oy,22+Math.sin(now/150)*2,0,7); g.fill(); }
   if(human){
     const sx=-p.fy, sy=p.fx, bc=M.bootCol;
     g.fillStyle=bc; g.strokeStyle="rgba(0,0,0,.5)"; g.lineWidth=1;
     for(const s of [-1,1]){ g.beginPath(); g.ellipse(p.x+sx*s*6+p.fx*4,p.y+sy*s*6+p.fy*4,5,3,Math.atan2(p.fy,p.fx),0,7); g.fill(); g.stroke(); }
-    if(M.shotBoost>1){ g.fillStyle="rgba(255,207,63,.18)"; g.beginPath(); g.arc(p.x,p.y,27+Math.sin(now/180)*3,0,7); g.fill(); }
+    if(M.perks.length){ g.fillStyle="rgba(255,207,63,.18)"; g.beginPath(); g.arc(p.x,p.y,27+Math.sin(now/180)*3,0,7); g.fill(); }
     g.save(); g.strokeStyle="#ffcf3f"; g.lineWidth=2.5; g.setLineDash([6,5]); g.lineDashOffset=-now/40;
     g.beginPath(); g.arc(p.x,p.y,19,0,7); g.stroke(); g.restore();
     g.fillStyle="#ffcf3f"; g.beginPath(); g.moveTo(p.x-7,p.y-31); g.lineTo(p.x+7,p.y-31); g.lineTo(p.x,p.y-23); g.closePath(); g.fill();
@@ -2859,7 +3174,7 @@ function drawPlayer(g,p,now){
   g.fillStyle=textOn(k1); g.font="500 17px Teko, 'Arial Narrow', sans-serif"; g.textAlign="center"; g.textBaseline="middle";
   g.fillText(p.num,p.x,p.y+oy+2);
   if(p.stun>.1){ g.fillStyle="#ffe27a"; for(let i=0;i<3;i++){ const a=now/150+i*2.1; g.beginPath(); g.arc(p.x+Math.cos(a)*14,p.y-16+Math.sin(a)*4,2,0,7); g.fill(); } }
-  if(p.star){ g.font="800 12px 'Baloo 2', sans-serif"; g.lineWidth=3.5; g.strokeStyle="rgba(5,12,20,.85)"; g.strokeText("★ "+p.star,p.x,p.y-22); g.fillStyle="#ffe8a3"; g.fillText("★ "+p.star,p.x,p.y-22); }
+  if(p.star){ const sy2=human?p.y-36:p.y-22; g.font="800 12px 'Baloo 2', sans-serif"; g.lineWidth=3.5; g.strokeStyle="rgba(5,12,20,.85)"; g.strokeText("★ "+p.star,p.x,sy2); g.fillStyle=p.side===0?"#ffcf3f":"#ffe8a3"; g.fillText("★ "+p.star,p.x,sy2); }
   if(human&&M.charging){ const w=40; g.fillStyle="rgba(5,12,20,.8)"; rrect(g,p.x-w/2-2,p.y-46,w+4,9,4); g.fill();
     g.fillStyle=M.charge>.85?"#ff7b6b":"#ffcf3f"; rrect(g,p.x-w/2,p.y-44,w*M.charge,5,2.5); g.fill(); }
   if(human&&M.stam<.97&&!M.pens){ g.strokeStyle="rgba(5,12,20,.7)"; g.lineWidth=3; g.beginPath(); g.arc(p.x,p.y,23,Math.PI*.15,Math.PI*.85); g.stroke();
@@ -2870,6 +3185,9 @@ function drawMatch(now){
   if(pitchCan) g.drawImage(pitchCan,0,0,PV.cw,PV.ch); else { g.fillStyle="#060d15"; g.fillRect(0,0,PV.cw,PV.ch); }
   g.save(); g.translate(PV.ox,PV.oy); g.scale(PV.s,PV.s);
   const b=M.ball;
+  // while a keeper holds the ball, show the space opponents must keep clear of
+  const kh=M.state==="play"&&keeperHolding();
+  if(kh){ g.save(); g.strokeStyle="rgba(255,255,255,.28)"; g.lineWidth=2; g.setLineDash([8,8]); g.beginPath(); g.arc(kh.x,kh.y,KEEP_R,0,7); g.stroke(); g.restore(); }
   const items=M.players.map(p=>({y:p.y,f:()=>drawPlayer(g,p,now)}));
   items.push({y:b.y+.5,f:()=>{
     const z=b.z||0;
@@ -2894,8 +3212,12 @@ function drawMatch(now){
 let lastFrame=performance.now();
 function frame(now){
   const dt=Math.min(.05,(now-lastFrame)/1000); lastFrame=now;
-  if(SCREEN==="match"&&M){ mUpdate(dt); if(M){ drawMatch(now); updateClock(); } }
   requestAnimationFrame(frame);
+  if(SCREEN==="match"&&M){
+    // if anything in the match ever throws, restart play with a drop ball instead of freezing the game
+    try{ mUpdate(dt); }catch(err){ console.error(err); try{ dropBall(true); }catch(e2){} }
+    if(M){ try{ drawMatch(now); updateClock(); }catch(err){ console.error(err); } }
+  }
 }
 let rzT=0;
 window.addEventListener("resize",()=>{ clearTimeout(rzT); rzT=setTimeout(()=>{
